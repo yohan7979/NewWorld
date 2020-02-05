@@ -1,0 +1,15 @@
+Binaries/
+Build/
+Intermediate/
+DerivedDataCache
+Saved/
+
+*.VC.db
+*.opendb
+*.ipch
+*.suo
+*.db-wal
+*.db-shm
+*.uasset
+*.umap
+*.vs

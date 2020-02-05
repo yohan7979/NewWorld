@@ -1,0 +1,13 @@
+{
+	"FileVersion": 3,
+	"EngineAssociation": "{5A29E689-4AA9-CC4D-AFB9-208259A0E062}",
+	"Category": "",
+	"Description": "",
+	"Modules": [
+		{
+			"Name": "NewWorld",
+			"Type": "Runtime",
+			"LoadingPhase": "Default"
+		}
+	]
+}
