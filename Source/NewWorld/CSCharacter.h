@@ -4,7 +4,11 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
+#include "CSTypes.h"
 #include "CSCharacter.generated.h"
+
+// Forward Declaration
+class ACSWeapon;
 
 UCLASS()
 class NEWWORLD_API ACSCharacter : public ACharacter
@@ -20,8 +24,9 @@ protected:
 	virtual void BeginPlay() override;
 
 public:	
-	// Called every frame
+	virtual void PostInitializeComponents() override;
 	virtual void Tick(float DeltaTime) override;
+	virtual void Destroyed() override;
 
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
@@ -31,12 +36,42 @@ public:
 	void TurnAt(float Value);
 	void LookUp(float Value);
 
+	void SwitchWeapon(int32 index);
+	
+	void SpawnDefaultInventory();
+	void DestoryInventory();
+	void AddWeapon(ACSWeapon* InWeapon);
+	void RemoveWeapon(ACSWeapon* InWeapon);
+
+	UFUNCTION(Reliable, Server, WithValidation)
+	void ServerEquipWeapon(ACSWeapon* NewWeapon);
+	void EquipWeapon(ACSWeapon* NewWeapon);
+	void SetCurrentWeapon(ACSWeapon* NewWeapon, ACSWeapon* LastWeapon);
+
 	float BaseTurnRate;
 	float BaseLookUpRate;
 
+	UFUNCTION()
+	void OnRep_Weapon(ACSWeapon* LastWeapon);
+
+	FORCEINLINE const FCharacterAnimGraph& GetDefaultCharacterAnimGraph() { return DefaultCharacterAnimGraph; }
+
+protected:
 	UPROPERTY(VisibleAnywhere, Category = "Components")
 	class USpringArmComponent* CameraBoom;
 
 	UPROPERTY(VisibleAnywhere, Category = "Components")
 	class UCameraComponent* CameraComponent;
+
+	UPROPERTY(EditDefaultsOnly, Category = "Animation")
+	FCharacterAnimGraph DefaultCharacterAnimGraph;
+
+	UPROPERTY(Transient, ReplicatedUsing=OnRep_Weapon)
+	ACSWeapon* Weapon;
+
+	UPROPERTY(Transient, Replicated)
+	TArray<ACSWeapon*> Inventory;
+
+	UPROPERTY(EditDefaultsOnly, Category = "Weapons")
+	TArray<TSubclassOf<ACSWeapon> > DefaultInventoryClasses;
 };
