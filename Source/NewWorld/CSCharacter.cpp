@@ -71,6 +71,7 @@ void ACSCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCompone
 	PlayerInputComponent->BindAxis(TEXT("LookUp"), this, &ACSCharacter::LookUp);
 
 	PlayerInputComponent->BindAction<FBindIntegerDelegate>(TEXT("SwitchWeaponOne"), IE_Pressed, this, &ACSCharacter::SwitchWeapon, 1);
+	PlayerInputComponent->BindAction<FBindIntegerDelegate>(TEXT("SwitchWeaponTwo"), IE_Pressed, this, &ACSCharacter::SwitchWeapon, 2);
 }
 
 void ACSCharacter::MoveForward(float Value)
@@ -106,9 +107,9 @@ void ACSCharacter::LookUp(float Value)
 
 void ACSCharacter::SwitchWeapon(int32 index)
 {
-	if (Inventory.IsValidIndex(index))
+	if (Inventory.IsValidIndex(index - 1))
 	{
-		ACSWeapon* DesiredWeapon = Inventory[index];
+		ACSWeapon* DesiredWeapon = Inventory[index - 1];
 		if (IsValid(DesiredWeapon))
 		{
 			EquipWeapon(DesiredWeapon);
@@ -228,6 +229,7 @@ void ACSCharacter::SetCurrentWeapon(ACSWeapon* NewWeapon, ACSWeapon* LastWeapon)
 	
 	if (Weapon)
 	{
+		Weapon->SetOwningPawn(this);	// Make sure weapon's MyPawn is pointing back to us. During replication, we can't guarantee ACSCharacter::Weapon will rep after ACSWeapon::Owner!
 		Weapon->OnEquip();
 	}
 }

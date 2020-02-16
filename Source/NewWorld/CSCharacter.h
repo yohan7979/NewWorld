@@ -56,6 +56,12 @@ public:
 
 	FORCEINLINE const FCharacterAnimGraph& GetDefaultCharacterAnimGraph() { return DefaultCharacterAnimGraph; }
 
+	UPROPERTY(Transient, ReplicatedUsing = OnRep_Weapon)
+	ACSWeapon* Weapon;
+
+	UPROPERTY(Transient, Replicated)
+	TArray<ACSWeapon*> Inventory;
+
 protected:
 	UPROPERTY(VisibleAnywhere, Category = "Components")
 	class USpringArmComponent* CameraBoom;
@@ -65,12 +71,6 @@ protected:
 
 	UPROPERTY(EditDefaultsOnly, Category = "Animation")
 	FCharacterAnimGraph DefaultCharacterAnimGraph;
-
-	UPROPERTY(Transient, ReplicatedUsing=OnRep_Weapon)
-	ACSWeapon* Weapon;
-
-	UPROPERTY(Transient, Replicated)
-	TArray<ACSWeapon*> Inventory;
 
 	UPROPERTY(EditDefaultsOnly, Category = "Weapons")
 	TArray<TSubclassOf<ACSWeapon> > DefaultInventoryClasses;

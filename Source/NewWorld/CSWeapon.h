@@ -39,6 +39,18 @@ struct FWeaponAnim
 	{}
 };
 
+USTRUCT()
+struct FAttachPoint
+{
+	GENERATED_USTRUCT_BODY()
+
+	UPROPERTY(EditDefaultsOnly)
+	FName GripSocketName;
+
+	UPROPERTY(EditDefaultsOnly)
+	FName UnEquipSocketName;
+};
+
 UCLASS(Abstract, NotBlueprintable)
 class NEWWORLD_API ACSWeapon : public AActor
 {
@@ -57,6 +69,10 @@ public:
 	virtual void OnUnEquip();
 	virtual void OnEnterInventory(ACSCharacter* NewOwner);
 	virtual void OnLeaveInventory();
+
+	void AttachMeshToCharacter(bool bEquip);
+	void DetachMeshFromCharacter();
+	void SetVisibility(bool bVisible);
 
 	void SetOwningPawn(ACSCharacter* NewOwner);
 	void SetCachedCharacter(AActor* NewOwner);
@@ -77,11 +93,14 @@ protected:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Animation")
 	FWeaponAnim UnEquipAnim;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
-	USkeletalMeshComponent* SkeletalMesh;
+	UPROPERTY(EditDefaultsOnly, Category = "Attachment")
+	FAttachPoint AttachPoint;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
-	UStaticMeshComponent* StaticMesh;
+	USkeletalMeshComponent* SkelMeshComp;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
+	UStaticMeshComponent* StaticMeshComp;
 
 	UPROPERTY(Transient)
 	ACSCharacter* CachedCharacter;

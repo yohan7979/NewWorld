@@ -5,5 +5,6 @@
 
 ACSWeapon_BaseWand::ACSWeapon_BaseWand(const FObjectInitializer& ObjectInitializer) : Super(ObjectInitializer)
 {
-
+	AttachPoint.GripSocketName = TEXT("wand_use");
+	AttachPoint.UnEquipSocketName = TEXT("wand");
 }

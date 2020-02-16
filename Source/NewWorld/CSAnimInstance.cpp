@@ -29,8 +29,16 @@ void UCSCharacterAnimInstance::NativeUpdateAnimation(float DeltaSeconds)
 		Direction = CalculateDirection(CurrentVelocity, OwnerCharacter->GetActorRotation());
 		Speed = CurrentVelocity.Size();
 
-		//@TODO : Get Weapon's CharacterAnimGraph
-		CharacterAnimGraph = OwnerCharacter->GetDefaultCharacterAnimGraph();
+		// Get Weapon's CharacterAnimGraph or Defaults
+		ACSWeapon* CurrentWeapon = OwnerCharacter->Weapon;
+		if (IsValid(CurrentWeapon))
+		{
+			CharacterAnimGraph = CurrentWeapon->GetCharacterAnimGraph();
+		}
+		else
+		{
+			CharacterAnimGraph = OwnerCharacter->GetDefaultCharacterAnimGraph();
+		}
 	}
 
 	Super::NativeUpdateAnimation(DeltaSeconds);
