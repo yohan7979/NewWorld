@@ -79,6 +79,7 @@ public:
 	virtual void OnRep_Owner() override;
 
 	FORCEINLINE const FCharacterAnimGraph& GetCharacterAnimGraph() { return CharacterAnimGraph; }
+	FORCEINLINE const float GetAnimGraphBlendTime() { return AnimGraphBlendOutTime; }
 
 protected:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Animation")
@@ -92,6 +93,9 @@ protected:
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Animation")
 	FWeaponAnim UnEquipAnim;
+
+	UPROPERTY(EditDefaultsOnly, Category = "Animation")
+	float AnimGraphBlendOutTime = 2.f;
 
 	UPROPERTY(EditDefaultsOnly, Category = "Attachment")
 	FAttachPoint AttachPoint;

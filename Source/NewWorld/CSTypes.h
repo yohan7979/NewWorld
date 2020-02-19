@@ -16,8 +16,17 @@ struct FCharacterAnimGraph
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
 	UAimOffsetBlendSpace* StandingAimOffset;
 
+	float BlendInTime;
+
 	FCharacterAnimGraph()
 		: StandingWalkBlendSpace(nullptr)
 		, StandingAimOffset(nullptr)
+		, BlendInTime(2.f)
 	{}
+
+	bool operator!=(const FCharacterAnimGraph& Other)
+	{
+		return StandingWalkBlendSpace != Other.StandingWalkBlendSpace ||
+			StandingAimOffset != Other.StandingAimOffset;
+	}
 };

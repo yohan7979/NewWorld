@@ -25,6 +25,8 @@ public:
 	virtual void NativeUpdateAnimation(float DeltaSeconds) override;
 
 protected:
+	void UpdateCharacterLocomotion(float DeltaSeconds);
+
 	UPROPERTY(Transient)
 	class ACSCharacter* OwnerCharacter;
 
@@ -34,6 +36,14 @@ protected:
 	UPROPERTY(BlueprintReadOnly)
 	float Speed;
 
-	UPROPERTY(Transient, EditAnywhere, BlueprintReadOnly)
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
 	FCharacterAnimGraph CharacterAnimGraph;
+
+	UPROPERTY(BlueprintReadOnly)
+	FCharacterAnimGraph PreviousCharacterAnimGraph;
+
+	UPROPERTY(Transient, BlueprintReadWrite)
+	float AnimGraphBlendAlpha = 1.f;
+	float BlendInTime;
+	float AccumulateBlendTime;
 };
