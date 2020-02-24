@@ -9,7 +9,9 @@
 
 class UAnimMontage;
 class ACSCharacter;
+class UCSWeaponState;
 
+UENUM(BlueprintType)
 namespace EWeaponState
 {
 	enum Type
@@ -78,6 +80,30 @@ public:
 	void SetCachedCharacter(AActor* NewOwner);
 	virtual void OnRep_Owner() override;
 
+	virtual void StartFire(const uint8 FireModeNum);
+	virtual void StopFire(const uint8 FireModeNum);
+
+	virtual bool CanFire();
+
+	UFUNCTION(Reliable, Server, WithValidation)
+	void ServerStartFire(const uint8 FireModeNum);
+
+	UFUNCTION(Reliable, Server, WithValidation)
+	void ServerStopFire(const uint8 FireModeNum);
+
+	void SetWeaponState(EWeaponState::Type NewState);
+	void OnWeaponStateChanged(uint8 OldState, uint8 NewState);
+	void PlayCurrentStateAnimation();
+	virtual float GetStateTransitionTime() const;
+	virtual void BringUpFinished();
+	virtual void PutDown();
+	virtual void FireWeapon();
+
+	virtual void PlayWeaponAnimation(const FWeaponAnim& InWeaponAnim);
+
+	UFUNCTION()
+	void OnRep_CurrentState(uint8 OldState);
+
 	FORCEINLINE const FCharacterAnimGraph& GetCharacterAnimGraph() { return CharacterAnimGraph; }
 	FORCEINLINE const float GetAnimGraphBlendTime() { return AnimGraphBlendOutTime; }
 
@@ -100,6 +126,12 @@ protected:
 	UPROPERTY(EditDefaultsOnly, Category = "Attachment")
 	FAttachPoint AttachPoint;
 
+	UPROPERTY(EditDefaultsOnly, Category = "State")
+	float EquipTime;
+
+	UPROPERTY(EditDefaultsOnly, Category = "State")
+	float ReloadTime;
+
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
 	USkeletalMeshComponent* SkelMeshComp;
 
@@ -108,4 +140,13 @@ protected:
 
 	UPROPERTY(Transient)
 	ACSCharacter* CachedCharacter;
+
+	UPROPERTY(ReplicatedUsing=OnRep_CurrentState)
+	uint8 CurrentState;
+
+	UPROPERTY(Transient)
+	UCSWeaponState* CurrentStateNode;
+
+	UPROPERTY(EditDefaultsOnly, Instanced)
+	TMap<TEnumAsByte<EWeaponState::Type>, UCSWeaponState*> WeaponStateMap;
 };

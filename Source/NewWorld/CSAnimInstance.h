@@ -46,4 +46,7 @@ protected:
 	float AnimGraphBlendAlpha = 1.f;
 	float BlendInTime;
 	float AccumulateBlendTime;
+
+	UPROPERTY(BlueprintReadOnly)
+	bool bIsFalling;
 };

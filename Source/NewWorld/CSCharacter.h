@@ -36,6 +36,12 @@ public:
 	void TurnAt(float Value);
 	void LookUp(float Value);
 
+	void DoJump(bool bPressed);
+	void OnStartFire();
+	void OnStopFire();
+	virtual void PawnStartFire(uint8 FireModeNum = 0) override;
+	void StopFire(const uint8 FireModeNum);
+
 	void SwitchWeapon(int32 index);
 	
 	void SpawnDefaultInventory();

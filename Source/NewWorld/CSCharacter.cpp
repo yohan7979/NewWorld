@@ -8,8 +8,8 @@
 #include "GameFramework/SpringArmComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "Animation/BlendSpace.h"
-#include "Net/UnrealNetwork.h"
 #include "CSWeapon.h"
+#include "CSPlayerController.h"
 
 ACSCharacter::ACSCharacter(const FObjectInitializer& ObjectInitializer)
 {
@@ -72,6 +72,11 @@ void ACSCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCompone
 
 	PlayerInputComponent->BindAction<FBindIntegerDelegate>(TEXT("SwitchWeaponOne"), IE_Pressed, this, &ACSCharacter::SwitchWeapon, 1);
 	PlayerInputComponent->BindAction<FBindIntegerDelegate>(TEXT("SwitchWeaponTwo"), IE_Pressed, this, &ACSCharacter::SwitchWeapon, 2);
+	PlayerInputComponent->BindAction<FBindBoolDelegate>(TEXT("DoJump"), IE_Pressed, this, &ACSCharacter::DoJump, true);
+	PlayerInputComponent->BindAction<FBindBoolDelegate>(TEXT("DoJump"), IE_Released, this, &ACSCharacter::DoJump, false);
+
+	PlayerInputComponent->BindAction(TEXT("OnStartFire"), IE_Pressed, this, &ACSCharacter::OnStartFire);
+	PlayerInputComponent->BindAction(TEXT("OnStartFire"), IE_Released, this, &ACSCharacter::OnStopFire);
 }
 
 void ACSCharacter::MoveForward(float Value)
@@ -103,6 +108,49 @@ void ACSCharacter::TurnAt(float Value)
 void ACSCharacter::LookUp(float Value)
 {
 	AddControllerPitchInput(Value * BaseLookUpRate * GetWorld()->GetDeltaSeconds());
+}
+
+void ACSCharacter::DoJump(bool bPressed)
+{
+	if (bPressed)
+	{
+		Jump();
+	}
+	else
+	{
+		StopJumping();
+	}
+}
+
+void ACSCharacter::OnStartFire()
+{
+	ACSPlayerController* Player = CastChecked<ACSPlayerController>(Controller);
+	if (Player)
+	{
+		Player->StartFire(1);
+	}
+}
+
+
+void ACSCharacter::OnStopFire()
+{
+	StopFire(1);
+}
+
+void ACSCharacter::PawnStartFire(uint8 FireModeNum /*= 0*/)
+{
+	if (IsValid(Weapon))
+	{
+		Weapon->StartFire(FireModeNum);
+	}
+}
+
+void ACSCharacter::StopFire(const uint8 FireModeNum)
+{
+	if (IsValid(Weapon))
+	{
+		Weapon->StopFire(FireModeNum);
+	}
 }
 
 void ACSCharacter::SwitchWeapon(int32 index)

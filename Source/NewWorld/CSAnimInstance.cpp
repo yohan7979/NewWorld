@@ -4,6 +4,7 @@
 #include "CSAnimInstance.h"
 #include "CSCharacter.h"
 #include "CSWeapon.h"
+#include "GameFramework/CharacterMovementComponent.h"
 
 UCSCharacterAnimInstance::UCSCharacterAnimInstance(const FObjectInitializer& ObjectInitializer)
 {
@@ -28,6 +29,8 @@ void UCSCharacterAnimInstance::NativeUpdateAnimation(float DeltaSeconds)
 		const FVector& CurrentVelocity = OwnerCharacter->GetVelocity();
 		Direction = CalculateDirection(CurrentVelocity, OwnerCharacter->GetActorRotation());
 		Speed = CurrentVelocity.Size();
+
+		bIsFalling = OwnerCharacter->GetCharacterMovement()->IsFalling();
 
 		UpdateCharacterLocomotion(DeltaSeconds);
 	}

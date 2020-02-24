@@ -1,9 +1,11 @@
 #pragma once
 #include "Animation/BlendSpace.h"
 #include "Animation/AimOffsetBlendSpace.h"
+#include "Net/UnrealNetwork.h"
 #include "CSTypes.generated.h"
 
 DECLARE_DELEGATE_OneParam(FBindIntegerDelegate, int32)
+DECLARE_DELEGATE_OneParam(FBindBoolDelegate, bool)
 
 USTRUCT(BlueprintType)
 struct FCharacterAnimGraph

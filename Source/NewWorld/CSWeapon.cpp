@@ -6,7 +6,9 @@
 #include "Animation/AnimMontage.h"
 #include "Components/SkeletalMeshComponent.h"
 #include "Components/StaticMeshComponent.h"
+#include "Animation/AnimInstance.h"
 #include "CSCharacter.h"
+#include "CSWeaponState.h"
 
 ACSWeapon::ACSWeapon(const FObjectInitializer& ObjectInitializer) : Super(ObjectInitializer)
 {
@@ -22,6 +24,12 @@ ACSWeapon::ACSWeapon(const FObjectInitializer& ObjectInitializer) : Super(Object
 	StaticMeshComp->SetupAttachment(RootComponent);
 	StaticMeshComp->SetGenerateOverlapEvents(false);
 	StaticMeshComp->SetCollisionResponseToAllChannels(ECollisionResponse::ECR_Ignore);
+
+	WeaponStateMap.Emplace(EWeaponState::Active, nullptr);
+	WeaponStateMap.Emplace(EWeaponState::Inactive, nullptr);
+	WeaponStateMap.Emplace(EWeaponState::Firing, nullptr);
+	WeaponStateMap.Emplace(EWeaponState::Reloading, nullptr);
+	WeaponStateMap.Emplace(EWeaponState::Equipping, nullptr);
 }
 
 // Called when the game starts or when spawned
@@ -29,6 +37,7 @@ void ACSWeapon::BeginPlay()
 {
 	Super::BeginPlay();
 	
+	CurrentStateNode = WeaponStateMap.FindRef(EWeaponState::Inactive);
 }
 
 // Called every frame
@@ -48,11 +57,15 @@ void ACSWeapon::PostInitializeComponents()
 void ACSWeapon::OnEquip()
 {
 	AttachMeshToCharacter(true);
+
+	SetWeaponState(EWeaponState::Equipping);
 }
 
 void ACSWeapon::OnUnEquip()
 {
 	AttachMeshToCharacter(false);
+
+	SetWeaponState(EWeaponState::Inactive);
 }
 
 void ACSWeapon::OnEnterInventory(ACSCharacter* NewOwner)
@@ -156,4 +169,176 @@ void ACSWeapon::SetCachedCharacter(AActor* NewOwner)
 void ACSWeapon::OnRep_Owner()
 {
 	SetCachedCharacter(GetOwner());
+}
+
+void ACSWeapon::StartFire(const uint8 FireModeNum)
+{
+	if (CanFire())
+	{
+		// @TODO : SetPendingFire
+		SetWeaponState(EWeaponState::Firing);
+
+		if (Role < ROLE_Authority)
+		{
+			ServerStartFire(FireModeNum);
+		}
+	}
+}
+
+void ACSWeapon::StopFire(const uint8 FireModeNum)
+{
+	// @TODO : ClearPendingFire
+
+	SetWeaponState(EWeaponState::Active);
+
+	if (Role < ROLE_Authority)
+	{
+		ServerStopFire(FireModeNum);
+	}
+}
+
+bool ACSWeapon::CanFire()
+{
+	return true;
+}
+
+void ACSWeapon::ServerStartFire_Implementation(const uint8 FireModeNum)
+{
+	StartFire(FireModeNum);
+}
+
+bool ACSWeapon::ServerStartFire_Validate(const uint8 FireModeNum)
+{
+	return true;
+}
+
+void ACSWeapon::ServerStopFire_Implementation(const uint8 FireModeNum)
+{
+	StopFire(FireModeNum);
+}
+
+bool ACSWeapon::ServerStopFire_Validate(const uint8 FireModeNum)
+{
+	return true;
+}
+
+void ACSWeapon::SetWeaponState(EWeaponState::Type NewState)
+{
+	uint8 OldState = CurrentState;
+
+	if (CurrentState != NewState)
+	{
+		CurrentState = NewState;
+
+		OnWeaponStateChanged(OldState, NewState);
+	}
+}
+
+void ACSWeapon::OnWeaponStateChanged(uint8 OldState, uint8 NewState)
+{
+	// End Old State
+	if (CurrentStateNode)
+	{
+		CurrentStateNode->EndState();
+	}
+	
+	CurrentStateNode = WeaponStateMap.FindRef(static_cast<EWeaponState::Type>(NewState));
+
+	// Begin New State
+	if (CurrentStateNode)
+	{
+		CurrentStateNode->BeginState();
+	}
+
+
+	PlayCurrentStateAnimation();
+}
+
+void ACSWeapon::PlayCurrentStateAnimation()
+{
+	switch (CurrentState)
+	{
+	case EWeaponState::Active:
+		break;
+	case EWeaponState::Firing:
+		break;
+	case EWeaponState::Inactive:
+		break;
+	case EWeaponState::Reloading:
+		break;
+	case EWeaponState::Equipping:
+		PlayWeaponAnimation(EquipAnim);
+		break;
+	default:
+		break;
+	}
+}
+
+float ACSWeapon::GetStateTransitionTime() const
+{
+	float TransitionTime = 0.f;
+
+	switch (CurrentState)
+	{
+	case EWeaponState::Active:
+		break;
+	case EWeaponState::Firing:
+		break;
+	case EWeaponState::Inactive:
+		break;
+	case EWeaponState::Reloading:
+		TransitionTime = ReloadTime;
+		break;
+	case EWeaponState::Equipping:
+		TransitionTime = EquipTime;
+		break;
+	default:
+		break;
+	}
+
+	return TransitionTime;
+}
+
+void ACSWeapon::BringUpFinished()
+{
+	SetWeaponState(EWeaponState::Active);
+}
+
+void ACSWeapon::PutDown()
+{
+	SetWeaponState(EWeaponState::Inactive);
+}
+
+void ACSWeapon::FireWeapon()
+{
+
+}
+
+void ACSWeapon::PlayWeaponAnimation(const FWeaponAnim& InWeaponAnim)
+{
+	if (IsValid(CachedCharacter))
+	{
+		CachedCharacter->PlayAnimMontage(InWeaponAnim.Character3P);
+	}
+
+	if (SkelMeshComp)
+	{
+		UAnimInstance* WeaponAnimInstance = SkelMeshComp->GetAnimInstance();
+		if (WeaponAnimInstance)
+		{
+			WeaponAnimInstance->Montage_Play(InWeaponAnim.Weapon3P);
+		}
+	}
+}
+
+void ACSWeapon::OnRep_CurrentState(uint8 OldState)
+{
+	OnWeaponStateChanged(OldState, CurrentState);
+}
+
+void ACSWeapon::GetLifetimeReplicatedProps(TArray< FLifetimeProperty > & OutLifetimeProps) const
+{
+	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
+
+	DOREPLIFETIME_CONDITION(ACSWeapon, CurrentState, COND_SkipOwner);
 }
