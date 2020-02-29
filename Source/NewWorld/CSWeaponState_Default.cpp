@@ -55,3 +55,13 @@ void UCSWeaponStateFiring::OnStateTransitionFinished()
 		OwnerWeapon->FireWeapon();
 	}
 }
+
+UCSWeaponStateReloading::UCSWeaponStateReloading(const FObjectInitializer& ObjectInitializer) : Super(ObjectInitializer)
+{
+
+}
+
+void UCSWeaponStateReloading::OnStateTransitionFinished()
+{
+
+}

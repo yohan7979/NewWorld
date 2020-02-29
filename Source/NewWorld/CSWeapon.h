@@ -61,6 +61,7 @@ class NEWWORLD_API ACSWeapon : public AActor
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
+	virtual void EndPlay(const EEndPlayReason::Type EndPlayReason) override;
 
 public:	
 	// Called every frame
@@ -147,6 +148,9 @@ protected:
 	UPROPERTY(Transient)
 	UCSWeaponState* CurrentStateNode;
 
-	UPROPERTY(EditDefaultsOnly, Instanced)
+	using FCSWeaponStateClassMap = TMap<TEnumAsByte<EWeaponState::Type>, TSubclassOf<UCSWeaponState> >;
+	FCSWeaponStateClassMap WeaponStateClassMap;
+
+	UPROPERTY(Transient)
 	TMap<TEnumAsByte<EWeaponState::Type>, UCSWeaponState*> WeaponStateMap;
 };

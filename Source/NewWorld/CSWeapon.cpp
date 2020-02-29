@@ -9,6 +9,7 @@
 #include "Animation/AnimInstance.h"
 #include "CSCharacter.h"
 #include "CSWeaponState.h"
+#include "CSWeaponState_Default.h"
 
 ACSWeapon::ACSWeapon(const FObjectInitializer& ObjectInitializer) : Super(ObjectInitializer)
 {
@@ -25,11 +26,11 @@ ACSWeapon::ACSWeapon(const FObjectInitializer& ObjectInitializer) : Super(Object
 	StaticMeshComp->SetGenerateOverlapEvents(false);
 	StaticMeshComp->SetCollisionResponseToAllChannels(ECollisionResponse::ECR_Ignore);
 
-	WeaponStateMap.Emplace(EWeaponState::Active, nullptr);
-	WeaponStateMap.Emplace(EWeaponState::Inactive, nullptr);
-	WeaponStateMap.Emplace(EWeaponState::Firing, nullptr);
-	WeaponStateMap.Emplace(EWeaponState::Reloading, nullptr);
-	WeaponStateMap.Emplace(EWeaponState::Equipping, nullptr);
+	WeaponStateClassMap.Emplace(EWeaponState::Active, UCSWeaponStateActive::StaticClass());
+	WeaponStateClassMap.Emplace(EWeaponState::Inactive, UCSWeaponStateInactive::StaticClass());
+	WeaponStateClassMap.Emplace(EWeaponState::Firing, UCSWeaponStateFiring::StaticClass());
+	WeaponStateClassMap.Emplace(EWeaponState::Reloading, UCSWeaponStateReloading::StaticClass());
+	WeaponStateClassMap.Emplace(EWeaponState::Equipping, UCSWeaponStateEquipping::StaticClass());
 }
 
 // Called when the game starts or when spawned
@@ -37,7 +38,21 @@ void ACSWeapon::BeginPlay()
 {
 	Super::BeginPlay();
 	
+	for (FCSWeaponStateClassMap::TConstIterator It(WeaponStateClassMap); It; ++It)
+	{
+		UCSWeaponState* NewState = NewObject<UCSWeaponState>(this, It->Value.Get());
+		WeaponStateMap.Emplace(It->Key, NewState);
+	}
+
 	CurrentStateNode = WeaponStateMap.FindRef(EWeaponState::Inactive);
+}
+
+void ACSWeapon::EndPlay(const EEndPlayReason::Type EndPlayReason)
+{
+	Super::EndPlay(EndPlayReason);
+
+	WeaponStateClassMap.Empty();
+	WeaponStateMap.Empty();
 }
 
 // Called every frame

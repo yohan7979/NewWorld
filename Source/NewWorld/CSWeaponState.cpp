@@ -30,11 +30,12 @@ void UCSWeaponState::EndState()
 	TimerManager.ClearTimer(TimerHandle_StateTransitionFinished); // explicit clear
 }
 
-float UCSWeaponState::GetStateTransitionTime() const
+float UCSWeaponState::GetStateTransitionTime()
 {
-	if (IsValid(OwnerWeaponPrivate))
+	ACSWeapon* OwnerWeapon = GetOwnerWeapon();
+	if (IsValid(OwnerWeapon))
 	{
-		return OwnerWeaponPrivate->GetStateTransitionTime();
+		return OwnerWeapon->GetStateTransitionTime();
 	}
 
 	return 0.f;

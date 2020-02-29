@@ -36,6 +36,15 @@ public:
 };
 
 UCLASS()
+class NEWWORLD_API UCSWeaponStateReloading : public UCSWeaponState
+{
+	GENERATED_UCLASS_BODY()
+
+public:
+	virtual void OnStateTransitionFinished() override;
+};
+
+UCLASS()
 class NEWWORLD_API UCSWeaponStateFiring : public UCSWeaponState
 {
 	GENERATED_UCLASS_BODY()

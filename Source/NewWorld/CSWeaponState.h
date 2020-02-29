@@ -28,7 +28,7 @@ public:
 
 	virtual void BeginState();
 	virtual void EndState();
-	virtual float GetStateTransitionTime() const;
+	virtual float GetStateTransitionTime();
 	virtual void OnStateTransitionFinished() {}
 
 private:
