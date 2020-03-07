@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
 #include "CSTypes.h"
+#include "CSWeaponTypes.h"
 #include "CSWeapon.generated.h"
 
 class UAnimMontage;
@@ -76,6 +77,7 @@ public:
 	void AttachMeshToCharacter(bool bEquip);
 	void DetachMeshFromCharacter();
 	void SetVisibility(bool bVisible);
+	UPrimitiveComponent* GetMeshComponent();
 
 	void SetOwningPawn(ACSCharacter* NewOwner);
 	void SetCachedCharacter(AActor* NewOwner);
@@ -85,6 +87,8 @@ public:
 	virtual void StopFire(const uint8 FireModeNum);
 
 	virtual bool CanFire();
+	virtual bool IsFiring() const;
+	virtual bool IsValidStateToFire() const;
 
 	UFUNCTION(Reliable, Server, WithValidation)
 	void ServerStartFire(const uint8 FireModeNum);
@@ -101,12 +105,20 @@ public:
 	virtual void FireWeapon();
 
 	virtual void PlayWeaponAnimation(const FWeaponAnim& InWeaponAnim);
+	virtual FVector GetCameraStartLocation(const FVector& AimDir) const;
+	virtual FVector GetAdjustedAim() const;
+	virtual FVector GetMuzzleLocation() const;
+	
+	bool WeaponTrace(const FVector& StartTrace, const FVector& EndTrace, FHitResult& OutHit);
+
+	bool IsLocallyControlled();
 
 	UFUNCTION()
 	void OnRep_CurrentState(uint8 OldState);
 
 	FORCEINLINE const FCharacterAnimGraph& GetCharacterAnimGraph() { return CharacterAnimGraph; }
 	FORCEINLINE const float GetAnimGraphBlendTime() { return AnimGraphBlendOutTime; }
+	FORCEINLINE FName GetMuzzleSocketName() const { return MuzzleSocketName; }
 
 protected:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Animation")
@@ -153,4 +165,13 @@ protected:
 
 	UPROPERTY(Transient)
 	TMap<TEnumAsByte<EWeaponState::Type>, UCSWeaponState*> WeaponStateMap;
+
+	UPROPERTY(EditDefaultsOnly, Instanced)
+	class UCSWeaponFiringAction* FiringAction;
+
+	UPROPERTY(EditDefaultsOnly)
+	FInstantWeaponConfig InstantWeaponConfig;
+
+	UPROPERTY(EditDefaultsOnly)
+	FName MuzzleSocketName;
 };

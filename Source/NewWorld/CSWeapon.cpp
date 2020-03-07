@@ -10,6 +10,10 @@
 #include "CSCharacter.h"
 #include "CSWeaponState.h"
 #include "CSWeaponState_Default.h"
+#include "CSWeaponFiringAction.h"
+#include "CSPlayerController.h"
+#include "CSProjectile.h"
+#include "Kismet/GameplayStatics.h"
 
 ACSWeapon::ACSWeapon(const FObjectInitializer& ObjectInitializer) : Super(ObjectInitializer)
 {
@@ -31,6 +35,8 @@ ACSWeapon::ACSWeapon(const FObjectInitializer& ObjectInitializer) : Super(Object
 	WeaponStateClassMap.Emplace(EWeaponState::Firing, UCSWeaponStateFiring::StaticClass());
 	WeaponStateClassMap.Emplace(EWeaponState::Reloading, UCSWeaponStateReloading::StaticClass());
 	WeaponStateClassMap.Emplace(EWeaponState::Equipping, UCSWeaponStateEquipping::StaticClass());
+
+	MuzzleSocketName = TEXT("MuzzleSocket");
 }
 
 // Called when the game starts or when spawned
@@ -45,6 +51,11 @@ void ACSWeapon::BeginPlay()
 	}
 
 	CurrentStateNode = WeaponStateMap.FindRef(EWeaponState::Inactive);
+
+	if (FiringAction)
+	{
+		FiringAction->Init(this);
+	}
 }
 
 void ACSWeapon::EndPlay(const EEndPlayReason::Type EndPlayReason)
@@ -59,13 +70,10 @@ void ACSWeapon::EndPlay(const EEndPlayReason::Type EndPlayReason)
 void ACSWeapon::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-
 }
 
 void ACSWeapon::PostInitializeComponents()
 {
-
-
 	Super::PostInitializeComponents();
 }
 
@@ -157,6 +165,21 @@ void ACSWeapon::SetVisibility(bool bVisible)
 	}
 }
 
+UPrimitiveComponent* ACSWeapon::GetMeshComponent()
+{
+	if (SkelMeshComp->SkeletalMesh)
+	{
+		return SkelMeshComp;
+	}
+
+	if (StaticMeshComp->GetStaticMesh())
+	{
+		return StaticMeshComp;
+	}
+
+	return nullptr;
+}
+
 void ACSWeapon::SetOwningPawn(ACSCharacter* NewOwner)
 {
 	if (GetOwner() != NewOwner)
@@ -204,17 +227,39 @@ void ACSWeapon::StopFire(const uint8 FireModeNum)
 {
 	// @TODO : ClearPendingFire
 
-	SetWeaponState(EWeaponState::Active);
-
-	if (Role < ROLE_Authority)
+	if (IsFiring())
 	{
-		ServerStopFire(FireModeNum);
+		SetWeaponState(EWeaponState::Active);
+
+		if (Role < ROLE_Authority)
+		{
+			ServerStopFire(FireModeNum);
+		}
 	}
 }
 
 bool ACSWeapon::CanFire()
 {
-	return true;
+	bool bValidStateToFire = IsValidStateToFire();
+
+	return bValidStateToFire;
+}
+
+bool ACSWeapon::IsFiring() const
+{
+	return CurrentState == EWeaponState::Firing;
+}
+
+bool ACSWeapon::IsValidStateToFire() const
+{
+	switch (CurrentState)
+	{
+	case EWeaponState::Active:
+	case EWeaponState::Firing:
+		return true;
+	}
+
+	return false;
 }
 
 void ACSWeapon::ServerStartFire_Implementation(const uint8 FireModeNum)
@@ -326,7 +371,10 @@ void ACSWeapon::PutDown()
 
 void ACSWeapon::FireWeapon()
 {
-
+	if (FiringAction)
+	{
+		FiringAction->FireShot();
+	}
 }
 
 void ACSWeapon::PlayWeaponAnimation(const FWeaponAnim& InWeaponAnim)
@@ -344,6 +392,78 @@ void ACSWeapon::PlayWeaponAnimation(const FWeaponAnim& InWeaponAnim)
 			WeaponAnimInstance->Montage_Play(InWeaponAnim.Weapon3P);
 		}
 	}
+}
+
+FVector ACSWeapon::GetCameraStartLocation(const FVector& AimDir) const
+{
+	ACSPlayerController* const PC = CachedCharacter ? Cast<ACSPlayerController>(CachedCharacter->Controller) : nullptr;
+
+	if (IsValid(PC))
+	{
+		FVector OutLocation;
+		FRotator UnusedRotation;
+		PC->GetPlayerViewPoint(OutLocation, UnusedRotation);
+
+		// Adjust trace so there is nothing blocking the ray between the camera and the pawn, and calculate distance from adjusted start
+		OutLocation = OutLocation + AimDir * ((Instigator->GetActorLocation() - OutLocation) | AimDir);
+
+		return OutLocation;
+	}
+
+	return FVector::ZeroVector;
+}
+
+FVector ACSWeapon::GetAdjustedAim() const
+{
+	ACSPlayerController* const PC = CachedCharacter ? Cast<ACSPlayerController>(CachedCharacter->Controller) : nullptr;
+
+	FVector OutAimVector = FVector::ZeroVector;
+
+	if (IsValid(PC))
+	{
+		FVector UnusedLocation;
+		FRotator OutRotation;
+		PC->GetPlayerViewPoint(UnusedLocation, OutRotation);
+
+		OutAimVector = OutRotation.Vector();
+	}
+	else if (Instigator)
+	{
+		OutAimVector = Instigator->GetBaseAimRotation().Vector();
+	}
+
+	return OutAimVector;
+}
+
+FVector ACSWeapon::GetMuzzleLocation() const
+{
+	if (IsValid(SkelMeshComp) && SkelMeshComp->SkeletalMesh)
+	{
+		return SkelMeshComp->GetSocketLocation(MuzzleSocketName);
+	}
+	else if (IsValid(StaticMeshComp) && StaticMeshComp->GetStaticMesh())
+	{
+		return StaticMeshComp->GetSocketLocation(MuzzleSocketName);
+	}
+
+	return FVector::ZeroVector;
+}
+
+bool ACSWeapon::WeaponTrace(const FVector& StartTrace, const FVector& EndTrace, FHitResult& OutHit)
+{
+	FCollisionQueryParams CollisionParams(SCENE_QUERY_STAT(WeaponTrace), true);
+	CollisionParams.AddIgnoredActor(this);
+	CollisionParams.AddIgnoredActor(Instigator);
+	CollisionParams.bReturnPhysicalMaterial = true;
+
+	GetWorld()->LineTraceSingleByChannel(OutHit, StartTrace, EndTrace, COLLISION_WEAPON, CollisionParams);
+
+	return OutHit.bBlockingHit;
+}
+
+bool ACSWeapon::IsLocallyControlled()
+{
+	return CachedCharacter && CachedCharacter->IsLocallyControlled();
 }
 
 void ACSWeapon::OnRep_CurrentState(uint8 OldState)
