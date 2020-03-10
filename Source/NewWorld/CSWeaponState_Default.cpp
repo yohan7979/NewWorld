@@ -47,12 +47,23 @@ void UCSWeaponStateFiring::BeginState()
 	Super::BeginState();
 }
 
+void UCSWeaponStateFiring::EndState()
+{
+	Super::EndState();
+
+	ACSWeapon* OwnerWeapon = GetOwnerWeapon();
+	if (IsValid(OwnerWeapon))
+	{
+		OwnerWeapon->FireWeapon(false);
+	}
+}
+
 void UCSWeaponStateFiring::OnStateTransitionFinished()
 {
 	ACSWeapon* OwnerWeapon = GetOwnerWeapon();
 	if (IsValid(OwnerWeapon))
 	{
-		OwnerWeapon->FireWeapon();
+		OwnerWeapon->FireWeapon(true);
 	}
 }
 

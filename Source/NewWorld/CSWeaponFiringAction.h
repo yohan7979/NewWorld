@@ -16,7 +16,10 @@ class NEWWORLD_API UCSWeaponFiringAction : public UObject
 	GENERATED_UCLASS_BODY()
 	
 public:
-	virtual void FireShot() PURE_VIRTUAL(UCSWeaponFiringAction::FireShot, );
+	void StartFire();
+	void StopFire();
+	virtual bool CanRefire();
+	virtual void FireShot();
 	virtual void Init(ACSWeapon* InWeapon);
 
 	template<typename T>
@@ -35,6 +38,18 @@ public:
 		return OwnerWeaponPrivate;
 	}
 
+	FTimerManager& GetTimerManager();
+
+protected:
+	UPROPERTY(EditAnywhere, meta = (ClampMin=0.01f))
+	float RefireTime;
+	float LastFiredTime;
+
+	UPROPERTY(EditAnywhere, meta = (ClampMin = 1))
+	int32 MaxComboCount;
+	int32 ComboCount;
+
 private:
 	ACSWeapon* OwnerWeaponPrivate;
+	FTimerHandle TimerHandle_RefireCheckTimer;
 };

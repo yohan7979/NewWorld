@@ -16,6 +16,7 @@ class NEWWORLD_API UCSWeaponFiringAction_Projectile : public UCSWeaponFiringActi
 	GENERATED_UCLASS_BODY()
 
 public:
+	virtual bool CanRefire() override;
 	virtual void FireShot() override;
 
 	virtual void SpawnProjectile(class ACSWeapon* OwnerWeapon, const FVector& Origin, const FVector& ShotDirection);

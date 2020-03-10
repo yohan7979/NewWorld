@@ -108,11 +108,11 @@ void ACSProjectile::PlayParticleEffect(TSoftObjectPtr<UParticleSystem>& SoftObje
 		ACSWeapon* OwnerWeapon = Cast<ACSWeapon>(GetOwner());
 		if (bAttachToSocket && IsValid(OwnerWeapon))
 		{
-			UCSGameplayStatics::SpawnEmitterAttached(TargetParticle, OwnerWeapon->GetMeshComponent(), OwnerWeapon->GetMuzzleSocketName());
+			UGameplayStatics::SpawnEmitterAttached(TargetParticle, OwnerWeapon->GetMeshComponent(), OwnerWeapon->GetMuzzleSocketName());
 		}
 		else
 		{
-			UCSGameplayStatics::SpawnEmitterAtLocation(GetWorld(), TargetParticle, GetTransform());
+			UGameplayStatics::SpawnEmitterAtLocation(GetWorld(), TargetParticle, GetTransform());
 		}
 		
 		SpawnedParticles.Add(TargetParticle);

@@ -31,6 +31,7 @@ void UCSCharacterAnimInstance::NativeUpdateAnimation(float DeltaSeconds)
 		Speed = CurrentVelocity.Size();
 
 		bIsFalling = OwnerCharacter->GetCharacterMovement()->IsFalling();
+		bIsStationary = Speed < KINDA_SMALL_NUMBER;
 
 		UpdateCharacterLocomotion(DeltaSeconds);
 	}

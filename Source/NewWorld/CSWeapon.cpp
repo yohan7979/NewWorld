@@ -43,14 +43,6 @@ ACSWeapon::ACSWeapon(const FObjectInitializer& ObjectInitializer) : Super(Object
 void ACSWeapon::BeginPlay()
 {
 	Super::BeginPlay();
-	
-	for (FCSWeaponStateClassMap::TConstIterator It(WeaponStateClassMap); It; ++It)
-	{
-		UCSWeaponState* NewState = NewObject<UCSWeaponState>(this, It->Value.Get());
-		WeaponStateMap.Emplace(It->Key, NewState);
-	}
-
-	CurrentStateNode = WeaponStateMap.FindRef(EWeaponState::Inactive);
 
 	if (FiringAction)
 	{
@@ -75,6 +67,14 @@ void ACSWeapon::Tick(float DeltaTime)
 void ACSWeapon::PostInitializeComponents()
 {
 	Super::PostInitializeComponents();
+
+	for (FCSWeaponStateClassMap::TConstIterator It(WeaponStateClassMap); It; ++It)
+	{
+		UCSWeaponState* NewState = NewObject<UCSWeaponState>(this, It->Value.Get());
+		WeaponStateMap.Emplace(It->Key, NewState);
+	}
+
+	CurrentStateNode = WeaponStateMap.FindRef(EWeaponState::Inactive);
 }
 
 void ACSWeapon::OnEquip()
@@ -310,7 +310,6 @@ void ACSWeapon::OnWeaponStateChanged(uint8 OldState, uint8 NewState)
 		CurrentStateNode->BeginState();
 	}
 
-
 	PlayCurrentStateAnimation();
 }
 
@@ -369,11 +368,30 @@ void ACSWeapon::PutDown()
 	SetWeaponState(EWeaponState::Inactive);
 }
 
-void ACSWeapon::FireWeapon()
+void ACSWeapon::FireWeapon(bool bWantsToFire)
 {
 	if (FiringAction)
 	{
-		FiringAction->FireShot();
+		if (bWantsToFire)
+		{
+			FiringAction->StartFire();
+		}
+		else
+		{
+			FiringAction->StopFire();
+		}
+	}
+}
+
+void ACSWeapon::PlayFiringAnimation(const int32 FireIndex)
+{
+	if (FireAnims.IsValidIndex(FireIndex))
+	{
+		PlayWeaponAnimation(FireAnims[FireIndex]);
+	}
+	else if (FireAnims.Num() > 0)
+	{
+		PlayWeaponAnimation(FireAnims[FireAnims.Num() - 1]);
 	}
 }
 

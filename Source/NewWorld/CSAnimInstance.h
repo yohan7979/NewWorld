@@ -49,4 +49,7 @@ protected:
 
 	UPROPERTY(BlueprintReadOnly)
 	bool bIsFalling;
+
+	UPROPERTY(BlueprintReadOnly)
+	bool bIsStationary;
 };

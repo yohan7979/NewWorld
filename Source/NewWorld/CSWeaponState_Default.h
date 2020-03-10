@@ -51,5 +51,6 @@ class NEWWORLD_API UCSWeaponStateFiring : public UCSWeaponState
 
 public:
 	virtual void BeginState() override;
+	virtual void EndState() override;
 	virtual void OnStateTransitionFinished() override;
 };

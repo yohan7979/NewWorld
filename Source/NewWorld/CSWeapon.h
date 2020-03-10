@@ -102,8 +102,9 @@ public:
 	virtual float GetStateTransitionTime() const;
 	virtual void BringUpFinished();
 	virtual void PutDown();
-	virtual void FireWeapon();
+	virtual void FireWeapon(bool bWantsToFire);
 
+	virtual void PlayFiringAnimation(const int32 FireIndex);
 	virtual void PlayWeaponAnimation(const FWeaponAnim& InWeaponAnim);
 	virtual FVector GetCameraStartLocation(const FVector& AimDir) const;
 	virtual FVector GetAdjustedAim() const;

@@ -6,7 +6,12 @@
 
 UCSWeaponFiringAction_Projectile::UCSWeaponFiringAction_Projectile(const FObjectInitializer& ObjectInitializer) : Super(ObjectInitializer)
 {
+	RefireTime = 0.5f;
+}
 
+bool UCSWeaponFiringAction_Projectile::CanRefire()
+{
+	return true;
 }
 
 void UCSWeaponFiringAction_Projectile::FireShot()
@@ -30,6 +35,8 @@ void UCSWeaponFiringAction_Projectile::FireShot()
 
 		SpawnProjectile(OwnerWeapon, Origin, AdjustedDir);
 	}
+
+	Super::FireShot();
 }
 
 void UCSWeaponFiringAction_Projectile::SpawnProjectile(class ACSWeapon* OwnerWeapon, const FVector& Origin, const FVector& ShotDirection)
