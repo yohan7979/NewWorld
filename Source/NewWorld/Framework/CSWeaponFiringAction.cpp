@@ -27,7 +27,7 @@ void UCSWeaponFiringAction::StopFire()
 	if (TimerHandle_RefireCheckTimer.IsValid())
 	{
 		GetTimerManager().ClearTimer(TimerHandle_RefireCheckTimer);
-		ComboCount = 0;
+		//ComboCount = 0;
 	}
 }
 
@@ -56,6 +56,13 @@ void UCSWeaponFiringAction::FireShot()
 void UCSWeaponFiringAction::Init(ACSWeapon* InWeapon)
 {
 	OwnerWeaponPrivate = InWeapon;
+}
+
+void UCSWeaponFiringAction::Shutdown()
+{
+	OwnerWeaponPrivate = nullptr;
+
+	GetTimerManager().ClearAllTimersForObject(this);
 }
 
 FTimerManager& UCSWeaponFiringAction::GetTimerManager()

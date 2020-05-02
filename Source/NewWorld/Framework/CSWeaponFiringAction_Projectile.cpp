@@ -3,10 +3,12 @@
 
 #include "CSWeaponFiringAction_Projectile.h"
 #include "Kismet/GameplayStatics.h"
+#include "TimerManager.h"
 
 UCSWeaponFiringAction_Projectile::UCSWeaponFiringAction_Projectile(const FObjectInitializer& ObjectInitializer) : Super(ObjectInitializer)
 {
 	RefireTime = 0.5f;
+	SpawnDelayTime = 0.2f;
 }
 
 bool UCSWeaponFiringAction_Projectile::CanRefire()
@@ -16,15 +18,34 @@ bool UCSWeaponFiringAction_Projectile::CanRefire()
 
 void UCSWeaponFiringAction_Projectile::FireShot()
 {
+	if (TimerHandle_SpawnDelayTimer.IsValid())
+	{
+		GetTimerManager().ClearTimer(TimerHandle_SpawnDelayTimer);
+	}
+
+	if (SpawnDelayTime > 0.f)
+	{
+		GetTimerManager().SetTimer(TimerHandle_SpawnDelayTimer, this, &UCSWeaponFiringAction_Projectile::InternalFireShot, SpawnDelayTime);
+	}
+	else
+	{
+		InternalFireShot();
+	}
+
+	Super::FireShot();
+}
+
+void UCSWeaponFiringAction_Projectile::InternalFireShot()
+{
 	ACSWeapon* OwnerWeapon = GetOwnerWeapon();
 	if (IsValid(OwnerWeapon) && OwnerWeapon->HasAuthority())
 	{
-		const FVector& Origin = OwnerWeapon->GetMuzzleLocation();
+		const FVector& Origin = OwnerWeapon->GetMuzzleLocation(ComboCount);
 		const FVector& AimDir = OwnerWeapon->GetAdjustedAim();
-		
+
 		const FVector& StartTrace = OwnerWeapon->GetCameraStartLocation(AimDir);
 		const FVector& EndTrace = StartTrace + AimDir * 1000.f;
-		
+
 		FVector AdjustedDir = AimDir;
 
 		FHitResult Hit(ForceInit);
@@ -35,8 +56,6 @@ void UCSWeaponFiringAction_Projectile::FireShot()
 
 		SpawnProjectile(OwnerWeapon, Origin, AdjustedDir);
 	}
-
-	Super::FireShot();
 }
 
 void UCSWeaponFiringAction_Projectile::SpawnProjectile(class ACSWeapon* OwnerWeapon, const FVector& Origin, const FVector& ShotDirection)

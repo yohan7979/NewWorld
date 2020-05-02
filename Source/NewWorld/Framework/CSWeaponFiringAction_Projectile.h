@@ -18,10 +18,15 @@ class NEWWORLD_API UCSWeaponFiringAction_Projectile : public UCSWeaponFiringActi
 public:
 	virtual bool CanRefire() override;
 	virtual void FireShot() override;
+	void InternalFireShot();
 
 	virtual void SpawnProjectile(class ACSWeapon* OwnerWeapon, const FVector& Origin, const FVector& ShotDirection);
 
 protected:
 	UPROPERTY(EditDefaultsOnly, meta = (ShowOnlyInnerProperties))
 	FProjectileWeaponConfig ProjectileWeaponConfig;
+
+	UPROPERTY(EditDefaultsOnly)
+	float SpawnDelayTime;
+	FTimerHandle TimerHandle_SpawnDelayTimer;
 };

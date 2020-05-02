@@ -108,7 +108,7 @@ public:
 	virtual void PlayWeaponAnimation(const FWeaponAnim& InWeaponAnim);
 	virtual FVector GetCameraStartLocation(const FVector& AimDir) const;
 	virtual FVector GetAdjustedAim() const;
-	virtual FVector GetMuzzleLocation() const;
+	virtual FVector GetMuzzleLocation(const int32 ComboCount = 0) const;
 	
 	bool WeaponTrace(const FVector& StartTrace, const FVector& EndTrace, FHitResult& OutHit);
 

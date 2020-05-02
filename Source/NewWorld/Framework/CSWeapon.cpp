@@ -56,6 +56,11 @@ void ACSWeapon::EndPlay(const EEndPlayReason::Type EndPlayReason)
 
 	WeaponStateClassMap.Empty();
 	WeaponStateMap.Empty();
+
+	if (FiringAction)
+	{
+		FiringAction->Shutdown();
+	}
 }
 
 // Called every frame
@@ -453,7 +458,7 @@ FVector ACSWeapon::GetAdjustedAim() const
 	return OutAimVector;
 }
 
-FVector ACSWeapon::GetMuzzleLocation() const
+FVector ACSWeapon::GetMuzzleLocation(const int32 ComboCount /*= 0*/) const
 {
 	if (IsValid(SkelMeshComp) && SkelMeshComp->SkeletalMesh)
 	{

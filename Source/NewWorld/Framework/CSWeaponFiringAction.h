@@ -21,6 +21,7 @@ public:
 	virtual bool CanRefire();
 	virtual void FireShot();
 	virtual void Init(ACSWeapon* InWeapon);
+	virtual void Shutdown();
 
 	template<typename T>
 	ACSWeapon* GetOwnerWeapon()
