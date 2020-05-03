@@ -3,7 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "Blueprint/UserWidget.h"
+#include "CSWidgetBase.h"
 #include "Components/UniformGridPanel.h"
 #include "CSWidget_Inventory.generated.h"
 
@@ -13,18 +13,17 @@ class UCSWidget_InventorySlot;
  * 
  */
 UCLASS()
-class NEWWORLD_API UCSWidget_Inventory : public UUserWidget
+class NEWWORLD_API UCSWidget_Inventory : public UCSWidgetBase
 {
 	GENERATED_UCLASS_BODY()
 
 protected:
-	virtual void NativeConstruct();
-	virtual void NativeDestruct();
+	virtual void NativeConstruct() override;
+	virtual void NativeDestruct() override;
 
-	virtual void SubscribeViewTargetControllerDelegate(bool bSubscribe);
 	virtual void SubscribeInventoryManagerDelegate(bool bSubscribe);
 
-	virtual void OnControllerSetPawn(APawn* InPawn);
+	virtual void OnControllerSetPawn(APawn* InPawn) override;
 	virtual void OnInventoryVisibilityChanged(bool bVisible);
 	virtual void OnInventoryInitialized(int32 InventorySize, int32 InventorySlotsPerRow);
 
@@ -39,7 +38,7 @@ protected:
 
 	UPROPERTY(Transient, BlueprintReadOnly)
 	TArray<UCSWidget_InventorySlot*> InventorySlots;
-	
-	UPROPERTY(Transient)
-	class ACSPlayerController* OwningPlayer;
+
+private:
+	bool bIsInitialized;
 };

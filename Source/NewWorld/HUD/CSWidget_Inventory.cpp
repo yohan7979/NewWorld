@@ -5,6 +5,7 @@
 #include "Framework/CSPlayerController.h"
 #include "Framework/CSInventoryManager.h"
 #include "CSWidget_InventorySlot.h"
+#include "Framework/CSInventoryComponent.h"
 #include "Components/UniformGridSlot.h"
 #include "Framework/CSCharacter.h"
 
@@ -18,41 +19,13 @@ void UCSWidget_Inventory::NativeConstruct()
 	Super::NativeConstruct();
 
 	SetVisibility(ESlateVisibility::Hidden);
-
-	OwningPlayer = GetOwningPlayer<ACSPlayerController>();
-
-	SubscribeViewTargetControllerDelegate(true);
 }
 
 void UCSWidget_Inventory::NativeDestruct()
 {
 	Super::NativeDestruct();
 
-	SubscribeViewTargetControllerDelegate(false);
-
-	OwningPlayer = nullptr;
-}
-
-void UCSWidget_Inventory::SubscribeViewTargetControllerDelegate(bool bSubscribe)
-{
-	if (IsValid(OwningPlayer))
-	{
-		bool bIsAlreayBound = OwningPlayer->OnControllerSetPawn().IsBoundToObject(this);
-		if (!bIsAlreayBound && bSubscribe)
-		{
-			OwningPlayer->OnControllerSetPawn().AddUObject(this, &UCSWidget_Inventory::OnControllerSetPawn);
-			 
-			// for standalone
-			if (OwningPlayer->GetPawn() != nullptr)
-			{
-				OnControllerSetPawn(OwningPlayer->GetPawn());
-			}
-		}
-		else if (bIsAlreayBound && !bSubscribe)
-		{
-			OwningPlayer->OnControllerSetPawn().RemoveAll(this);
-		}
-	}
+	InventorySlots.Empty();
 }
 
 void UCSWidget_Inventory::SubscribeInventoryManagerDelegate(bool bSubscribe)
@@ -96,23 +69,26 @@ void UCSWidget_Inventory::OnInventoryVisibilityChanged(bool bVisible)
 
 void UCSWidget_Inventory::OnInventoryInitialized(int32 InventorySize, int32 InventorySlotsPerRow)
 {
-	if (IsValid(InventoryGridPanel))
+	if (IsValid(InventoryGridPanel) && !bIsInitialized) // init only once
 	{
 		InventoryGridPanel->ClearChildren();
 
 		int32 MaxRow = InventorySlotsPerRow > 0 ? FMath::CeilToInt(InventorySize / (float)InventorySlotsPerRow) : 1;
 		CreateInventorySlots(InventorySize, MaxRow, InventorySlotsPerRow);
+
+		bIsInitialized = true;
 	}
 }
 
 void UCSWidget_Inventory::CreateInventorySlots(int32 InventorySize, int32 MaxRow, int32 MaxColumn)
 {
-	int32 SlotIndex = 0;
+	int32 EquipSlotCount = static_cast<int32>(EEquipmentSlot::MAX);
+	int32 SlotIndex = EquipSlotCount;
 	for (int32 row = 0; row < MaxRow; ++row)
 	{
 		for (int32 column = 0; column < MaxColumn; ++column)
 		{
-			if (SlotIndex > InventorySize - 1)
+			if (SlotIndex > InventorySize + EquipSlotCount - 1)
 			{
 				return;
 			}

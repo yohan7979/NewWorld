@@ -7,6 +7,7 @@
 #include "CSPlayerController.generated.h"
 
 class UCSInventoryManager;
+class UCSInventoryComponent;
 
 /**
  * 
@@ -24,13 +25,19 @@ public:
 	DECLARE_EVENT_OneParam(ACSPlayerController, FOnControllerSetPawn, APawn*)
 	FOnControllerSetPawn& OnControllerSetPawn() { return ControllerSetPawnEvent; }
 
+	static FName InventoryComponentName;
+
 protected:
 	virtual void SetupInputComponent() override;
 	void ToggleInventory();
+	void ToggleEquipment();
 
 public:
 	UPROPERTY(Transient)
 	UCSInventoryManager* InventoryManager;
+
+	UPROPERTY(VisibleAnywhere, meta = (AllowPrivateAccess = true))
+	UCSInventoryComponent* InventoryComponent;
 
 private:
 	FOnControllerSetPawn ControllerSetPawnEvent;
