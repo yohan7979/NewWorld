@@ -4,6 +4,7 @@
 #include "CSWidgetBase.h"
 #include "Framework/CSPlayerController.h"
 #include "Framework/CSInventoryManager.h"
+#include "Framework/CSInventoryComponent.h"
 
 UCSWidgetBase::UCSWidgetBase(const FObjectInitializer& ObjectInitializer) : Super(ObjectInitializer)
 {
@@ -15,40 +16,65 @@ void UCSWidgetBase::NativeConstruct()
 	Super::NativeConstruct();
 
 	OwningPlayer = GetOwningPlayer<ACSPlayerController>();
-	SubscribeViewTargetControllerDelegate(true);
+	SubscribePlayerControllerDelegate(true);
 }
 
 void UCSWidgetBase::NativeDestruct()
 {
 	Super::NativeDestruct();
 
-	SubscribeViewTargetControllerDelegate(false);
+	SubscribePlayerControllerDelegate(false);
 	OwningPlayer = nullptr;
 }
 
-void UCSWidgetBase::SubscribeViewTargetControllerDelegate(bool bSubscribe)
+void UCSWidgetBase::SubscribePlayerControllerDelegate(bool bSubscribe)
 {
 	if (IsValid(OwningPlayer))
 	{
-		bool bIsAlreayBound = OwningPlayer->OnControllerSetPawn().IsBoundToObject(this);
-		if (!bIsAlreayBound && bSubscribe)
+		bool bIsAlreadyBound = OwningPlayer->OnAcknowledgePossession().IsBoundToObject(this);
+		if (!bIsAlreadyBound && bSubscribe)
 		{
-			OwningPlayer->OnControllerSetPawn().AddUObject(this, &UCSWidgetBase::OnControllerSetPawn);
+			OwningPlayer->OnAcknowledgePossession().AddUObject(this, &UCSWidgetBase::OnAcknowledgePossession);
 
 			// for standalone
 			if (OwningPlayer->GetPawn() != nullptr)
 			{
-				OnControllerSetPawn(OwningPlayer->GetPawn());
+				OnAcknowledgePossession(OwningPlayer->GetPawn());
 			}
 		}
-		else if (bIsAlreayBound && !bSubscribe)
+		else if (bIsAlreadyBound && !bSubscribe)
 		{
-			OwningPlayer->OnControllerSetPawn().RemoveAll(this);
+			OwningPlayer->OnAcknowledgePossession().RemoveAll(this);
+		}
+
+		UCSInventoryComponent* InvComponent = OwningPlayer ? OwningPlayer->InventoryComponent : nullptr;
+		if (InvComponent)
+		{
+			bIsAlreadyBound = InvComponent->OnItemInfomationUpdate().IsBoundToObject(this);
+			if (!bIsAlreadyBound && bSubscribe)
+			{
+				InvComponent->OnItemInfomationUpdate().AddUObject(this, &UCSWidgetBase::OnItemInfomationUpdate);
+
+				// for standalone
+				if (OwningPlayer->GetPawn() != nullptr)
+				{
+					OnItemInfomationUpdate(InvComponent->ItemInfomations);
+				}
+			}
+			else if (bIsAlreadyBound && !bSubscribe)
+			{
+				InvComponent->OnItemInfomationUpdate().RemoveAll(this);
+			}
 		}
 	}
 }
 
-void UCSWidgetBase::OnControllerSetPawn(APawn* InPawn)
+void UCSWidgetBase::OnItemInfomationUpdate(const TArray<struct FItemInfomation>& ItemInfomations)
+{
+
+}
+
+void UCSWidgetBase::OnAcknowledgePossession(APawn* InPawn)
 {
 
 }

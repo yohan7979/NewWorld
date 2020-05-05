@@ -48,7 +48,7 @@ void UCSWidget_Inventory::SubscribeInventoryManagerDelegate(bool bSubscribe)
 	}
 }
 
-void UCSWidget_Inventory::OnControllerSetPawn(APawn* InPawn)
+void UCSWidget_Inventory::OnAcknowledgePossession(APawn* InPawn)
 {
 	SubscribeInventoryManagerDelegate(InPawn != nullptr);
 
@@ -80,15 +80,27 @@ void UCSWidget_Inventory::OnInventoryInitialized(int32 InventorySize, int32 Inve
 	}
 }
 
+void UCSWidget_Inventory::OnItemInfomationUpdate(const TArray<FItemInfomation>& ItemInfomations)
+{
+	const int32 EquipmentSlotCount = static_cast<int32>(EEquipmentSlot::MAX);
+	for (int32 i = 0; i < InventorySlots.Num(); ++i)
+	{
+		if (InventorySlots.IsValidIndex(i) && ItemInfomations.IsValidIndex(i + EquipmentSlotCount))
+		{
+			InventorySlots[i]->ItemInfomation = ItemInfomations[i + EquipmentSlotCount];
+		}
+	}
+}
+
 void UCSWidget_Inventory::CreateInventorySlots(int32 InventorySize, int32 MaxRow, int32 MaxColumn)
 {
-	int32 EquipSlotCount = static_cast<int32>(EEquipmentSlot::MAX);
-	int32 SlotIndex = EquipSlotCount;
+	const int32 EquipmentSlotCount = static_cast<int32>(EEquipmentSlot::MAX);
+	int32 SlotIndex = EquipmentSlotCount;
 	for (int32 row = 0; row < MaxRow; ++row)
 	{
 		for (int32 column = 0; column < MaxColumn; ++column)
 		{
-			if (SlotIndex > InventorySize + EquipSlotCount - 1)
+			if (SlotIndex > InventorySize + EquipmentSlotCount - 1)
 			{
 				return;
 			}

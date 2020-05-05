@@ -5,6 +5,7 @@
 #include "CSPlayerController.h"
 #include "CSInventoryComponent.h"
 #include "Engine/NetDriver.h"
+#include "Engine/DataTable.h"
 
 UCSInventoryManager::UCSInventoryManager(const FObjectInitializer& ObjectInitializer) : Super(ObjectInitializer)
 {
@@ -57,6 +58,61 @@ void UCSInventoryManager::OnInventoryStateChanged(bool bOpen)
 void UCSInventoryManager::OnEquipmentStateChanged(bool bOpen)
 {
 
+}
+
+void UCSInventoryManager::ServerLoadPlayerItems()
+{
+	static const FString ContextString = TEXT("UCSInventoryManager::ServerLoadPlayerItems");
+	TArray<FInventoryItem> LocalItems;
+
+	if (ItemTable)
+	{
+		TMap<EEquipmentSlot, FItemKey> StartEquipItemKeys;
+		StartEquipItemKeys.Add(EEquipmentSlot::Head, FItemKey(TEXT("Armor_Leather_Helmet"), 1));
+		StartEquipItemKeys.Add(EEquipmentSlot::Feet, FItemKey(TEXT("Armor_Leather_Boots"), 1));
+		
+		for (int32 i = 0; i < static_cast<int32>(EEquipmentSlot::MAX); ++i)
+		{
+			FItemKey* ItemKeyPtr = StartEquipItemKeys.Find(static_cast<EEquipmentSlot>(i));
+			if (ItemKeyPtr)
+			{
+				FInventoryItem* FoundItem = ItemTable->FindRow<FInventoryItem>(ItemKeyPtr->ID, ContextString);
+				if (FoundItem)
+				{
+					LocalItems.Add(*FoundItem);
+					UE_LOG(LogTemp, Log, TEXT("FoundItem ID : %s"), *ItemKeyPtr->ID.ToString());
+				}
+				else
+				{
+					LocalItems.Add(FInventoryItem());
+				}
+			}
+			else
+			{
+				LocalItems.Add(FInventoryItem());
+			}
+		}
+
+		TArray<FItemKey> StartItemKeys;
+		StartItemKeys.Add(FItemKey(TEXT("Weapon_Bone_Dagger"), 1));
+		StartItemKeys.Add(FItemKey(TEXT("Armor_Cardboard_Helmet"), 1));
+		StartItemKeys.Add(FItemKey(TEXT("Food_Apple_Poisoned"), 1));
+
+		for (const FItemKey& ItemKey : StartItemKeys)
+		{
+			FInventoryItem* FoundItem = ItemTable->FindRow<FInventoryItem>(ItemKey.ID, ContextString);
+			if (FoundItem)
+			{
+				LocalItems.Add(*FoundItem);
+				UE_LOG(LogTemp, Log, TEXT("FoundItem ID : %s"), *ItemKey.ID.ToString());
+			}
+		}
+
+		if (IsValid(InventoryComponent))
+		{
+			InventoryComponent->LoadInventoryItems(LocalItems, InventorySize + static_cast<int32>(EEquipmentSlot::MAX));
+		}
+	}
 }
 
 int32 UCSInventoryManager::GetFunctionCallspace(UFunction* Function, void* Parameters, FFrame* Stack)

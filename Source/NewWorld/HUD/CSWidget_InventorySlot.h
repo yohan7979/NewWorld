@@ -7,39 +7,6 @@
 #include "Framework/CSInventoryComponent.h"
 #include "CSWidget_InventorySlot.generated.h"
 
-USTRUCT(BlueprintType)
-struct FItemInfomation
-{
-	GENERATED_USTRUCT_BODY()
-
-	UPROPERTY(BlueprintReadOnly)
-	FName ID;
-
-	UPROPERTY(BlueprintReadOnly)
-	UTexture2D* Icon;
-
-	UPROPERTY(BlueprintReadOnly)
-	FName Name;
-
-	UPROPERTY(BlueprintReadOnly)
-	EItemQuality Quality;
-	
-	UPROPERTY(BlueprintReadOnly)
-	EItemType Type;
-
-	UPROPERTY(BlueprintReadOnly)
-	int32 Amount;
-
-	FItemInfomation()
-		: ID(NAME_None)
-		, Icon(nullptr)
-		, Name(NAME_None)
-		, Quality(EItemQuality::Common)
-		, Type(EItemType::Miscellaneous)
-		, Amount(1)
-	{}
-};
-
 /**
  * 
  */

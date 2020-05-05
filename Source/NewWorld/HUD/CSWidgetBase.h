@@ -18,8 +18,10 @@ protected:
 	virtual void NativeConstruct() override;
 	virtual void NativeDestruct() override;
 
-	virtual void SubscribeViewTargetControllerDelegate(bool bSubscribe);
-	virtual void OnControllerSetPawn(APawn* InPawn);
+	virtual void SubscribePlayerControllerDelegate(bool bSubscribe);
+
+	virtual void OnItemInfomationUpdate(const TArray<struct FItemInfomation>& ItemInfomations);
+	virtual void OnAcknowledgePossession(APawn* InPawn);
 
 	UPROPERTY(Transient)
 	class ACSPlayerController* OwningPlayer;

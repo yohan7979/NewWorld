@@ -7,7 +7,7 @@
 #include "CSWidget_Equipment.generated.h"
 
 class UCSWidget_InventorySlot;
-
+enum class EEquipmentSlot : uint8;
 /**
  * 
  */
@@ -21,8 +21,13 @@ public:
 	virtual void NativeDestruct() override;
 
 	virtual void SubscribeInventoryManagerDelegate(bool bSubscribe);
-	virtual void OnControllerSetPawn(APawn* InPawn) override;
+	
 	virtual void OnEquipmentVisibilityChanged(bool bVisible);
+	virtual void OnAcknowledgePossession(APawn* InPawn) override;
+	virtual void OnItemInfomationUpdate(const TArray<struct FItemInfomation>& ItemInfomations);
+
+	void UpdateEquipItemInfomation(const FItemInfomation& ItemInfo, UCSWidget_InventorySlot* TargetSlot);
+	UCSWidget_InventorySlot* GetEquipmentItemSlot(EEquipmentSlot EquipmentSlot);
 
 	UPROPERTY(BlueprintReadWrite, meta = (BindWidgetOptional))
 	UCSWidget_InventorySlot* HeadSlot;

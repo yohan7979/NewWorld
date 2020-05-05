@@ -11,7 +11,7 @@ class UCSInventoryComponent;
 /**
  * 
  */
-UCLASS(Within = CSPlayerController)
+UCLASS(Blueprintable, Within = CSPlayerController)
 class NEWWORLD_API UCSInventoryManager : public UObject
 {
 	GENERATED_BODY()
@@ -24,6 +24,8 @@ public:
 	virtual void ToggleEquipment();
 	virtual void OnInventoryStateChanged(bool bOpen);
 	virtual void OnEquipmentStateChanged(bool bOpen);
+
+	virtual void ServerLoadPlayerItems();
 
 	// UObject Interface Begin //
 	virtual int32 GetFunctionCallspace(UFunction* Function, void* Parameters, FFrame* Stack) override;
@@ -47,6 +49,9 @@ public:
 
 	DECLARE_EVENT_OneParam(UCSInventoryManager, FOnEquipmentVisibilityChanged, bool)
 	FOnEquipmentVisibilityChanged& OnEquipmentVisibilityChanged() { return EquipmentVisibilityChangeEvent; }
+
+	UPROPERTY(EditDefaultsOnly)
+	class UDataTable* ItemTable;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
 	int32 InventorySize = 30;

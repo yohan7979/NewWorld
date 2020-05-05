@@ -14,22 +14,20 @@ ACSPlayerController::ACSPlayerController(const FObjectInitializer& ObjectInitial
 	InventoryComponent = ObjectInitializer.CreateDefaultSubobject<UCSInventoryComponent>(this, ACSPlayerController::InventoryComponentName);
 }
 
+void ACSPlayerController::PostInitializeComponents()
+{
+	Super::PostInitializeComponents();
+
+	if (InventoryManagerClass && InventoryManager == nullptr)
+	{
+		InventoryManager = NewObject<UCSInventoryManager>(this, InventoryManagerClass);
+		InventoryManager->Initialize(this, InventoryComponent);
+	}
+}
+
 void ACSPlayerController::BeginPlay()
 {
 	Super::BeginPlay();
-
-	InventoryManager = NewObject<UCSInventoryManager>(this);
-	InventoryManager->Initialize(this, InventoryComponent);
-}
-
-void ACSPlayerController::SetPawn(APawn* InPawn)
-{
-	Super::SetPawn(InPawn);
-	
-	if (ControllerSetPawnEvent.IsBound())
-	{
-		ControllerSetPawnEvent.Broadcast(InPawn);
-	}
 }
 
 void ACSPlayerController::StartFire(uint8 FireModeNum /* = 0 */)
@@ -42,6 +40,36 @@ void ACSPlayerController::StartFire(uint8 FireModeNum /* = 0 */)
 	else if (GetPawn() && !bCinematicMode && !GetWorld()->bPlayersOnly)
 	{
 		GetPawn()->PawnStartFire(FireModeNum);
+	}
+}
+
+void ACSPlayerController::SetPawn(APawn* InPawn)
+{
+	Super::SetPawn(InPawn);
+
+	if (InPawn && InventoryComponent)
+	{
+		InventoryComponent->SetOwnerCharacter(InPawn);
+	}
+}
+
+void ACSPlayerController::AcknowledgePossession(class APawn* P)
+{
+	Super::AcknowledgePossession(P);
+
+	if (AcknowledgePossessionEvent.IsBound())
+	{
+		AcknowledgePossessionEvent.Broadcast(P);
+	}
+}
+
+void ACSPlayerController::ServerAcknowledgePossession_Implementation(class APawn* P)
+{
+	Super::ServerAcknowledgePossession_Implementation(P);
+
+	if (IsValid(InventoryManager))
+	{
+		InventoryManager->ServerLoadPlayerItems();
 	}
 }
 
@@ -67,4 +95,9 @@ void ACSPlayerController::ToggleEquipment()
 	{
 		InventoryManager->ToggleEquipment();
 	}
+}
+
+void ACSPlayerController::ClientMatchInProgress_Implementation()
+{
+
 }

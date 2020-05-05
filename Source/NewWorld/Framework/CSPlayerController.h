@@ -18,14 +18,21 @@ class NEWWORLD_API ACSPlayerController : public APlayerController
 	GENERATED_UCLASS_BODY()
 	
 public:
+	virtual void PostInitializeComponents() override;
 	virtual void BeginPlay() override;
-	virtual void SetPawn(APawn* InPawn) override;
 	virtual void StartFire(uint8 FireModeNum /* = 0 */) override;
+	
+	virtual void SetPawn(APawn* InPawn) override;
+	virtual void AcknowledgePossession(class APawn* P) override;
+	virtual void ServerAcknowledgePossession_Implementation(class APawn* P) override;
 
-	DECLARE_EVENT_OneParam(ACSPlayerController, FOnControllerSetPawn, APawn*)
-	FOnControllerSetPawn& OnControllerSetPawn() { return ControllerSetPawnEvent; }
+	DECLARE_EVENT_OneParam(ACSPlayerController, FOnAcknowledgePossession, APawn*)
+	FOnAcknowledgePossession& OnAcknowledgePossession() { return AcknowledgePossessionEvent; }
 
 	static FName InventoryComponentName;
+
+	UFUNCTION(Reliable, Client)
+	void ClientMatchInProgress();
 
 protected:
 	virtual void SetupInputComponent() override;
@@ -33,6 +40,9 @@ protected:
 	void ToggleEquipment();
 
 public:
+	UPROPERTY(EditDefaultsOnly)
+	TSubclassOf<UCSInventoryManager> InventoryManagerClass;
+
 	UPROPERTY(Transient)
 	UCSInventoryManager* InventoryManager;
 
@@ -40,5 +50,5 @@ public:
 	UCSInventoryComponent* InventoryComponent;
 
 private:
-	FOnControllerSetPawn ControllerSetPawnEvent;
+	FOnAcknowledgePossession AcknowledgePossessionEvent;
 };
