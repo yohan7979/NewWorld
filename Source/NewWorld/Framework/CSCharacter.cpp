@@ -10,6 +10,8 @@
 #include "Animation/BlendSpace.h"
 #include "CSWeapon.h"
 #include "CSPlayerController.h"
+#include "Components/SphereComponent.h"
+#include "Interface/CSInteractionInterface.h"
 
 ACSCharacter::ACSCharacter(const FObjectInitializer& ObjectInitializer)
 {
@@ -21,6 +23,15 @@ ACSCharacter::ACSCharacter(const FObjectInitializer& ObjectInitializer)
 
 	CameraComponent = ObjectInitializer.CreateDefaultSubobject<UCameraComponent>(this, TEXT("CameraComponent"));
 	CameraComponent->SetupAttachment(CameraBoom);
+
+	InteractionSphereComponent = ObjectInitializer.CreateDefaultSubobject<USphereComponent>(this, TEXT("InteractionSphereComponent"));
+	InteractionSphereComponent->SetSphereRadius(300.f);
+	InteractionSphereComponent->SetCollisionEnabled(ECollisionEnabled::QueryOnly);
+	InteractionSphereComponent->SetCollisionObjectType(COLLISION_INTERACTIVE);
+	InteractionSphereComponent->SetCollisionResponseToAllChannels(ECR_Ignore);
+	InteractionSphereComponent->SetCollisionResponseToChannel(ECC_WorldDynamic, ECR_Overlap);
+	InteractionSphereComponent->SetGenerateOverlapEvents(true);
+	InteractionSphereComponent->SetupAttachment(RootComponent);
 
 	BaseTurnRate = 45.f;
 	BaseLookUpRate = 45.f;
@@ -77,6 +88,8 @@ void ACSCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCompone
 
 	PlayerInputComponent->BindAction(TEXT("OnStartFire"), IE_Pressed, this, &ACSCharacter::OnStartFire);
 	PlayerInputComponent->BindAction(TEXT("OnStartFire"), IE_Released, this, &ACSCharacter::OnStopFire);
+
+	PlayerInputComponent->BindAction(TEXT("OnInteract"), IE_Pressed, this, &ACSCharacter::OnInteract);
 }
 
 void ACSCharacter::MoveForward(float Value)
@@ -163,6 +176,64 @@ void ACSCharacter::SwitchWeapon(int32 index)
 			EquipWeapon(DesiredWeapon);
 		}
 	}
+}
+
+void ACSCharacter::OnInteract()
+{
+	AActor* TargetActor = GetNearestInteractActor();
+	if (TargetActor)
+	{
+		ServerInteract();
+	}
+}
+
+void ACSCharacter::ServerInteract_Implementation()
+{
+	AActor* TargetActor = GetNearestInteractActor();
+	if (TargetActor)
+	{
+		ICSInteractionInterface* InteractActor = Cast<ICSInteractionInterface>(TargetActor);
+		if (InteractActor)
+		{
+			InteractActor->OnInteractWith(this);
+		}
+	}
+}
+
+bool ACSCharacter::ServerInteract_Validate()
+{
+	return true;
+}
+
+AActor* ACSCharacter::GetNearestInteractActor()
+{
+	AActor* NearestActor = nullptr;
+
+	if (InteractionSphereComponent)
+	{
+		TArray<AActor*> OverlappedActors;
+		InteractionSphereComponent->GetOverlappingActors(OverlappedActors);
+		float NearestDistanceSquared = FLT_MAX;
+		
+		for (AActor* Actor : OverlappedActors)
+		{
+			if (IsValid(Actor))
+			{
+				ICSInteractionInterface* InteractActor = Cast<ICSInteractionInterface>(Actor);
+				if (InteractActor && InteractActor->CanInteractWith(this))
+				{
+					float CurrentDistanceSq = FVector::DistSquared(GetActorLocation(), Actor->GetActorLocation());
+					if (NearestDistanceSquared > CurrentDistanceSq)
+					{
+						NearestDistanceSquared = CurrentDistanceSq;
+						NearestActor = Actor;
+					}
+				}
+			}
+		}
+	}
+
+	return NearestActor;
 }
 
 void ACSCharacter::SpawnDefaultInventory()

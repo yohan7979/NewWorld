@@ -12,6 +12,8 @@ DECLARE_DELEGATE_OneParam(FBindIntegerDelegate, int32)
 DECLARE_DELEGATE_OneParam(FBindBoolDelegate, bool)
 
 #define COLLISION_WEAPON ECC_GameTraceChannel1
+#define COLLISION_PROJECTILE ECC_GameTraceChannel2
+#define COLLISION_INTERACTIVE ECC_GameTraceChannel3
 
 USTRUCT(BlueprintType)
 struct FCharacterAnimGraph

@@ -22,15 +22,23 @@ public:
 	virtual void SetInventoryItem(const FInventoryItem& NewItem, int32 SlotIndex);
 	virtual FInventoryItem GetInventoryItem(int32 SlotIndex) const;
 	virtual const TArray<FInventoryItem>& GetInventoryItems(int32 SlotIndex) const;
+
+	virtual void AddInventoryItem(const FInventoryItem& NewItem, int32 SlotIndex);
+	virtual void AddInventoryItemAtEmptySlot(const FInventoryItem& NewItem, int32 EmptySlot);
+
 	virtual void LoadInventoryItems(const TArray<FInventoryItem>& ItemLists, int32 InventorySize);
 	
+	virtual void UpdateInventoryItem(int32 SlotIndex);
 	virtual void UpdateInventoryItems();
+	virtual bool IsEquipmentSlotEmpty(EEquipmentSlot SlotType) const;
+	virtual bool HasInventoryEmptySpace(int32& OutSlotIndex) const;
 
 	DECLARE_EVENT_OneParam(UCSInventoryComponent, FOnItemInfomationUpdate, const TArray<FItemInfomation>&)
 	FOnItemInfomationUpdate& OnItemInfomationUpdate() { return ItemInfomationUpdateEvent; }
 
 	UFUNCTION()
 	void OnRep_ItemInfomation();
+	void BroadcastItemInfomationUpdated();
 	
 protected:
 	virtual void BeginPlay() override;

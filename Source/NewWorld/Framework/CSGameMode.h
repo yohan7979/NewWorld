@@ -19,19 +19,20 @@ UCLASS()
 class NEWWORLD_API ACSGameMode : public AGameMode
 {
 	GENERATED_UCLASS_BODY()
+
+	virtual void StartMatch() override;
+	virtual bool ReadyToStartMatch_Implementation() override;
 	
-// 	virtual bool IsMatchInProgress() const override;
-// 	virtual void StartMatch() override;
-// 	
-// protected:
-// 	/** Overridable virtual function to dispatch the appropriate transition functions before GameState and Blueprints get SetMatchState calls. */
-// 	virtual void OnMatchStateSet() override;
-// 
-// 	virtual void HandleMatchHasStarted() override;
-// 	virtual void HandleMatchIsInProgress();
-// 
-// 	virtual void OnEndPrepareMatchStart();
-// 
-// 	void SetEndMatchStateOnNextTick(const FTimerDelegate& TimerDelegate);
-// 	FTimerHandle TimerHandle_OnEndMatchState;
+protected:
+	/** Overridable virtual function to dispatch the appropriate transition functions before GameState and Blueprints get SetMatchState calls. */
+	virtual void OnMatchStateSet() override;
+
+	virtual void HandleMatchHasStarted() override;
+	virtual void HandleMatchIsInProgress();
+
+	virtual void OnEndPrepareMatchStart();
+
+	void SetEndMatchStateOnNextTick(const FTimerDelegate& TimerDelegate);
+	void NotifyAllPlayerControllers(TFunction<void(class ACSPlayerController*)>&& NotifyFunc);
+	FTimerHandle TimerHandle_OnEndMatchState;
 };

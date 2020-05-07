@@ -26,6 +26,7 @@ public:
 	virtual void OnEquipmentStateChanged(bool bOpen);
 
 	virtual void ServerLoadPlayerItems();
+	virtual bool TryToGiveItem(const FName& ItemID, int32 Amount);
 
 	// UObject Interface Begin //
 	virtual int32 GetFunctionCallspace(UFunction* Function, void* Parameters, FFrame* Stack) override;

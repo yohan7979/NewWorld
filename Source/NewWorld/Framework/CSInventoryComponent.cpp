@@ -46,6 +46,21 @@ const TArray<FInventoryItem>& UCSInventoryComponent::GetInventoryItems(int32 Slo
 	return InventoryItems;
 }
 
+void UCSInventoryComponent::AddInventoryItem(const FInventoryItem& NewItem, int32 SlotIndex)
+{
+	SetInventoryItem(NewItem, SlotIndex);
+
+	// Update ItemInfomation
+	UpdateInventoryItem(SlotIndex);
+}
+
+void UCSInventoryComponent::AddInventoryItemAtEmptySlot(const FInventoryItem& NewItem, int32 EmptySlot)
+{
+	EmptySlot = FMath::Max(EmptySlot, static_cast<int32>(EEquipmentSlot::MAX));
+
+	AddInventoryItem(NewItem, EmptySlot);
+}
+
 // Server
 void UCSInventoryComponent::LoadInventoryItems(const TArray<FInventoryItem>& ItemLists, int32 InventorySize)
 {
@@ -63,6 +78,24 @@ void UCSInventoryComponent::LoadInventoryItems(const TArray<FInventoryItem>& Ite
 	}
 
 	UpdateInventoryItems();
+}
+
+void UCSInventoryComponent::UpdateInventoryItem(int32 SlotIndex)
+{
+	FItemInfomation ItemInfo;
+
+	ItemInfo.ID = InventoryItems[SlotIndex].ID;
+	ItemInfo.Icon = InventoryItems[SlotIndex].Icon;
+	ItemInfo.Amount = InventoryItems[SlotIndex].Amount;
+	ItemInfo.Name = InventoryItems[SlotIndex].Name;
+	ItemInfo.Quality = InventoryItems[SlotIndex].Quality;
+	ItemInfo.Type = InventoryItems[SlotIndex].ItemType;
+	ItemInfo.NetDirty++;
+
+	// for replicate to owner client
+	ItemInfomations[SlotIndex] = ItemInfo;
+
+	BroadcastItemInfomationUpdated();
 }
 
 // Server
@@ -83,11 +116,35 @@ void UCSInventoryComponent::UpdateInventoryItems()
 		ItemInfomations[i] = ItemInfo;
 	}
 
-	OnRep_ItemInfomation();
+	BroadcastItemInfomationUpdated();
+}
+
+bool UCSInventoryComponent::IsEquipmentSlotEmpty(EEquipmentSlot SlotType) const
+{
+	return InventoryItems[static_cast<int32>(SlotType)].ID == NAME_None;
+}
+
+bool UCSInventoryComponent::HasInventoryEmptySpace(int32& OutSlotIndex) const
+{
+	for (int i = static_cast<int32>(EEquipmentSlot::MAX); i < InventoryItems.Num(); ++i)
+	{
+		if (InventoryItems[i].ID == NAME_None)
+		{
+			OutSlotIndex = i;
+			return true;
+		}
+	}
+	
+	return false;
 }
 
 // Server & Owning Client
 void UCSInventoryComponent::OnRep_ItemInfomation()
+{
+	BroadcastItemInfomationUpdated();
+}
+
+void UCSInventoryComponent::BroadcastItemInfomationUpdated()
 {
 	if (ItemInfomationUpdateEvent.IsBound())
 	{

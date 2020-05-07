@@ -24,6 +24,7 @@ protected:
 	virtual void SubscribeInventoryManagerDelegate(bool bSubscribe);
 
 	virtual void OnAcknowledgePossession(APawn* InPawn) override;
+
 	virtual void OnInventoryVisibilityChanged(bool bVisible);
 	virtual void OnInventoryInitialized(int32 InventorySize, int32 InventorySlotsPerRow);
 	virtual void OnItemInfomationUpdate(const TArray<struct FItemInfomation>& ItemInfomations) override;

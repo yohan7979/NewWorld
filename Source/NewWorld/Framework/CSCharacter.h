@@ -43,6 +43,12 @@ public:
 	void StopFire(const uint8 FireModeNum);
 
 	void SwitchWeapon(int32 index);
+	void OnInteract();
+
+	UFUNCTION(Server, Reliable, WithValidation)
+	void ServerInteract();
+
+	AActor* GetNearestInteractActor();
 	
 	void SpawnDefaultInventory();
 	void DestoryInventory();
@@ -74,6 +80,9 @@ protected:
 
 	UPROPERTY(VisibleAnywhere, Category = "Components")
 	class UCameraComponent* CameraComponent;
+
+	UPROPERTY(VisibleAnywhere, Category = "Components")
+	class USphereComponent* InteractionSphereComponent;
 
 	UPROPERTY(EditDefaultsOnly, Category = "Animation")
 	FCharacterAnimGraph DefaultCharacterAnimGraph;

@@ -115,6 +115,36 @@ void UCSInventoryManager::ServerLoadPlayerItems()
 	}
 }
 
+bool UCSInventoryManager::TryToGiveItem(const FName& ItemID, int32 Amount)
+{
+	if (ItemTable && InventoryComponent)
+	{
+		static const FString ContextString = TEXT("UCSInventoryManager::TryToGiveItem");
+		FInventoryItem* ItemToGive = ItemTable->FindRow<FInventoryItem>(ItemID, ContextString);
+		if (ItemToGive)
+		{
+			// 1. Equipment 인 경우, SlotType이 비어있는지 확인 (비어 있지 않다면 2번으로)
+			if (ItemToGive->ItemType == EItemType::Equipment && InventoryComponent->IsEquipmentSlotEmpty(ItemToGive->EquipmentSlot))
+			{
+				// 비어 있다면 슬롯에 바로 장착
+				InventoryComponent->AddInventoryItem(*ItemToGive, static_cast<int32>(ItemToGive->EquipmentSlot));
+				return true;
+			}
+
+			// 2. 인벤토리에 빈 공간 있는지 확인 (가득 차 있다면 return false)
+			int32 EmptySlot = INDEX_NONE;
+			if (InventoryComponent->HasInventoryEmptySpace(EmptySlot))
+			{
+				// 빈 공간 인덱스에 SetInventoryItem
+				InventoryComponent->AddInventoryItemAtEmptySlot(*ItemToGive, EmptySlot);
+				return true;
+			}
+		}
+	}
+
+	return false;
+}
+
 int32 UCSInventoryManager::GetFunctionCallspace(UFunction* Function, void* Parameters, FFrame* Stack)
 {
 	ACSPlayerController* PC = GetOwningPlayer();
