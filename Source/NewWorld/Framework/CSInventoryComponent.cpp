@@ -61,6 +61,14 @@ void UCSInventoryComponent::AddInventoryItemAtEmptySlot(const FInventoryItem& Ne
 	AddInventoryItem(NewItem, EmptySlot);
 }
 
+void UCSInventoryComponent::RemoveInventoryItem(int32 SlotIndex)
+{
+	SetInventoryItem(FInventoryItem(), SlotIndex);
+
+	// Update ItemInfomation
+	UpdateInventoryItem(SlotIndex);
+}
+
 // Server
 void UCSInventoryComponent::LoadInventoryItems(const TArray<FInventoryItem>& ItemLists, int32 InventorySize)
 {
@@ -84,13 +92,7 @@ void UCSInventoryComponent::UpdateInventoryItem(int32 SlotIndex)
 {
 	FItemInfomation ItemInfo;
 
-	ItemInfo.ID = InventoryItems[SlotIndex].ID;
-	ItemInfo.Icon = InventoryItems[SlotIndex].Icon;
-	ItemInfo.Amount = InventoryItems[SlotIndex].Amount;
-	ItemInfo.Name = InventoryItems[SlotIndex].Name;
-	ItemInfo.Quality = InventoryItems[SlotIndex].Quality;
-	ItemInfo.Type = InventoryItems[SlotIndex].ItemType;
-	ItemInfo.NetDirty++;
+	ItemInfo.FillFrom(InventoryItems[SlotIndex]);
 
 	// for replicate to owner client
 	ItemInfomations[SlotIndex] = ItemInfo;
@@ -104,13 +106,7 @@ void UCSInventoryComponent::UpdateInventoryItems()
 	FItemInfomation ItemInfo;
 	for (int32 i = 0 ; i < InventoryItems.Num() ; ++i)
 	{
-		ItemInfo.ID = InventoryItems[i].ID;
-		ItemInfo.Icon = InventoryItems[i].Icon;
-		ItemInfo.Amount = InventoryItems[i].Amount;
-		ItemInfo.Name = InventoryItems[i].Name;
-		ItemInfo.Quality = InventoryItems[i].Quality;
-		ItemInfo.Type = InventoryItems[i].ItemType;
-		ItemInfo.NetDirty++;
+		ItemInfo.FillFrom(InventoryItems[i]);
 
 		// for replicate to owner client
 		ItemInfomations[i] = ItemInfo;

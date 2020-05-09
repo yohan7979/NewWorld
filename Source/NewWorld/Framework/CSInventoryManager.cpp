@@ -68,8 +68,8 @@ void UCSInventoryManager::ServerLoadPlayerItems()
 	if (ItemTable)
 	{
 		TMap<EEquipmentSlot, FItemKey> StartEquipItemKeys;
-		StartEquipItemKeys.Add(EEquipmentSlot::Head, FItemKey(TEXT("Armor_Leather_Helmet"), 1));
-		StartEquipItemKeys.Add(EEquipmentSlot::Feet, FItemKey(TEXT("Armor_Leather_Boots"), 1));
+		//StartEquipItemKeys.Add(EEquipmentSlot::Head, FItemKey(TEXT("Armor_Leather_Helmet"), 1));
+		//StartEquipItemKeys.Add(EEquipmentSlot::Feet, FItemKey(TEXT("Armor_Leather_Boots"), 1));
 		
 		for (int32 i = 0; i < static_cast<int32>(EEquipmentSlot::MAX); ++i)
 		{
@@ -115,28 +115,30 @@ void UCSInventoryManager::ServerLoadPlayerItems()
 	}
 }
 
-bool UCSInventoryManager::TryToGiveItem(const FName& ItemID, int32 Amount)
+bool UCSInventoryManager::TryToGiveItem(const FName& ItemID, int32& Amount)
 {
 	if (ItemTable && InventoryComponent)
 	{
 		static const FString ContextString = TEXT("UCSInventoryManager::TryToGiveItem");
 		FInventoryItem* ItemToGive = ItemTable->FindRow<FInventoryItem>(ItemID, ContextString);
-		if (ItemToGive)
+		if (ItemToGive && Amount > 0)
 		{
-			// 1. Equipment 인 경우, SlotType이 비어있는지 확인 (비어 있지 않다면 2번으로)
+			// 1. Equipment 인 경우, SlotType이 비어있는지 확인
 			if (ItemToGive->ItemType == EItemType::Equipment && InventoryComponent->IsEquipmentSlotEmpty(ItemToGive->EquipmentSlot))
 			{
 				// 비어 있다면 슬롯에 바로 장착
 				InventoryComponent->AddInventoryItem(*ItemToGive, static_cast<int32>(ItemToGive->EquipmentSlot));
+				Amount -= 1;
 				return true;
 			}
 
-			// 2. 인벤토리에 빈 공간 있는지 확인 (가득 차 있다면 return false)
+			// 2. 인벤토리에 빈 공간 있는지 확인
 			int32 EmptySlot = INDEX_NONE;
 			if (InventoryComponent->HasInventoryEmptySpace(EmptySlot))
 			{
 				// 빈 공간 인덱스에 SetInventoryItem
 				InventoryComponent->AddInventoryItemAtEmptySlot(*ItemToGive, EmptySlot);
+				Amount -= 1;
 				return true;
 			}
 		}
@@ -172,6 +174,99 @@ bool UCSInventoryManager::CallRemoteFunction(UFunction* Function, void* Parms, s
 bool UCSInventoryManager::IsSupportedForNetworking() const
 {
 	return true;
+}
+
+void UCSInventoryManager::EquipItem(UCSInventoryComponent* FromInventory, UCSInventoryComponent* ToInventory, const int32 FromIndex, const int32 ToIndex)
+{
+	// check same element
+	if (FromInventory == ToInventory && FromIndex == ToIndex)
+	{
+		return;
+	}
+
+	// 드래그 대상이 장비인지 확인
+	const FInventoryItem& FromItem = FromInventory->GetInventoryItem(FromIndex);
+	if (FromItem.ItemType == EItemType::Equipment)
+	{
+		// 드롭 타겟이 존재하는 지 확인
+		const FInventoryItem& ToItem = ToInventory->GetInventoryItem(ToIndex);
+		if (ToItem.ID != NAME_None)
+		{
+			// 존재하면서 슬롯이 같은 경우 스왑 
+			if (FromItem.EquipmentSlot == ToItem.EquipmentSlot)
+			{
+				ToInventory->AddInventoryItem(FromItem, ToIndex);
+				FromInventory->AddInventoryItem(ToItem, FromIndex);
+			}
+		}
+		// 비어 있는 경우 슬롯 인덱스 같은지 확인
+		else if (FromItem.EquipmentSlot == static_cast<EEquipmentSlot>(ToIndex))
+		{
+			ToInventory->AddInventoryItem(FromItem, ToIndex);
+			FromInventory->RemoveInventoryItem(FromIndex);
+		}
+	}
+
+}
+
+void UCSInventoryManager::UnEquipItem(UCSInventoryComponent* FromInventory, UCSInventoryComponent* ToInventory, const int32 FromIndex, const int32 ToIndex)
+{
+	// check same element
+	if (FromInventory == ToInventory && FromIndex == ToIndex)
+	{
+		return;
+	}
+
+	const FInventoryItem& FromItem = FromInventory->GetInventoryItem(FromIndex);
+	const FInventoryItem& ToItem = ToInventory->GetInventoryItem(ToIndex);
+	if (ToItem.ID != NAME_None)
+	{
+		// 드롭 타겟이 장비이고, 슬롯이 같은 경우 스왑
+		if (ToItem.ItemType == EItemType::Equipment && ToItem.EquipmentSlot == FromItem.EquipmentSlot)
+		{
+			// Swap Item
+			ToInventory->AddInventoryItem(FromItem, ToIndex);
+			FromInventory->AddInventoryItem(ToItem, FromIndex);
+		}
+	}
+	// 장착 슬롯이 아닌 경우
+	else if(ToIndex >= static_cast<int32>(EEquipmentSlot::MAX))
+	{
+		// Move Item
+		ToInventory->AddInventoryItem(FromItem, ToIndex);
+		FromInventory->RemoveInventoryItem(FromIndex);
+	}
+}
+
+void UCSInventoryManager::MoveItem(UCSInventoryComponent* FromInventory, UCSInventoryComponent* ToInventory, const int32 FromIndex, const int32 ToIndex)
+{
+	// check same element
+	if (FromInventory == ToInventory && FromIndex == ToIndex)
+	{
+		return;
+	}
+
+	// equipment won't be here
+	int32 EquipmentSlotMax = static_cast<int32>(EEquipmentSlot::MAX);
+	if (FromIndex < EquipmentSlotMax || ToIndex < EquipmentSlotMax)
+	{
+		return;
+	}
+
+	const FInventoryItem& FromItem = FromInventory->GetInventoryItem(FromIndex);
+	const FInventoryItem& ToItem = ToInventory->GetInventoryItem(ToIndex);
+	if (ToItem.ID != NAME_None)
+	{
+		// Swap Item
+		ToInventory->AddInventoryItem(FromItem, ToIndex);
+		FromInventory->AddInventoryItem(ToItem, FromIndex);
+	}
+	else
+	{
+		// Move Item
+		ToInventory->AddInventoryItem(FromItem, ToIndex);
+		FromInventory->RemoveInventoryItem(FromIndex);
+	}
 }
 
 ENetRole UCSInventoryManager::GetOwnerRole() const

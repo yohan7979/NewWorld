@@ -26,8 +26,6 @@ ACSPickupBase::ACSPickupBase(const FObjectInitializer& ObjectInitializer) : Supe
 	StaticMeshComponent->SetupAttachment(RootComponent);
 
 	SetReplicates(true);
-
-	bCanBePickedup = true;
 }
 
 void ACSPickupBase::BeginPlay()
@@ -38,14 +36,12 @@ void ACSPickupBase::BeginPlay()
 
 bool ACSPickupBase::CanInteractWith(class ACSCharacter* Character)
 {
-	return bCanBePickedup;
+	return CanBePickedUp(Character);
 }
 
 void ACSPickupBase::OnInteractWith(class ACSCharacter* Character)
 {
-	PreGiveTo(Character);
-	GiveTo(Character);
-	PostGiveTo(Character);
+	PickedUpBy(Character);
 }
 
 void ACSPickupBase::PreGiveTo(class ACSCharacter* Character)
@@ -60,12 +56,27 @@ void ACSPickupBase::PreGiveTo(class ACSCharacter* Character)
 	}
 }
 
-void ACSPickupBase::GiveTo(class ACSCharacter* Character)
-{
-
-}
-
 void ACSPickupBase::PostGiveTo(class ACSCharacter* Character)
 {
 	Destroy();
+}
+
+bool ACSPickupBase::CanBePickedUp(class ACSCharacter* Character)
+{
+	if (IsValid(Character) /*&& Character->IsAliveAndWell()*/)
+	{
+		return true;
+	}
+
+	return false;
+}
+
+void ACSPickupBase::PickedUpBy(class ACSCharacter* Character)
+{
+	if (Role == ROLE_Authority)
+	{
+		PreGiveTo(Character);
+		GiveTo(Character);
+		PostGiveTo(Character);
+	}
 }

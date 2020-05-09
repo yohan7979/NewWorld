@@ -86,6 +86,8 @@ void ACSPlayerController::ToggleInventory()
 	if (IsValid(InventoryManager))
 	{
 		InventoryManager->ToggleInventory();
+
+		bShowMouseCursor = InventoryManager->IsInventoryOpened();
 	}
 }
 
@@ -94,10 +96,78 @@ void ACSPlayerController::ToggleEquipment()
 	if (IsValid(InventoryManager))
 	{
 		InventoryManager->ToggleEquipment();
+
+		bShowMouseCursor = InventoryManager->IsInventoryOpened();
 	}
 }
 
 void ACSPlayerController::ClientMatchInProgress_Implementation()
 {
 
+}
+
+// Local Client
+void ACSPlayerController::UnEquipInventoryItem(const int32 From, const int32 To)
+{
+	if (IsLocalPlayerController())
+	{
+		ServerUnEquipInventoryItem(From, To);
+	}
+}
+
+// Local Client
+void ACSPlayerController::EquipInventoryItem(const int32 From, const int32 To)
+{
+	if (IsLocalPlayerController())
+	{
+		ServerEquipInventoryItem(From, To);
+	}
+}
+
+// Local Client
+void ACSPlayerController::MoveInventoryItem(const int32 From, const int32 To)
+{
+	if (IsLocalPlayerController())
+	{
+		ServerMoveInventoryItem(From, To);
+	}
+}
+
+void ACSPlayerController::ServerEquipInventoryItem_Implementation(const int32 From, const int32 To)
+{
+	if (IsValid(InventoryManager))
+	{
+		InventoryManager->EquipItem(InventoryComponent, InventoryComponent, From, To);
+	}
+}
+
+bool ACSPlayerController::ServerEquipInventoryItem_Validate(const int32 From, const int32 To)
+{
+	return true;
+}
+
+void ACSPlayerController::ServerUnEquipInventoryItem_Implementation(const int32 From, const int32 To)
+{
+	if (IsValid(InventoryManager))
+	{
+		InventoryManager->UnEquipItem(InventoryComponent, InventoryComponent, From, To);
+	}
+}
+
+bool ACSPlayerController::ServerUnEquipInventoryItem_Validate(const int32 From, const int32 To)
+{
+	return true;
+}
+
+void ACSPlayerController::ServerMoveInventoryItem_Implementation(const int32 From, const int32 To)
+{
+	if (IsValid(InventoryManager))
+	{
+		InventoryManager->MoveItem(InventoryComponent, InventoryComponent, From, To);
+	}
+}
+
+bool ACSPlayerController::ServerMoveInventoryItem_Validate(const int32 From, const int32 To)
+{
+	return true;
 }

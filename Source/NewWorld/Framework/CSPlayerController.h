@@ -34,6 +34,24 @@ public:
 	UFUNCTION(Reliable, Client)
 	void ClientMatchInProgress();
 
+	UFUNCTION(BlueprintCallable)
+	void UnEquipInventoryItem(const int32 From, const int32 To);
+
+	UFUNCTION(BlueprintCallable)
+	void EquipInventoryItem(const int32 From, const int32 To);
+
+	UFUNCTION(BlueprintCallable)
+	void MoveInventoryItem(const int32 From, const int32 To);
+
+	UFUNCTION(Reliable, Server, WithValidation)
+	void ServerEquipInventoryItem(const int32 From, const int32 To);
+
+	UFUNCTION(Reliable, Server, WithValidation)
+	void ServerUnEquipInventoryItem(const int32 From, const int32 To);
+
+	UFUNCTION(Reliable, Server, WithValidation)
+	void ServerMoveInventoryItem(const int32 From, const int32 To);
+
 protected:
 	virtual void SetupInputComponent() override;
 	void ToggleInventory();

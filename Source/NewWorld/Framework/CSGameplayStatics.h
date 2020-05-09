@@ -4,6 +4,8 @@
 
 #include "CoreMinimal.h"
 #include "Kismet/GameplayStatics.h"
+#include "Components/Widget.h"
+#include "CSTypes.h"
 #include "CSGameplayStatics.generated.h"
 
 /**
@@ -36,4 +38,6 @@ public:
 
 		return SoftClassPtr.Get();
 	}
+
+	static void SetInputMode(APlayerController* Target, UWidget* InWidgetToFocus, EInputMode InputMode);
 };

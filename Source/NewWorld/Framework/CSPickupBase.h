@@ -21,8 +21,11 @@ public:
 	virtual void OnInteractWith(class ACSCharacter* Character);
 
 	virtual void PreGiveTo(class ACSCharacter* Character);
-	virtual void GiveTo(class ACSCharacter* Character);
+	virtual void GiveTo(class ACSCharacter* Character) PURE_VIRTUAL(ACSPickupBase,);
 	virtual void PostGiveTo(class ACSCharacter* Character);
+
+	virtual bool CanBePickedUp(class ACSCharacter* Character);
+	virtual void PickedUpBy(class ACSCharacter* Character);
 
 protected:
 	UPROPERTY(VisibleAnywhere, meta = (AllowPrivateAccess = true))
@@ -31,9 +34,9 @@ protected:
 	UPROPERTY(VisibleAnywhere, meta = (AllowPrivateAccess = true))
 	class UStaticMeshComponent* StaticMeshComponent;
 
-	UPROPERTY(EditDefaultsOnly)
-	bool bCanBePickedup;
+	UPROPERTY(EditAnywhere, Category = "Item")
+	bool bTryPickedUpWhenOverlapped;
 
-	UPROPERTY(EditDefaultsOnly, Category = "Item")
+	UPROPERTY(EditAnywhere, Category = "Item")
 	class USoundCue* PickupSound;
 };

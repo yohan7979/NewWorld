@@ -18,15 +18,28 @@ void ACSPickup_Item::GiveTo(class ACSCharacter* Character)
 		ACSPlayerController* PlayerController = Cast<ACSPlayerController>(Character->GetController());
 		if (PlayerController && PlayerController->InventoryManager)
 		{
-			bSucessToGive = PlayerController->InventoryManager->TryToGiveItem(ItemID, Amount);
+			bSuccessToGive = PlayerController->InventoryManager->TryToGiveItem(ItemID, Amount);
 		}
 	}
 }
 
 void ACSPickup_Item::PostGiveTo(class ACSCharacter* Character)
 {
-	if (bSucessToGive)
+	if (bSuccessToGive && Amount == 0)
 	{
 		Destroy();
 	}
+}
+
+bool ACSPickup_Item::CanBePickedUp(class ACSCharacter* Character)
+{
+	if (Super::CanBePickedUp(Character))
+	{
+		if (Amount > 0)
+		{
+			return true;
+		}
+	}
+
+	return false;
 }

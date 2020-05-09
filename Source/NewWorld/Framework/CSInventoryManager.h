@@ -22,17 +22,22 @@ public:
 	virtual void Initialize(class ACSPlayerController* InOwningPlayer, class UCSInventoryComponent* InInventoryComponent);
 	virtual void ToggleInventory();
 	virtual void ToggleEquipment();
+	virtual bool IsInventoryOpened() const { return bIsInventoryOpened || bIsEquipmentOpened; }
 	virtual void OnInventoryStateChanged(bool bOpen);
 	virtual void OnEquipmentStateChanged(bool bOpen);
 
 	virtual void ServerLoadPlayerItems();
-	virtual bool TryToGiveItem(const FName& ItemID, int32 Amount);
+	virtual bool TryToGiveItem(const FName& ItemID, int32& Amount);
 
 	// UObject Interface Begin //
 	virtual int32 GetFunctionCallspace(UFunction* Function, void* Parameters, FFrame* Stack) override;
 	virtual bool CallRemoteFunction(UFunction* Function, void* Parms, struct FOutParmRec* OutParms, FFrame* Stack) override;
 	virtual bool IsSupportedForNetworking() const override;
 	// UObject Interface End //
+
+	virtual void EquipItem(UCSInventoryComponent* FromInventory, UCSInventoryComponent* ToInventory, const int32 FromIndex, const int32 ToIndex);
+	virtual void UnEquipItem(UCSInventoryComponent* FromInventory, UCSInventoryComponent* ToInventory, const int32 FromIndex, const int32 ToIndex);
+	virtual void MoveItem(UCSInventoryComponent* FromInventory, UCSInventoryComponent* ToInventory, const int32 FromIndex, const int32 ToIndex);
 
 	ENetRole GetOwnerRole() const;
 	ACSPlayerController* GetOwningPlayer() const

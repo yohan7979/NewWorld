@@ -23,6 +23,10 @@ protected:
 	virtual void OnItemInfomationUpdate(const TArray<struct FItemInfomation>& ItemInfomations);
 	virtual void OnAcknowledgePossession(APawn* InPawn);
 
+public:
+	class ACSPlayerController* GetOwningCSPlayer();
+
+protected:
 	UPROPERTY(Transient)
 	class ACSPlayerController* OwningPlayer;
 };

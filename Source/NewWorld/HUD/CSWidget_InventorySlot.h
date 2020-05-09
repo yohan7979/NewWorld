@@ -25,4 +25,8 @@ public:
 
 	UPROPERTY(BlueprintReadOnly)
 	FItemInfomation ItemInfomation;
+
+protected:
+	UPROPERTY(BlueprintReadOnly)
+	class ACSPlayerController* OwningPlayer;
 };

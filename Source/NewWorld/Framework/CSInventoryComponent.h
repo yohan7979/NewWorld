@@ -26,6 +26,7 @@ public:
 	virtual void AddInventoryItem(const FInventoryItem& NewItem, int32 SlotIndex);
 	virtual void AddInventoryItemAtEmptySlot(const FInventoryItem& NewItem, int32 EmptySlot);
 
+	virtual void RemoveInventoryItem(int32 SlotIndex);
 	virtual void LoadInventoryItems(const TArray<FInventoryItem>& ItemLists, int32 InventorySize);
 	
 	virtual void UpdateInventoryItem(int32 SlotIndex);

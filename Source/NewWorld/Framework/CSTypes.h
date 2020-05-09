@@ -211,6 +211,9 @@ struct FItemInfomation
 		, Amount(1)
 		, NetDirty(0)
 	{}
+
+	void FillFrom(const FInventoryItem& InventoryItem);
+	void Reset();
 };
 
 USTRUCT(BlueprintType)
@@ -233,4 +236,11 @@ struct FItemKey
 		: ID(InID)
 		, Amount(InAmount)
 	{}
+};
+
+enum class EInputMode : uint8 
+{
+	UIOnly,
+	GameAndUI,
+	GameOnly,
 };

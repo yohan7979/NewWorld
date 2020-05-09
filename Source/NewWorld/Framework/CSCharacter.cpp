@@ -11,6 +11,7 @@
 #include "CSWeapon.h"
 #include "CSPlayerController.h"
 #include "Components/SphereComponent.h"
+#include "Components/CapsuleComponent.h"
 #include "Interface/CSInteractionInterface.h"
 
 ACSCharacter::ACSCharacter(const FObjectInitializer& ObjectInitializer)
@@ -32,6 +33,8 @@ ACSCharacter::ACSCharacter(const FObjectInitializer& ObjectInitializer)
 	InteractionSphereComponent->SetCollisionResponseToChannel(ECC_WorldDynamic, ECR_Overlap);
 	InteractionSphereComponent->SetGenerateOverlapEvents(true);
 	InteractionSphereComponent->SetupAttachment(RootComponent);
+
+	GetCapsuleComponent()->SetCollisionResponseToChannel(COLLISION_PROJECTILE, ECR_Ignore);
 
 	BaseTurnRate = 45.f;
 	BaseLookUpRate = 45.f;

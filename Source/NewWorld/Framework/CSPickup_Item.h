@@ -18,12 +18,14 @@ public:
 	virtual void GiveTo(class ACSCharacter* Character) override;
 	virtual void PostGiveTo(class ACSCharacter* Character) override;
 
+	virtual bool CanBePickedUp(class ACSCharacter* Character) override;
+
 protected:
-	UPROPERTY(EditDefaultsOnly, Category = "Item")
+	UPROPERTY(EditAnywhere, Category = "Item")
 	FName ItemID;
 
-	UPROPERTY(EditDefaultsOnly, Category = "Item")
+	UPROPERTY(EditAnywhere, Category = "Item")
 	int32 Amount = 1;
 
-	bool bSucessToGive;
+	bool bSuccessToGive;
 };

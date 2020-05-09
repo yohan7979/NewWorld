@@ -78,3 +78,13 @@ void UCSWidgetBase::OnAcknowledgePossession(APawn* InPawn)
 {
 
 }
+
+class ACSPlayerController* UCSWidgetBase::GetOwningCSPlayer()
+{
+	if (!OwningPlayer)
+	{
+		OwningPlayer = GetOwningPlayer<ACSPlayerController>();
+	}
+
+	return OwningPlayer;
+}

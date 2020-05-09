@@ -4,6 +4,7 @@
 #include "CSWidget_Equipment.h"
 #include "Framework/CSPlayerController.h"
 #include "Framework/CSInventoryManager.h"
+#include "Framework/CSGameplayStatics.h"
 #include "CSWidget_InventorySlot.h"
 
 UCSWidget_Equipment::UCSWidget_Equipment(const FObjectInitializer& ObjectInitializer) : Super(ObjectInitializer)
@@ -46,6 +47,13 @@ void UCSWidget_Equipment::SubscribeInventoryManagerDelegate(bool bSubscribe)
 void UCSWidget_Equipment::OnEquipmentVisibilityChanged(bool bVisible)
 {
 	SetVisibility(bVisible ? ESlateVisibility::Visible : ESlateVisibility::Hidden);
+
+	ACSPlayerController* Player = GetOwningCSPlayer();
+	if (Player && Player->InventoryManager)
+	{
+		bool bIsInvOpened = Player->InventoryManager->IsInventoryOpened();
+		UCSGameplayStatics::SetInputMode(Player, this, bIsInvOpened ? EInputMode::GameAndUI : EInputMode::GameOnly);
+	}
 }
 
 void UCSWidget_Equipment::OnAcknowledgePossession(APawn* InPawn)

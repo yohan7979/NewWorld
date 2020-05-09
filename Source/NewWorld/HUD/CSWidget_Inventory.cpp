@@ -8,6 +8,7 @@
 #include "Framework/CSInventoryComponent.h"
 #include "Components/UniformGridSlot.h"
 #include "Framework/CSCharacter.h"
+#include "Framework/CSGameplayStatics.h"
 
 UCSWidget_Inventory::UCSWidget_Inventory(const FObjectInitializer& ObjectInitializer) : Super(ObjectInitializer)
 {
@@ -65,6 +66,13 @@ void UCSWidget_Inventory::OnAcknowledgePossession(APawn* InPawn)
 void UCSWidget_Inventory::OnInventoryVisibilityChanged(bool bVisible)
 {
 	SetVisibility(bVisible ? ESlateVisibility::Visible : ESlateVisibility::Hidden);
+
+	ACSPlayerController* Player = GetOwningCSPlayer();
+	if (Player && Player->InventoryManager)
+	{
+		bool bIsInvOpened = Player->InventoryManager->IsInventoryOpened();
+		UCSGameplayStatics::SetInputMode(Player, this, bIsInvOpened ? EInputMode::GameAndUI : EInputMode::GameOnly);
+	}
 }
 
 void UCSWidget_Inventory::OnInventoryInitialized(int32 InventorySize, int32 InventorySlotsPerRow)
