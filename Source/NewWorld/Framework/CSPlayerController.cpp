@@ -133,6 +133,24 @@ void ACSPlayerController::MoveInventoryItem(const int32 From, const int32 To)
 	}
 }
 
+// Local Client
+void ACSPlayerController::UseInventoryItem(const int32 SlotIndex)
+{
+	if (IsLocalPlayerController())
+	{
+		ServerUseInventoryItem(SlotIndex);
+	}
+}
+
+// Local Client
+void ACSPlayerController::DropInventoryItem(const int32 SlotIndex)
+{
+	if (IsLocalPlayerController())
+	{
+		ServerDropInventoryItem(SlotIndex);
+	}
+}
+
 void ACSPlayerController::ServerEquipInventoryItem_Implementation(const int32 From, const int32 To)
 {
 	if (IsValid(InventoryManager))
@@ -168,6 +186,32 @@ void ACSPlayerController::ServerMoveInventoryItem_Implementation(const int32 Fro
 }
 
 bool ACSPlayerController::ServerMoveInventoryItem_Validate(const int32 From, const int32 To)
+{
+	return true;
+}
+
+void ACSPlayerController::ServerUseInventoryItem_Implementation(const int32 SlotIndex)
+{
+	if (IsValid(InventoryManager))
+	{
+		InventoryManager->UseItem(SlotIndex);
+	}
+}
+
+bool ACSPlayerController::ServerUseInventoryItem_Validate(const int32 SlotIndex)
+{
+	return true;
+}
+
+void ACSPlayerController::ServerDropInventoryItem_Implementation(const int32 SlotIndex)
+{
+	if (IsValid(InventoryManager))
+	{
+		// @
+	}
+}
+
+bool ACSPlayerController::ServerDropInventoryItem_Validate(const int32 SlotIndex)
 {
 	return true;
 }

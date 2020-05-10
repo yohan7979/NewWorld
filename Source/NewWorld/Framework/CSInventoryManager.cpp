@@ -219,20 +219,20 @@ void UCSInventoryManager::UnEquipItem(UCSInventoryComponent* FromInventory, UCSI
 
 	const FInventoryItem& FromItem = FromInventory->GetInventoryItem(FromIndex);
 	const FInventoryItem& ToItem = ToInventory->GetInventoryItem(ToIndex);
+	
+	// 드롭 타겟이 존재하는 지 확인
 	if (ToItem.ID != NAME_None)
 	{
 		// 드롭 타겟이 장비이고, 슬롯이 같은 경우 스왑
 		if (ToItem.ItemType == EItemType::Equipment && ToItem.EquipmentSlot == FromItem.EquipmentSlot)
 		{
-			// Swap Item
 			ToInventory->AddInventoryItem(FromItem, ToIndex);
 			FromInventory->AddInventoryItem(ToItem, FromIndex);
 		}
 	}
-	// 장착 슬롯이 아닌 경우
+	// 비어 있는데 장착 슬롯이 아닌 경우 무브
 	else if(ToIndex >= static_cast<int32>(EEquipmentSlot::MAX))
 	{
-		// Move Item
 		ToInventory->AddInventoryItem(FromItem, ToIndex);
 		FromInventory->RemoveInventoryItem(FromIndex);
 	}
@@ -266,6 +266,41 @@ void UCSInventoryManager::MoveItem(UCSInventoryComponent* FromInventory, UCSInve
 		// Move Item
 		ToInventory->AddInventoryItem(FromItem, ToIndex);
 		FromInventory->RemoveInventoryItem(FromIndex);
+	}
+}
+
+void UCSInventoryManager::UseItem(const int32 SlotIndex)
+{
+	if (!InventoryComponent)
+	{
+		return;
+	}
+
+	const FInventoryItem& InventoryItem = InventoryComponent->GetInventoryItem(SlotIndex);
+	if (InventoryItem.ID != NAME_None)
+	{
+		switch (InventoryItem.ItemType)
+		{
+		case EItemType::Equipment:
+			UseEquipItem(InventoryItem, SlotIndex); // Equip or UnEquip
+			break;
+		}
+	}
+}
+
+void UCSInventoryManager::UseEquipItem(const struct FInventoryItem& InventoryItem, const int32 SlotIndex)
+{
+	int32 DesiredSlotIndex = INDEX_NONE;
+	const bool bIsEquip = SlotIndex >= static_cast<int32>(EEquipmentSlot::MAX);
+
+	if (bIsEquip)
+	{
+		DesiredSlotIndex = static_cast<int32>(InventoryItem.EquipmentSlot);
+		EquipItem(InventoryComponent, InventoryComponent, SlotIndex, DesiredSlotIndex);
+	}
+	else if (InventoryComponent->HasInventoryEmptySpace(DesiredSlotIndex))
+	{
+		UnEquipItem(InventoryComponent, InventoryComponent, SlotIndex, DesiredSlotIndex);
 	}
 }
 

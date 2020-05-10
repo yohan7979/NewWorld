@@ -43,6 +43,12 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void MoveInventoryItem(const int32 From, const int32 To);
 
+	UFUNCTION(BlueprintCallable)
+	void UseInventoryItem(const int32 SlotIndex);
+
+	UFUNCTION(BlueprintCallable)
+	void DropInventoryItem(const int32 SlotIndex);
+
 	UFUNCTION(Reliable, Server, WithValidation)
 	void ServerEquipInventoryItem(const int32 From, const int32 To);
 
@@ -51,6 +57,12 @@ public:
 
 	UFUNCTION(Reliable, Server, WithValidation)
 	void ServerMoveInventoryItem(const int32 From, const int32 To);
+
+	UFUNCTION(Reliable, Server, WithValidation)
+	void ServerUseInventoryItem(const int32 SlotIndex);
+	
+	UFUNCTION(Reliable, Server, WithValidation)
+	void ServerDropInventoryItem(const int32 SlotIndex);
 
 protected:
 	virtual void SetupInputComponent() override;
