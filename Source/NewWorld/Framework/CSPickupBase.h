@@ -19,6 +19,7 @@ public:
 	// Interaction Interface Begin
 	virtual bool CanInteractWith(class ACSCharacter* Character);
 	virtual void OnInteractWith(class ACSCharacter* Character);
+	// Interaction Interface End
 
 	virtual void PreGiveTo(class ACSCharacter* Character);
 	virtual void GiveTo(class ACSCharacter* Character) PURE_VIRTUAL(ACSPickupBase,);

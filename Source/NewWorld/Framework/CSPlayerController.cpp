@@ -207,7 +207,7 @@ void ACSPlayerController::ServerDropInventoryItem_Implementation(const int32 Slo
 {
 	if (IsValid(InventoryManager))
 	{
-		// @
+		InventoryManager->DropItem(SlotIndex);
 	}
 }
 

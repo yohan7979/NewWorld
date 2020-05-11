@@ -39,8 +39,10 @@ public:
 	virtual void UnEquipItem(UCSInventoryComponent* FromInventory, UCSInventoryComponent* ToInventory, const int32 FromIndex, const int32 ToIndex);
 	virtual void MoveItem(UCSInventoryComponent* FromInventory, UCSInventoryComponent* ToInventory, const int32 FromIndex, const int32 ToIndex);
 	virtual void UseItem(const int32 SlotIndex);
+	virtual void DropItem(const int32 SlotIndex);
 
 	virtual void UseEquipItem(const struct FInventoryItem& InventoryItem, const int32 SlotIndex);
+	bool GetDropItemTransform(FTransform& OutTransform) const;
 
 	ENetRole GetOwnerRole() const;
 	ACSPlayerController* GetOwningPlayer() const

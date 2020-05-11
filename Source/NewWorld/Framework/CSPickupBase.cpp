@@ -20,7 +20,11 @@ ACSPickupBase::ACSPickupBase(const FObjectInitializer& ObjectInitializer) : Supe
 	RootComponent = CapsuleComponent;
 
 	StaticMeshComponent = ObjectInitializer.CreateDefaultSubobject<UStaticMeshComponent>(this, TEXT("StaticMeshComponent"));
-	StaticMeshComponent->SetCollisionProfileName(TEXT("NoCollision"));
+	StaticMeshComponent->SetCollisionResponseToAllChannels(ECR_Ignore);
+	StaticMeshComponent->SetCollisionResponseToChannel(ECC_WorldStatic, ECR_Block);
+	StaticMeshComponent->SetCollisionResponseToChannel(ECC_WorldDynamic, ECR_Block);
+	StaticMeshComponent->SetCollisionEnabled(ECollisionEnabled::PhysicsOnly);
+	StaticMeshComponent->SetSimulatePhysics(true);
 	StaticMeshComponent->CanCharacterStepUpOn = ECanBeCharacterBase::ECB_No;
 	StaticMeshComponent->SetGenerateOverlapEvents(false);
 	StaticMeshComponent->SetupAttachment(RootComponent);

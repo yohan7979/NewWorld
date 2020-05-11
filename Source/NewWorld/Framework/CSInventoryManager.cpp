@@ -6,6 +6,9 @@
 #include "CSInventoryComponent.h"
 #include "Engine/NetDriver.h"
 #include "Engine/DataTable.h"
+#include "CSPickup_Item.h"
+#include "CSGameplayStatics.h"
+#include "DrawDebugHelpers.h"
 
 UCSInventoryManager::UCSInventoryManager(const FObjectInitializer& ObjectInitializer) : Super(ObjectInitializer)
 {
@@ -284,6 +287,35 @@ void UCSInventoryManager::UseItem(const int32 SlotIndex)
 		case EItemType::Equipment:
 			UseEquipItem(InventoryItem, SlotIndex); // Equip or UnEquip
 			break;
+		case EItemType::Currency:
+			break;
+		case EItemType::Consumable:
+			break;
+		}
+	}
+}
+
+void UCSInventoryManager::DropItem(const int32 SlotIndex)
+{
+	if (!InventoryComponent)
+	{
+		return;
+	}
+
+	const FInventoryItem& InventoryItem = InventoryComponent->GetInventoryItem(SlotIndex);
+	if (InventoryItem.ID != NAME_None)
+	{
+		FTransform SpawnTransform;
+		GetDropItemTransform(SpawnTransform);
+
+		ACSPickup_Item* DroppedItem = Cast<ACSPickup_Item>(UGameplayStatics::BeginDeferredActorSpawnFromClass(this, ACSPickup_Item::StaticClass(), SpawnTransform, ESpawnActorCollisionHandlingMethod::AlwaysSpawn));
+		if (DroppedItem)
+		{
+			DroppedItem->Initialize(InventoryItem);
+
+			UGameplayStatics::FinishSpawningActor(DroppedItem, SpawnTransform);
+
+			InventoryComponent->RemoveInventoryItem(SlotIndex);
 		}
 	}
 }
@@ -302,6 +334,24 @@ void UCSInventoryManager::UseEquipItem(const struct FInventoryItem& InventoryIte
 	{
 		UnEquipItem(InventoryComponent, InventoryComponent, SlotIndex, DesiredSlotIndex);
 	}
+}
+
+bool UCSInventoryManager::GetDropItemTransform(FTransform& OutTransform) const
+{
+	APawn* Pawn = GetOwningPlayer() ? GetOwningPlayer()->GetPawn() : nullptr;
+	if (Pawn)
+	{
+		FVector PawnLocation = Pawn->GetActorLocation();
+		FRotator PawnRotation = Pawn->GetActorRotation();
+
+		//DrawDebugSphere(GetWorld(), PawnLocation, 10.f, 10, FColor::Blue, true);
+		//DrawDebugSphere(GetWorld(), PawnLocation += Pawn->GetActorForwardVector() * 100.f, 10.f, 10, FColor::Green, true);
+
+		OutTransform = FTransform(PawnRotation, PawnLocation);
+		return true;
+	}
+
+	return false;
 }
 
 ENetRole UCSInventoryManager::GetOwnerRole() const
