@@ -52,6 +52,11 @@ struct FAttachPoint
 
 	UPROPERTY(EditDefaultsOnly)
 	FName UnEquipSocketName;
+
+	FAttachPoint()
+		: GripSocketName(NAME_None)
+		, UnEquipSocketName(NAME_None)
+	{}
 };
 
 UCLASS(Abstract, NotBlueprintable)
@@ -71,8 +76,8 @@ public:
 
 	virtual void OnEquip();
 	virtual void OnUnEquip();
-	virtual void OnEnterInventory(ACSCharacter* NewOwner);
-	virtual void OnLeaveInventory();
+	virtual void OnEnterWeaponInventory(ACSCharacter* NewOwner);
+	virtual void OnLeaveWeaponInventory();
 
 	void AttachMeshToCharacter(bool bEquip);
 	void DetachMeshFromCharacter();
@@ -161,7 +166,7 @@ protected:
 	UPROPERTY(Transient)
 	UCSWeaponState* CurrentStateNode;
 
-	using FCSWeaponStateClassMap = TMap<TEnumAsByte<EWeaponState::Type>, TSubclassOf<UCSWeaponState> >;
+	typedef TMap<TEnumAsByte<EWeaponState::Type>, TSubclassOf<UCSWeaponState> > FCSWeaponStateClassMap;
 	FCSWeaponStateClassMap WeaponStateClassMap;
 
 	UPROPERTY(Transient)

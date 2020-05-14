@@ -24,46 +24,46 @@ public:
 public:
 	// SkeletalMeshComponent Begin
 	UPROPERTY(VisibleAnywhere, meta = (AllowPrivateAccess = true))
-	USkeletalMeshComponent* HeadSkelMesh;
+	USkeletalMeshComponent* Head;
 
 	UPROPERTY(VisibleAnywhere, meta = (AllowPrivateAccess = true))
-	USkeletalMeshComponent* ShoulderSkelMesh;
+	USkeletalMeshComponent* Shoulder;
 
 	UPROPERTY(VisibleAnywhere, meta = (AllowPrivateAccess = true))
-	USkeletalMeshComponent* ChestSkelMesh;
+	USkeletalMeshComponent* Chest;
 
 	UPROPERTY(VisibleAnywhere, meta = (AllowPrivateAccess = true))
-	USkeletalMeshComponent* HandsSkelMesh;
+	USkeletalMeshComponent* Hands;
 
 	UPROPERTY(VisibleAnywhere, meta = (AllowPrivateAccess = true))
-	USkeletalMeshComponent* LegsSkelMesh;
+	USkeletalMeshComponent* Legs;
 
 	UPROPERTY(VisibleAnywhere, meta = (AllowPrivateAccess = true))
-	USkeletalMeshComponent* FeetSkelMesh;
+	USkeletalMeshComponent* Feet;
 
 	UPROPERTY(VisibleAnywhere, meta = (AllowPrivateAccess = true))
-	USkeletalMeshComponent* BackSkelMesh;
+	USkeletalMeshComponent* Back;
 
 	UPROPERTY(VisibleAnywhere, meta = (AllowPrivateAccess = true))
-	USkeletalMeshComponent* WaistSkelMesh;
+	USkeletalMeshComponent* Waist;
 
 	UPROPERTY(VisibleAnywhere, meta = (AllowPrivateAccess = true))
-	USkeletalMeshComponent* AccessorySkelMesh;
+	USkeletalMeshComponent* Accessory;
 
 	UPROPERTY(VisibleAnywhere, meta = (AllowPrivateAccess = true))
-	USkeletalMeshComponent* EaringSkelMesh;
+	USkeletalMeshComponent* Earing;
 
 	UPROPERTY(VisibleAnywhere, meta = (AllowPrivateAccess = true))
-	USkeletalMeshComponent* RingSkelMesh;
+	USkeletalMeshComponent* Ring;
 
 	UPROPERTY(VisibleAnywhere, meta = (AllowPrivateAccess = true))
-	USkeletalMeshComponent* TrinketSkelMesh;
+	USkeletalMeshComponent* Trinket;
 
 	UPROPERTY(VisibleAnywhere, meta = (AllowPrivateAccess = true))
-	USkeletalMeshComponent* MainHandSkelMesh;
+	USkeletalMeshComponent* MainHand;
 
 	UPROPERTY(VisibleAnywhere, meta = (AllowPrivateAccess = true))
-	USkeletalMeshComponent* OffHandSkelMesh;
+	USkeletalMeshComponent* OffHand;
 	// SkeletalMeshComponent End
 
 	UPROPERTY(ReplicatedUsing=OnRep_AttachedSkelMeshes)

@@ -29,7 +29,7 @@ public:
 	}
 
 	template<typename T>
-	static T* GetLoadedClass(TSoftClassPtr<T>& SoftClassPtr)
+	static UClass* GetLoadedClass(TSoftClassPtr<T>& SoftClassPtr)
 	{
 		if (!SoftClassPtr.IsValid())
 		{

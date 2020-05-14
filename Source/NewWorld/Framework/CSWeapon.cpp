@@ -96,14 +96,14 @@ void ACSWeapon::OnUnEquip()
 	SetWeaponState(EWeaponState::Inactive);
 }
 
-void ACSWeapon::OnEnterInventory(ACSCharacter* NewOwner)
+void ACSWeapon::OnEnterWeaponInventory(ACSCharacter* NewOwner)
 {
 	AttachMeshToCharacter(false);
 
 	SetOwningPawn(NewOwner);
 }
 
-void ACSWeapon::OnLeaveInventory()
+void ACSWeapon::OnLeaveWeaponInventory()
 {
 	DetachMeshFromCharacter();
 
@@ -201,11 +201,11 @@ void ACSWeapon::SetCachedCharacter(AActor* NewOwner)
 	CachedCharacter = Character;
 	if (CachedCharacter)
 	{
-		OnEnterInventory(CachedCharacter);
+		OnEnterWeaponInventory(CachedCharacter);
 	}
 	else
 	{
-		OnLeaveInventory();
+		OnLeaveWeaponInventory();
 	}
 }
 

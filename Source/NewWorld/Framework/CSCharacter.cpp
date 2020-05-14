@@ -53,7 +53,7 @@ void ACSCharacter::PostInitializeComponents()
 
 	if (Role == ROLE_Authority)
 	{
-		SpawnDefaultInventory();
+		SpawnDefaultWeaponInventory();
 	}
 }
 
@@ -70,7 +70,7 @@ void ACSCharacter::Destroyed()
 
 	if (Role == ROLE_Authority)
 	{
-		DestoryInventory();
+		DestoryWeaponInventory();
 	}
 }
 
@@ -171,9 +171,9 @@ void ACSCharacter::StopFire(const uint8 FireModeNum)
 
 void ACSCharacter::SwitchWeapon(int32 index)
 {
-	if (Inventory.IsValidIndex(index - 1))
+	if (WeaponInventory.IsValidIndex(index - 1))
 	{
-		ACSWeapon* DesiredWeapon = Inventory[index - 1];
+		ACSWeapon* DesiredWeapon = WeaponInventory[index - 1];
 		if (IsValid(DesiredWeapon))
 		{
 			EquipWeapon(DesiredWeapon);
@@ -239,40 +239,33 @@ AActor* ACSCharacter::GetNearestInteractActor()
 	return NearestActor;
 }
 
-void ACSCharacter::SpawnDefaultInventory()
+void ACSCharacter::SpawnDefaultWeaponInventory()
 {
 	if (Role < ROLE_Authority)
 	{
 		return;
 	}
 
-	for (auto& WeaponClass : DefaultInventoryClasses)
+	for (const auto& WeaponClass : DefaultWeaponInventoryClasses)
 	{
-		if (IsValid(WeaponClass))
-		{
-			FActorSpawnParameters SpawnParams;
-			SpawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
-
-			ACSWeapon* NewWeapon = GetWorld()->SpawnActor<ACSWeapon>(WeaponClass.Get(), SpawnParams);
-			AddWeapon(NewWeapon);
-		}
+		CreateAndGiveWeapon(WeaponClass);
 	}
 
 	// 첫 번째 무기 자동 장착
-	if (Inventory.Num() > 0)
+	if (WeaponInventory.Num() > 0)
 	{
-		EquipWeapon(Inventory[0]);
+		EquipWeapon(WeaponInventory[0]);
 	}
 }
 
-void ACSCharacter::DestoryInventory()
+void ACSCharacter::DestoryWeaponInventory()
 {
 	if (Role < ROLE_Authority)
 	{
 		return;
 	}
 
-	for (ACSWeapon* TargetWeapon : Inventory)
+	for (ACSWeapon* TargetWeapon : WeaponInventory)
 	{
 		if (TargetWeapon)
 		{
@@ -282,12 +275,28 @@ void ACSCharacter::DestoryInventory()
 	}
 }
 
+ACSWeapon* ACSCharacter::CreateAndGiveWeapon(const TSubclassOf<ACSWeapon>& WeaponClass)
+{
+	if (IsValid(WeaponClass))
+	{
+		FActorSpawnParameters SpawnParams;
+		SpawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
+
+		ACSWeapon* NewWeapon = GetWorld()->SpawnActor<ACSWeapon>(WeaponClass.Get(), SpawnParams);
+		AddWeapon(NewWeapon);
+
+		return NewWeapon;
+	}
+
+	return nullptr;
+}
+
 void ACSCharacter::AddWeapon(ACSWeapon* InWeapon)
 {
 	if (IsValid(InWeapon))
 	{
-		InWeapon->OnEnterInventory(this);
-		Inventory.AddUnique(InWeapon);
+		InWeapon->OnEnterWeaponInventory(this);
+		WeaponInventory.AddUnique(InWeapon);
 	}
 }
 
@@ -295,8 +304,8 @@ void ACSCharacter::RemoveWeapon(ACSWeapon* InWeapon)
 {
 	if (IsValid(InWeapon))
 	{
-		InWeapon->OnLeaveInventory();
-		Inventory.RemoveSingle(InWeapon);
+		InWeapon->OnLeaveWeaponInventory();
+		WeaponInventory.RemoveSingle(InWeapon);
 	}
 }
 
@@ -367,6 +376,6 @@ void ACSCharacter::GetLifetimeReplicatedProps(TArray< FLifetimeProperty > & OutL
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
 
 	DOREPLIFETIME(ACSCharacter, Weapon);
-	DOREPLIFETIME_CONDITION(ACSCharacter, Inventory, COND_OwnerOnly);
+	DOREPLIFETIME_CONDITION(ACSCharacter, WeaponInventory, COND_OwnerOnly);
 }
 

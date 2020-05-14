@@ -1,10 +1,12 @@
 
 #include "CSTypes.h"
+#include "CSGameplayStatics.h"
+#include "CSWeapon.h"
 
-void FItemInfomation::FillFrom(const FInventoryItem& InventoryItem)
+void FItemInfomation::FillFrom(FInventoryItem& InventoryItem)
 {
 	ID = InventoryItem.ID;
-	Icon = InventoryItem.Icon;
+	Icon = UCSGameplayStatics::GetLoadedObject<UTexture2D>(InventoryItem.Icon);
 	Amount = InventoryItem.Amount;
 	Name = InventoryItem.Name;
 	Quality = InventoryItem.Quality;

@@ -323,9 +323,9 @@ void UCSInventoryManager::DropItem(const int32 SlotIndex)
 void UCSInventoryManager::UseEquipItem(const struct FInventoryItem& InventoryItem, const int32 SlotIndex)
 {
 	int32 DesiredSlotIndex = INDEX_NONE;
-	const bool bIsEquip = SlotIndex >= static_cast<int32>(EEquipmentSlot::MAX);
+	const bool bWantsToEquip = SlotIndex >= static_cast<int32>(EEquipmentSlot::MAX);
 
-	if (bIsEquip)
+	if (bWantsToEquip)
 	{
 		DesiredSlotIndex = static_cast<int32>(InventoryItem.EquipmentSlot);
 		EquipItem(InventoryComponent, InventoryComponent, SlotIndex, DesiredSlotIndex);
@@ -343,9 +343,9 @@ bool UCSInventoryManager::GetDropItemTransform(FTransform& OutTransform) const
 	{
 		FVector PawnLocation = Pawn->GetActorLocation();
 		FRotator PawnRotation = Pawn->GetActorRotation();
-
-		//DrawDebugSphere(GetWorld(), PawnLocation, 10.f, 10, FColor::Blue, true);
-		//DrawDebugSphere(GetWorld(), PawnLocation += Pawn->GetActorForwardVector() * 100.f, 10.f, 10, FColor::Green, true);
+		
+		// »ìÂ¦ ¾Õ¿¡ ¶³±À
+		PawnLocation += Pawn->GetActorForwardVector() * 100.f;
 
 		OutTransform = FTransform(PawnRotation, PawnLocation);
 		return true;

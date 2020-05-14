@@ -50,8 +50,9 @@ public:
 
 	AActor* GetNearestInteractActor();
 	
-	void SpawnDefaultInventory();
-	void DestoryInventory();
+	void SpawnDefaultWeaponInventory();
+	void DestoryWeaponInventory();
+	ACSWeapon* CreateAndGiveWeapon(const TSubclassOf<ACSWeapon>& WeaponClass);
 	void AddWeapon(ACSWeapon* InWeapon);
 	void RemoveWeapon(ACSWeapon* InWeapon);
 
@@ -72,7 +73,7 @@ public:
 	ACSWeapon* Weapon;
 
 	UPROPERTY(Transient, Replicated)
-	TArray<ACSWeapon*> Inventory;
+	TArray<ACSWeapon*> WeaponInventory;
 
 protected:
 	UPROPERTY(VisibleAnywhere, Category = "Components")
@@ -88,5 +89,5 @@ protected:
 	FCharacterAnimGraph DefaultCharacterAnimGraph;
 
 	UPROPERTY(EditDefaultsOnly, Category = "Weapons")
-	TArray<TSubclassOf<ACSWeapon> > DefaultInventoryClasses;
+	TArray<TSubclassOf<ACSWeapon> > DefaultWeaponInventoryClasses;
 };

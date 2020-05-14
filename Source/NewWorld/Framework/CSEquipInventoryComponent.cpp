@@ -3,6 +3,8 @@
 
 #include "CSEquipInventoryComponent.h"
 #include "CSEquipableCharacter.h"
+#include "CSGameplayStatics.h"
+#include "CSWeapon.h"
 
 UCSEquipInventoryComponent::UCSEquipInventoryComponent(const FObjectInitializer& ObjectInitializer) : Super(ObjectInitializer)
 {

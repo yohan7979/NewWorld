@@ -15,10 +15,10 @@ void UCSGameplayStatics::SetInputMode(APlayerController* Target, UWidget* InWidg
 	switch (InputMode)
 	{
 	case EInputMode::UIOnly:
-		UWidgetBlueprintLibrary::SetInputMode_UIOnly(Target, InWidgetToFocus);
+		UWidgetBlueprintLibrary::SetInputMode_UIOnlyEx(Target, InWidgetToFocus);
 		break;
 	case EInputMode::GameAndUI:
-		UWidgetBlueprintLibrary::SetInputMode_GameAndUI(Target, InWidgetToFocus, true);
+		UWidgetBlueprintLibrary::SetInputMode_GameAndUIEx(Target, InWidgetToFocus, EMouseLockMode::LockOnCapture, true);
 		break;
 	case EInputMode::GameOnly:
 		UWidgetBlueprintLibrary::SetInputMode_GameOnly(Target);

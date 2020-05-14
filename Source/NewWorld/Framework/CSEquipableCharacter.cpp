@@ -6,47 +6,31 @@
 
 ACSEquipableCharacter::ACSEquipableCharacter(const FObjectInitializer& ObjectInitializer) : Super(ObjectInitializer)
 {
-	HeadSkelMesh = ObjectInitializer.CreateOptionalDefaultSubobject<USkeletalMeshComponent>(this, TEXT("HeadSkelMesh"));
-	HeadSkelMesh->SetupAttachment(GetMesh());
+	Head		= ObjectInitializer.CreateOptionalDefaultSubobject<USkeletalMeshComponent>(this, TEXT("Head"));
+	Shoulder	= ObjectInitializer.CreateOptionalDefaultSubobject<USkeletalMeshComponent>(this, TEXT("Shoulder"));	
+	Chest		= ObjectInitializer.CreateOptionalDefaultSubobject<USkeletalMeshComponent>(this, TEXT("Chest"));
+	Hands		= ObjectInitializer.CreateOptionalDefaultSubobject<USkeletalMeshComponent>(this, TEXT("Hands"));
+	Legs		= ObjectInitializer.CreateOptionalDefaultSubobject<USkeletalMeshComponent>(this, TEXT("Legs"));
+	Feet		= ObjectInitializer.CreateOptionalDefaultSubobject<USkeletalMeshComponent>(this, TEXT("Feet"));
+	Back		= ObjectInitializer.CreateOptionalDefaultSubobject<USkeletalMeshComponent>(this, TEXT("Back"));	
+	Waist		= ObjectInitializer.CreateOptionalDefaultSubobject<USkeletalMeshComponent>(this, TEXT("Waist"));
+	Accessory	= ObjectInitializer.CreateOptionalDefaultSubobject<USkeletalMeshComponent>(this, TEXT("Accessory"));
+	Earing		= ObjectInitializer.CreateOptionalDefaultSubobject<USkeletalMeshComponent>(this, TEXT("Earing"));
+	Ring		= ObjectInitializer.CreateOptionalDefaultSubobject<USkeletalMeshComponent>(this, TEXT("Ring"));
+	Trinket		= ObjectInitializer.CreateOptionalDefaultSubobject<USkeletalMeshComponent>(this, TEXT("Trinket"));
+	MainHand	= ObjectInitializer.CreateOptionalDefaultSubobject<USkeletalMeshComponent>(this, TEXT("MainHand"));
+	OffHand		= ObjectInitializer.CreateOptionalDefaultSubobject<USkeletalMeshComponent>(this, TEXT("OffHand"));
 
-	ShoulderSkelMesh = ObjectInitializer.CreateOptionalDefaultSubobject<USkeletalMeshComponent>(this, TEXT("ShoulderSkelMesh"));
-	ShoulderSkelMesh->SetupAttachment(GetMesh());
 
-	ChestSkelMesh = ObjectInitializer.CreateOptionalDefaultSubobject<USkeletalMeshComponent>(this, TEXT("ChestSkelMesh"));
-	ChestSkelMesh->SetupAttachment(GetMesh());
-
-	HandsSkelMesh = ObjectInitializer.CreateOptionalDefaultSubobject<USkeletalMeshComponent>(this, TEXT("HandsSkelMesh"));
-	HandsSkelMesh->SetupAttachment(GetMesh());
-
-	LegsSkelMesh = ObjectInitializer.CreateOptionalDefaultSubobject<USkeletalMeshComponent>(this, TEXT("LegsSkelMesh"));
-	LegsSkelMesh->SetupAttachment(GetMesh());
-
-	FeetSkelMesh = ObjectInitializer.CreateOptionalDefaultSubobject<USkeletalMeshComponent>(this, TEXT("FeetSkelMesh"));
-	FeetSkelMesh->SetupAttachment(GetMesh());
-
-	BackSkelMesh = ObjectInitializer.CreateOptionalDefaultSubobject<USkeletalMeshComponent>(this, TEXT("BackSkelMesh"));
-	BackSkelMesh->SetupAttachment(GetMesh());
-
-	WaistSkelMesh = ObjectInitializer.CreateOptionalDefaultSubobject<USkeletalMeshComponent>(this, TEXT("WaistSkelMesh"));
-	WaistSkelMesh->SetupAttachment(GetMesh());
-
-	AccessorySkelMesh = ObjectInitializer.CreateOptionalDefaultSubobject<USkeletalMeshComponent>(this, TEXT("AccessorySkelMesh"));
-	AccessorySkelMesh->SetupAttachment(GetMesh());
-
-	EaringSkelMesh = ObjectInitializer.CreateOptionalDefaultSubobject<USkeletalMeshComponent>(this, TEXT("EaringSkelMesh"));
-	EaringSkelMesh->SetupAttachment(GetMesh());
-
-	RingSkelMesh = ObjectInitializer.CreateOptionalDefaultSubobject<USkeletalMeshComponent>(this, TEXT("RingSkelMesh"));
-	RingSkelMesh->SetupAttachment(GetMesh());
-
-	TrinketSkelMesh = ObjectInitializer.CreateOptionalDefaultSubobject<USkeletalMeshComponent>(this, TEXT("TrinketSkelMesh"));
-	TrinketSkelMesh->SetupAttachment(GetMesh());
-
-	MainHandSkelMesh = ObjectInitializer.CreateOptionalDefaultSubobject<USkeletalMeshComponent>(this, TEXT("MainHandSkelMesh"));
-	MainHandSkelMesh->SetupAttachment(GetMesh());
-
-	OffHandSkelMesh = ObjectInitializer.CreateOptionalDefaultSubobject<USkeletalMeshComponent>(this, TEXT("OffHandSkelMesh"));
-	OffHandSkelMesh->SetupAttachment(GetMesh());
+	for (int32 i = 0; i < static_cast<int32>(EEquipmentSlot::MAX); ++i)
+	{
+		USkeletalMeshComponent* TargetMeshComp = GetSkeletalMeshByType(static_cast<EEquipmentSlot>(i));
+		if (TargetMeshComp)
+		{
+			TargetMeshComp->SetupAttachment(GetMesh());
+			TargetMeshComp->SetComponentTickEnabled(false);
+		}
+	}
 }
 
 // Client
@@ -81,20 +65,20 @@ USkeletalMeshComponent* ACSEquipableCharacter::GetSkeletalMeshByType(EEquipmentS
 {
 	switch (SlotType)
 	{
-	case EEquipmentSlot::Head:			return HeadSkelMesh;
-	case EEquipmentSlot::Shoulder:		return ShoulderSkelMesh;
-	case EEquipmentSlot::Chest:			return ChestSkelMesh;
-	case EEquipmentSlot::Hands:			return HandsSkelMesh;
-	case EEquipmentSlot::Legs:			return LegsSkelMesh;
-	case EEquipmentSlot::Feet:			return FeetSkelMesh;
-	case EEquipmentSlot::Back:			return BackSkelMesh;
-	case EEquipmentSlot::Waist:			return WaistSkelMesh;
-	case EEquipmentSlot::Accessory:		return AccessorySkelMesh;
-	case EEquipmentSlot::Earing:		return EaringSkelMesh;
-	case EEquipmentSlot::Ring:			return RingSkelMesh;
-	case EEquipmentSlot::Trinket:		return TrinketSkelMesh;
-	case EEquipmentSlot::MainHand:		return MainHandSkelMesh;
-	case EEquipmentSlot::OffHand:		return OffHandSkelMesh;
+	case EEquipmentSlot::Head:			return Head;
+	case EEquipmentSlot::Shoulder:		return Shoulder;
+	case EEquipmentSlot::Chest:			return Chest;
+	case EEquipmentSlot::Hands:			return Hands;
+	case EEquipmentSlot::Legs:			return Legs;
+	case EEquipmentSlot::Feet:			return Feet;
+	case EEquipmentSlot::Back:			return Back;
+	case EEquipmentSlot::Waist:			return Waist;
+	case EEquipmentSlot::Accessory:		return Accessory;
+	case EEquipmentSlot::Earing:		return Earing;
+	case EEquipmentSlot::Ring:			return Ring;
+	case EEquipmentSlot::Trinket:		return Trinket;
+	case EEquipmentSlot::MainHand:		return MainHand;
+	case EEquipmentSlot::OffHand:		return OffHand;
 	default: break;
 	}
 	

@@ -120,7 +120,7 @@ struct FInventoryItem : public FTableRowBase
 	FName ID;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
-	UTexture2D* Icon;
+	TSoftObjectPtr<UTexture2D> Icon;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
 	FName Name;
@@ -158,6 +158,9 @@ struct FInventoryItem : public FTableRowBase
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
 	EEquipmentSlot EquipmentSlot;
 
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
+	TSoftClassPtr<class ACSWeapon> WeaponClass;
+
 	FInventoryItem()
 		: ID(NAME_None)
 		, Icon(nullptr)
@@ -173,6 +176,7 @@ struct FInventoryItem : public FTableRowBase
 		, EquipmentMesh(nullptr)
 		, EquipmentType(EEquipmentType::Armor)
 		, EquipmentSlot(EEquipmentSlot::Head)
+		, WeaponClass(nullptr)
 	{}
 };
 
@@ -212,7 +216,7 @@ struct FItemInfomation
 		, NetDirty(0)
 	{}
 
-	void FillFrom(const FInventoryItem& InventoryItem);
+	void FillFrom(FInventoryItem& InventoryItem);
 	void Reset();
 };
 
