@@ -42,6 +42,7 @@ public:
 	virtual void DropItem(const int32 SlotIndex);
 
 	virtual void UseEquipItem(const struct FInventoryItem& InventoryItem, const int32 SlotIndex);
+	virtual void SetOwnerDropWeapon(TSoftClassPtr<class ACSWeapon>& SoftWeaponClass);
 	bool GetDropItemTransform(FTransform& OutTransform) const;
 
 	ENetRole GetOwnerRole() const;

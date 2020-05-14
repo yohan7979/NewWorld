@@ -245,7 +245,7 @@ void ACSCharacter::SpawnDefaultWeaponInventory()
 	{
 		return;
 	}
-
+/*
 	for (const auto& WeaponClass : DefaultWeaponInventoryClasses)
 	{
 		CreateAndGiveWeapon(WeaponClass);
@@ -256,6 +256,7 @@ void ACSCharacter::SpawnDefaultWeaponInventory()
 	{
 		EquipWeapon(WeaponInventory[0]);
 	}
+*/
 }
 
 void ACSCharacter::DestoryWeaponInventory()
@@ -291,6 +292,21 @@ ACSWeapon* ACSCharacter::CreateAndGiveWeapon(const TSubclassOf<ACSWeapon>& Weapo
 	return nullptr;
 }
 
+ACSWeapon* ACSCharacter::FindWeaponInventory(UClass* WeaponClass)
+{
+	ACSWeapon** FindWeapon = WeaponInventory.FindByPredicate([&](const ACSWeapon* Element)
+	{
+		return Element->GetClass() == WeaponClass;
+	});
+
+	if (FindWeapon)
+	{
+		return *FindWeapon;
+	}
+
+	return nullptr;
+}
+
 void ACSCharacter::AddWeapon(ACSWeapon* InWeapon)
 {
 	if (IsValid(InWeapon))
@@ -321,16 +337,13 @@ bool ACSCharacter::ServerEquipWeapon_Validate(ACSWeapon* NewWeapon)
 
 void ACSCharacter::EquipWeapon(ACSWeapon* NewWeapon)
 {
-	if (NewWeapon)
+	if (Role == ROLE_Authority)
 	{
-		if (Role == ROLE_Authority)
-		{
-			SetCurrentWeapon(NewWeapon, Weapon);
-		}
-		else
-		{
-			ServerEquipWeapon(NewWeapon);
-		}
+		SetCurrentWeapon(NewWeapon, Weapon);
+	}
+	else
+	{
+		ServerEquipWeapon(NewWeapon);
 	}
 }
 

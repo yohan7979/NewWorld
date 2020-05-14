@@ -58,12 +58,6 @@ public:
 
 	UPROPERTY(VisibleAnywhere, meta = (AllowPrivateAccess = true))
 	USkeletalMeshComponent* Trinket;
-
-	UPROPERTY(VisibleAnywhere, meta = (AllowPrivateAccess = true))
-	USkeletalMeshComponent* MainHand;
-
-	UPROPERTY(VisibleAnywhere, meta = (AllowPrivateAccess = true))
-	USkeletalMeshComponent* OffHand;
 	// SkeletalMeshComponent End
 
 	UPROPERTY(ReplicatedUsing=OnRep_AttachedSkelMeshes)

@@ -36,6 +36,8 @@ ACSWeapon::ACSWeapon(const FObjectInitializer& ObjectInitializer) : Super(Object
 	WeaponStateClassMap.Emplace(EWeaponState::Reloading, UCSWeaponStateReloading::StaticClass());
 	WeaponStateClassMap.Emplace(EWeaponState::Equipping, UCSWeaponStateEquipping::StaticClass());
 
+	SetRootComponent(SkelMeshComp);
+
 	MuzzleSocketName = TEXT("MuzzleSocket");
 }
 
@@ -141,7 +143,7 @@ void ACSWeapon::AttachMeshToCharacter(bool bEquip)
 
 void ACSWeapon::DetachMeshFromCharacter()
 {
-	if (IsValid(CachedCharacter))
+//	if (IsValid(CachedCharacter))
 	{
 		if (SkelMeshComp->SkeletalMesh)
 		{
@@ -198,6 +200,7 @@ void ACSWeapon::SetOwningPawn(ACSCharacter* NewOwner)
 void ACSWeapon::SetCachedCharacter(AActor* NewOwner)
 {
 	ACSCharacter* Character = NewOwner ? Cast<ACSCharacter>(NewOwner) : nullptr;
+
 	CachedCharacter = Character;
 	if (CachedCharacter)
 	{

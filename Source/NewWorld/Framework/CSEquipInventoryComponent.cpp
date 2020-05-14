@@ -39,7 +39,14 @@ void UCSEquipInventoryComponent::SetInventoryItem(const FInventoryItem& NewItem,
 		const int32 EquipmentSlotSize = static_cast<int32>(EEquipmentSlot::MAX);
 		if (SlotIndex < EquipmentSlotSize)
 		{
-			UpdateEquippedMesh(NewItem, SlotIndex);
+			if (SlotIndex < static_cast<int32>(EEquipmentSlot::MainHand))
+			{
+				UpdateEquippedMesh(NewItem, SlotIndex);
+			}
+			else
+			{
+				UpdateWeaponEquippedMesh(NewItem, SlotIndex);
+			}
 		}
 	}
 }
@@ -49,5 +56,40 @@ void UCSEquipInventoryComponent::UpdateEquippedMesh(const FInventoryItem& NewIte
 	if (IsValid(OwnerEquipableCharacter))
 	{
 		OwnerEquipableCharacter->SetAttachedSkeletalMesh(NewItem.EquipmentMesh, SlotIndex);
+	}
+}
+
+void UCSEquipInventoryComponent::UpdateWeaponEquippedMesh(const FInventoryItem& NewItem, int32 SlotIndex)
+{
+	if (IsValid(OwnerEquipableCharacter))
+	{
+		ACSWeapon* NewWeapon = nullptr;
+		FInventoryItem* MutableItem = const_cast<FInventoryItem*>(&NewItem);
+		
+		UClass* NewWeaponClass = !MutableItem->WeaponClass.IsNull() ? UCSGameplayStatics::GetLoadedClass<ACSWeapon>(MutableItem->WeaponClass) : nullptr;
+		if (NewWeaponClass)
+		{
+			// 장착
+			NewWeapon = OwnerEquipableCharacter->FindWeaponInventory(NewWeaponClass);
+			if (NewWeapon)
+			{
+				// WeaponInventory에 있는 무기면 그냥 장착
+				OwnerEquipableCharacter->EquipWeapon(NewWeapon);
+			}
+			else
+			{
+				// 없으면 생성해서 장착
+				NewWeapon = OwnerEquipableCharacter->CreateAndGiveWeapon(NewWeaponClass);
+				if (NewWeapon)
+				{
+					OwnerEquipableCharacter->EquipWeapon(NewWeapon);
+				}
+			}
+		}
+		else
+		{
+			// 해제
+			OwnerEquipableCharacter->EquipWeapon(nullptr);
+		}
 	}
 }

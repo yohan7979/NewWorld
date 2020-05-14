@@ -18,11 +18,8 @@ ACSEquipableCharacter::ACSEquipableCharacter(const FObjectInitializer& ObjectIni
 	Earing		= ObjectInitializer.CreateOptionalDefaultSubobject<USkeletalMeshComponent>(this, TEXT("Earing"));
 	Ring		= ObjectInitializer.CreateOptionalDefaultSubobject<USkeletalMeshComponent>(this, TEXT("Ring"));
 	Trinket		= ObjectInitializer.CreateOptionalDefaultSubobject<USkeletalMeshComponent>(this, TEXT("Trinket"));
-	MainHand	= ObjectInitializer.CreateOptionalDefaultSubobject<USkeletalMeshComponent>(this, TEXT("MainHand"));
-	OffHand		= ObjectInitializer.CreateOptionalDefaultSubobject<USkeletalMeshComponent>(this, TEXT("OffHand"));
 
-
-	for (int32 i = 0; i < static_cast<int32>(EEquipmentSlot::MAX); ++i)
+	for (int32 i = 0; i < static_cast<int32>(EEquipmentSlot::MainHand); ++i)
 	{
 		USkeletalMeshComponent* TargetMeshComp = GetSkeletalMeshByType(static_cast<EEquipmentSlot>(i));
 		if (TargetMeshComp)
@@ -36,7 +33,8 @@ ACSEquipableCharacter::ACSEquipableCharacter(const FObjectInitializer& ObjectIni
 // Client
 void ACSEquipableCharacter::OnRep_AttachedSkelMeshes()
 {
-	for (int32 i = 0; i < static_cast<int32>(EEquipmentSlot::MAX); ++i)
+	// until EEquipmentSlot::MainHand
+	for (int32 i = 0; i < static_cast<int32>(EEquipmentSlot::MainHand); ++i)
 	{
 		USkeletalMeshComponent* TargetMeshComp = GetSkeletalMeshByType(static_cast<EEquipmentSlot>(i));
 		if (TargetMeshComp && TargetMeshComp->SkeletalMesh != AttachedSkelMeshes[i])
@@ -77,8 +75,8 @@ USkeletalMeshComponent* ACSEquipableCharacter::GetSkeletalMeshByType(EEquipmentS
 	case EEquipmentSlot::Earing:		return Earing;
 	case EEquipmentSlot::Ring:			return Ring;
 	case EEquipmentSlot::Trinket:		return Trinket;
-	case EEquipmentSlot::MainHand:		return MainHand;
-	case EEquipmentSlot::OffHand:		return OffHand;
+	case EEquipmentSlot::MainHand:		//return MainHand;
+	case EEquipmentSlot::OffHand:		//return OffHand;
 	default: break;
 	}
 	

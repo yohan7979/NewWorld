@@ -53,6 +53,7 @@ public:
 	void SpawnDefaultWeaponInventory();
 	void DestoryWeaponInventory();
 	ACSWeapon* CreateAndGiveWeapon(const TSubclassOf<ACSWeapon>& WeaponClass);
+	ACSWeapon* FindWeaponInventory(UClass* WeaponClass);
 	void AddWeapon(ACSWeapon* InWeapon);
 	void RemoveWeapon(ACSWeapon* InWeapon);
 

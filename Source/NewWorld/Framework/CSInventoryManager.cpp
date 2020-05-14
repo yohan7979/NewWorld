@@ -9,6 +9,8 @@
 #include "CSPickup_Item.h"
 #include "CSGameplayStatics.h"
 #include "DrawDebugHelpers.h"
+#include "CSCharacter.h"
+#include "CSWeapon.h"
 
 UCSInventoryManager::UCSInventoryManager(const FObjectInitializer& ObjectInitializer) : Super(ObjectInitializer)
 {
@@ -312,10 +314,16 @@ void UCSInventoryManager::DropItem(const int32 SlotIndex)
 		if (DroppedItem)
 		{
 			DroppedItem->Initialize(InventoryItem);
-
 			UGameplayStatics::FinishSpawningActor(DroppedItem, SpawnTransform);
 
 			InventoryComponent->RemoveInventoryItem(SlotIndex);
+
+			// if weapon, remove from owner's weapon inventory
+			if (InventoryItem.EquipmentSlot >= EEquipmentSlot::MainHand)
+			{
+				FInventoryItem* MutableItem = const_cast<FInventoryItem*>(&InventoryItem);
+				SetOwnerDropWeapon(MutableItem->WeaponClass);
+			}
 		}
 	}
 }
@@ -333,6 +341,22 @@ void UCSInventoryManager::UseEquipItem(const struct FInventoryItem& InventoryIte
 	else if (InventoryComponent->HasInventoryEmptySpace(DesiredSlotIndex))
 	{
 		UnEquipItem(InventoryComponent, InventoryComponent, SlotIndex, DesiredSlotIndex);
+	}
+}
+
+void UCSInventoryManager::SetOwnerDropWeapon(TSoftClassPtr<ACSWeapon>& SoftWeaponClass)
+{
+	ACSCharacter* OwnerCharacter = GetOwningPlayer() ? Cast<ACSCharacter>(GetOwningPlayer()->GetPawn()) : nullptr;
+	if (OwnerCharacter)
+	{
+		UClass* WeaponClass = UCSGameplayStatics::GetLoadedClass<ACSWeapon>(SoftWeaponClass);
+		ACSWeapon* FindWeapon = WeaponClass ? OwnerCharacter->FindWeaponInventory(WeaponClass) : nullptr;
+
+		if (FindWeapon)
+		{
+			// 무기 인벤토리에서 삭제
+			OwnerCharacter->RemoveWeapon(FindWeapon);
+		}
 	}
 }
 
