@@ -13,13 +13,18 @@
 #include "Components/SphereComponent.h"
 #include "Components/CapsuleComponent.h"
 #include "Interface/CSInteractionInterface.h"
+#include "CSAttributeComponent.h"
 
 ACSCharacter::ACSCharacter(const FObjectInitializer& ObjectInitializer)
 {
 	PrimaryActorTick.bCanEverTick = true;
 
+	bUseControllerRotationYaw = false;
+
 	CameraBoom = ObjectInitializer.CreateDefaultSubobject<USpringArmComponent>(this, TEXT("CameraBoom"));
 	CameraBoom->bUsePawnControlRotation = true;
+	CameraBoom->SocketOffset = FVector(0.f, 0.f, 75.f);
+	CameraBoom->TargetArmLength = 400.f;
 	CameraBoom->SetupAttachment(RootComponent);
 
 	CameraComponent = ObjectInitializer.CreateDefaultSubobject<UCameraComponent>(this, TEXT("CameraComponent"));
@@ -34,7 +39,10 @@ ACSCharacter::ACSCharacter(const FObjectInitializer& ObjectInitializer)
 	InteractionSphereComponent->SetGenerateOverlapEvents(true);
 	InteractionSphereComponent->SetupAttachment(RootComponent);
 
+	AttributeComponent = ObjectInitializer.CreateDefaultSubobject<UCSAttributeComponent>(this, TEXT("AttributeComponent"));
+
 	GetCapsuleComponent()->SetCollisionResponseToChannel(COLLISION_PROJECTILE, ECR_Ignore);
+	GetCharacterMovement()->bOrientRotationToMovement = true;
 
 	BaseTurnRate = 45.f;
 	BaseLookUpRate = 45.f;
@@ -44,6 +52,16 @@ ACSCharacter::ACSCharacter(const FObjectInitializer& ObjectInitializer)
 void ACSCharacter::BeginPlay()
 {
 	Super::BeginPlay();
+	
+}
+
+void ACSCharacter::EndPlay(const EEndPlayReason::Type EndPlayReason)
+{
+	Super::EndPlay(EndPlayReason);
+
+	FTimerManager& TimerManager = GetWorldTimerManager();
+	TimerManager.ClearAllTimersForObject(this);
+	TimerManager.ClearTimer(TimerHandle_OrientRotationMode);
 	
 }
 
@@ -99,19 +117,33 @@ void ACSCharacter::MoveForward(float Value)
 {
 	if (Controller && Value != 0.f)
 	{
-		bool bLimitRotation = GetCharacterMovement()->IsMovingOnGround() || GetCharacterMovement()->IsFalling();
-		const FRotator& Rotation = bLimitRotation ? GetActorRotation() : GetControlRotation();
-		const FVector& Direction = FRotationMatrix(Rotation).GetScaledAxis(EAxis::X);
+// 		bool bLimitRotation = GetCharacterMovement()->IsMovingOnGround() || GetCharacterMovement()->IsFalling();
+// 		const FRotator& Rotation = bLimitRotation ? GetActorRotation() : GetControlRotation();
+// 		const FVector& Direction = FRotationMatrix(Rotation).GetScaledAxis(EAxis::X);
+// 		AddMovementInput(Direction, Value);
+
+		// find out which way is forward
+		const FRotator Rotation = Controller->GetControlRotation();
+		const FRotator YawRotation(0, Rotation.Yaw, 0);
+
+		const FVector Direction = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::X);
 		AddMovementInput(Direction, Value);
 	}
 }
 
 void ACSCharacter::MoveRight(float Value)
 {
-	if (Value != 0.f)
+	if (Controller && Value != 0.f)
 	{
-		const FQuat& Rotation = GetActorQuat();
-		const FVector& Direction = FQuatRotationMatrix(Rotation).GetScaledAxis(EAxis::Y);
+// 		const FQuat& Rotation = GetActorQuat();
+// 		const FVector& Direction = FQuatRotationMatrix(Rotation).GetScaledAxis(EAxis::Y);
+// 		AddMovementInput(Direction, Value);
+
+		// find out which way is right
+		const FRotator Rotation = Controller->GetControlRotation();
+		const FRotator YawRotation(0, Rotation.Yaw, 0);
+
+		const FVector Direction = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::Y);
 		AddMovementInput(Direction, Value);
 	}
 }
@@ -136,6 +168,32 @@ void ACSCharacter::DoJump(bool bPressed)
 	{
 		StopJumping();
 	}
+}
+
+void ACSCharacter::SetOrientRotationMode(bool bOrientRotationToMovement, float DelayTime /*= 0.f*/)
+{
+	auto SetOrientModeRamda = [&](bool bEnable)
+	{
+		GetCharacterMovement()->bOrientRotationToMovement = bEnable;
+		GetCharacterMovement()->bUseControllerDesiredRotation = !bEnable;
+	};
+
+	FTimerManager& TimerManager = GetWorldTimerManager();
+	if (TimerHandle_OrientRotationMode.IsValid())
+	{
+		TimerManager.ClearTimer(TimerHandle_OrientRotationMode);
+	}
+
+	if (DelayTime > 0.f)
+	{
+		FTimerDelegate TimerDelegate = FTimerDelegate::CreateLambda(SetOrientModeRamda, bOrientRotationToMovement);
+		TimerManager.SetTimer(TimerHandle_OrientRotationMode, TimerDelegate, DelayTime, false);	
+	}
+	else
+	{
+		SetOrientModeRamda(bOrientRotationToMovement);
+	}
+
 }
 
 void ACSCharacter::OnStartFire()

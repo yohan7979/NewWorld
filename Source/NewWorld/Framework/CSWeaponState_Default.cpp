@@ -2,6 +2,7 @@
 
 
 #include "CSWeaponState_Default.h"
+#include "CSCharacter.h"
 
 
 UCSWeaponStateActive::UCSWeaponStateActive(const FObjectInitializer& ObjectInitializer) : Super(ObjectInitializer)
@@ -42,9 +43,9 @@ UCSWeaponStateFiring::UCSWeaponStateFiring(const FObjectInitializer& ObjectIniti
 
 void UCSWeaponStateFiring::BeginState()
 {
-	// Check Ammo (do reload)
-
 	Super::BeginState();
+
+	// Check Ammo (do reload)
 }
 
 void UCSWeaponStateFiring::EndState()
@@ -55,6 +56,12 @@ void UCSWeaponStateFiring::EndState()
 	if (IsValid(OwnerWeapon))
 	{
 		OwnerWeapon->FireWeapon(false);
+
+		ACSCharacter* OwnerPawn = Cast<ACSCharacter>(OwnerWeapon->GetOwner());
+		if (IsValid(OwnerPawn))
+		{
+			OwnerPawn->SetOrientRotationMode(true, 1.5f);
+		}
 	}
 }
 
@@ -64,6 +71,12 @@ void UCSWeaponStateFiring::OnStateTransitionFinished()
 	if (IsValid(OwnerWeapon))
 	{
 		OwnerWeapon->FireWeapon(true);
+
+		ACSCharacter* OwnerPawn = Cast<ACSCharacter>(OwnerWeapon->GetOwner());
+		if (IsValid(OwnerPawn))
+		{
+			OwnerPawn->SetOrientRotationMode(false);
+		}		
 	}
 }
 

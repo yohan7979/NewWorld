@@ -85,4 +85,6 @@ protected:
 
 	UPROPERTY(Transient)
 	TArray<class UParticleSystem*> SpawnedParticles;
+
+	bool bExploded;
 };

@@ -11,13 +11,14 @@ ACSWeapon_BaseWand::ACSWeapon_BaseWand(const FObjectInitializer& ObjectInitializ
 	AttachPoint.UnEquipSocketName = TEXT("wand");
 }
 
-FVector ACSWeapon_BaseWand::GetMuzzleLocation(const int32 ComboCount /*=0*/) const
+FVector ACSWeapon_BaseWand::GetMuzzleLocation(const FVector& AimDir, const int32 ComboCount /*=0*/) const
 {
 	if (IsValid(CachedCharacter) && CachedCharacter->GetMesh())
 	{
-		const FName& DesiredSocketName = (ComboCount % 2 == 1) ? TEXT("magic_right_hand") : TEXT("magic_left_hand");
-		return CachedCharacter->GetMesh()->GetSocketLocation(DesiredSocketName);
+		//const FName& DesiredSocketName = (ComboCount % 2 == 1) ? TEXT("magic_right_hand") : TEXT("magic_left_hand");
+		const FName& DesiredSocketName = TEXT("spine_03");
+		return CachedCharacter->GetMesh()->GetSocketLocation(DesiredSocketName) + AimDir * 100.f;
 	}
 
-	return Super::GetMuzzleLocation(ComboCount);
+	return Super::GetMuzzleLocation(AimDir, ComboCount);
 }

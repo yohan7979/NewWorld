@@ -40,8 +40,8 @@ void UCSWeaponFiringAction_Projectile::InternalFireShot()
 	ACSWeapon* OwnerWeapon = GetOwnerWeapon();
 	if (IsValid(OwnerWeapon) && OwnerWeapon->HasAuthority())
 	{
-		const FVector& Origin = OwnerWeapon->GetMuzzleLocation(ComboCount);
 		const FVector& AimDir = OwnerWeapon->GetAdjustedAim();
+		const FVector& Origin = OwnerWeapon->GetMuzzleLocation(AimDir, ComboCount);
 
 		const FVector& StartTrace = OwnerWeapon->GetCameraStartLocation(AimDir);
 		const FVector& EndTrace = StartTrace + AimDir * 1000.f;

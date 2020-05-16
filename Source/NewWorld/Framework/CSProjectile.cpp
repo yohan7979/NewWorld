@@ -8,6 +8,7 @@
 #include "Particles/ParticleSystemComponent.h"
 #include "Particles/ParticleSystem.h"
 #include "CSGameplayStatics.h"
+#include "CSCharacter.h"
 
 ACSProjectile::ACSProjectile(const FObjectInitializer& ObjectInitializer) : Super(ObjectInitializer)
 {
@@ -38,6 +39,7 @@ void ACSProjectile::BeginPlay()
 	if (SphereComponent)
 	{
 		SphereComponent->OnComponentHit.AddDynamic(this, &ACSProjectile::OnHit);
+		SphereComponent->MoveIgnoreActors.Add(Instigator);
 	}
 
 	PlayParticleEffect(ParticleSet.SpawnParticle);
@@ -88,11 +90,27 @@ void ACSProjectile::Explode()
 	PlayParticleEffect(ParticleSet.HitParticle);
 
 	SetLifeSpan(0.5f);
+
+	bExploded = true;
 }
 
 void ACSProjectile::OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit)
 {
-	Explode();
+	if (!IsPendingKill() && !bExploded)
+	{
+		Explode();
+
+		if (Role == ROLE_Authority)
+		{
+			if (IsValid(OtherActor))
+			{
+				FDamageEvent DamageEvent(ProjectileConfig.DamageType);
+				OtherActor->TakeDamage(ProjectileConfig.ExplosionDamage, DamageEvent, GetInstigatorController(), GetInstigator());
+
+				UE_LOG(LogTemp, Log, TEXT("OtherActor : %s, IgnoreActor : %s"), *GetNameSafe(OtherActor), *GetNameSafe(SphereComponent->MoveIgnoreActors[0]));
+			}
+		}
+	}
 }
 
 void ACSProjectile::PlayParticleEffect(TSoftObjectPtr<UParticleSystem>& SoftObjectPtr, bool bAttachToSocket)

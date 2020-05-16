@@ -15,5 +15,5 @@ class NEWWORLD_API ACSWeapon_BaseWand : public ACSWeapon
 	GENERATED_UCLASS_BODY()
 	
 public:
-	virtual FVector GetMuzzleLocation(const int32 ComboCount = 0) const override;
+	virtual FVector GetMuzzleLocation(const FVector& AimDir, const int32 ComboCount = 0) const override;
 };

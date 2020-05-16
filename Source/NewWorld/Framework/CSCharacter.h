@@ -22,6 +22,7 @@ public:
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
+	virtual void EndPlay(const EEndPlayReason::Type EndPlayReason) override;
 
 public:	
 	virtual void PostInitializeComponents() override;
@@ -37,6 +38,7 @@ public:
 	void LookUp(float Value);
 
 	void DoJump(bool bPressed);
+	void SetOrientRotationMode(bool bOrientRotationToMovement, float DelayTime = 0.f);
 	void OnStartFire();
 	void OnStopFire();
 	virtual void PawnStartFire(uint8 FireModeNum = 0) override;
@@ -86,9 +88,14 @@ protected:
 	UPROPERTY(VisibleAnywhere, Category = "Components")
 	class USphereComponent* InteractionSphereComponent;
 
+	UPROPERTY(VisibleAnywhere, Category = "Components")
+	class UCSAttributeComponent* AttributeComponent;
+
 	UPROPERTY(EditDefaultsOnly, Category = "Animation")
 	FCharacterAnimGraph DefaultCharacterAnimGraph;
 
 	UPROPERTY(EditDefaultsOnly, Category = "Weapons")
 	TArray<TSubclassOf<ACSWeapon> > DefaultWeaponInventoryClasses;
+
+	FTimerHandle TimerHandle_OrientRotationMode;
 };

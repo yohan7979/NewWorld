@@ -86,15 +86,18 @@ void ACSWeapon::PostInitializeComponents()
 
 void ACSWeapon::OnEquip()
 {
-	AttachMeshToCharacter(true);
-
+	if (EquipTime < KINDA_SMALL_NUMBER)
+	{
+		AttachMeshToCharacter(true);
+	}
+	
 	SetWeaponState(EWeaponState::Equipping);
 }
 
 void ACSWeapon::OnUnEquip()
 {
 	AttachMeshToCharacter(false);
-
+		
 	SetWeaponState(EWeaponState::Inactive);
 }
 
@@ -461,7 +464,7 @@ FVector ACSWeapon::GetAdjustedAim() const
 	return OutAimVector;
 }
 
-FVector ACSWeapon::GetMuzzleLocation(const int32 ComboCount /*= 0*/) const
+FVector ACSWeapon::GetMuzzleLocation(const FVector& AimDir, const int32 ComboCount /*= 0*/) const
 {
 	if (IsValid(SkelMeshComp) && SkelMeshComp->SkeletalMesh)
 	{
