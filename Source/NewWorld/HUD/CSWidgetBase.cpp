@@ -58,7 +58,7 @@ void UCSWidgetBase::SubscribePlayerControllerDelegate(bool bSubscribe)
 				// for standalone
 				if (OwningPlayer->GetPawn() != nullptr)
 				{
-					OnItemInfomationUpdate(InvComponent->ItemInfomations);
+					OnItemInfomationUpdate(InvComponent->ItemInfomations.Items);
 				}
 			}
 			else if (bIsAlreadyBound && !bSubscribe)

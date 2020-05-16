@@ -181,7 +181,7 @@ struct FInventoryItem : public FTableRowBase
 };
 
 USTRUCT(BlueprintType)
-struct FItemInfomation
+struct FItemInfomation : public FFastArraySerializerItem
 {
 	GENERATED_USTRUCT_BODY()
 
@@ -203,9 +203,6 @@ struct FItemInfomation
 	UPROPERTY(BlueprintReadOnly)
 	int32 Amount;
 
-	UPROPERTY()
-	uint8 NetDirty;
-
 	FItemInfomation()
 		: ID(NAME_None)
 		, Icon(nullptr)
@@ -213,12 +210,77 @@ struct FItemInfomation
 		, Quality(EItemQuality::Common)
 		, Type(EItemType::Miscellaneous)
 		, Amount(1)
-		, NetDirty(0)
 	{}
+
+	FItemInfomation(const FItemInfomation& InItemInfo)
+		: ID(InItemInfo.ID)
+		, Icon(InItemInfo.Icon)
+		, Name(InItemInfo.Name)
+		, Quality(InItemInfo.Quality)
+		, Type(InItemInfo.Type)
+		, Amount(InItemInfo.Amount)
+	{}
+
+	FItemInfomation& operator=(const FItemInfomation& Other)
+	{
+		ID = Other.ID;
+		Icon = Other.Icon;
+		Name = Other.Name;
+		Quality = Other.Quality;
+		Type = Other.Type;
+
+		return *this;
+	}
 
 	void FillFrom(FInventoryItem& InventoryItem);
 	void Reset();
+
+	void PreReplicatedRemove(const struct FItemInfomationContainer& InArraySerializer) {}
+	void PostReplicatedAdd(const struct FItemInfomationContainer& InArraySerializer);
+	void PostReplicatedChange(const struct FItemInfomationContainer& InArraySerializer);
+
+	FORCEINLINE bool operator==(const FItemInfomation& rhs) const
+	{
+		return ID == rhs.ID;
+	}
+
+	FORCEINLINE bool operator!=(const FItemInfomation& rhs) const
+	{
+		return !(FItemInfomation::operator==(rhs));
+	}
+
+private:
+	void OnRep_ItemInfomation(const struct FItemInfomationContainer& InArraySerializer);
 };
+
+USTRUCT()
+struct FItemInfomationContainer : public FFastArraySerializer
+{
+	GENERATED_USTRUCT_BODY()
+
+	UPROPERTY()
+	TArray<FItemInfomation> Items;
+
+	TWeakObjectPtr<class UCSInventoryComponent> OwnerInventory;
+
+	bool NetDeltaSerialize(FNetDeltaSerializeInfo & DeltaParms)
+	{
+		return FFastArraySerializer::FastArrayDeltaSerialize<FItemInfomation, FItemInfomationContainer>(Items, DeltaParms, *this);
+	}
+
+	void AddDefaultedItems(int32 Size);
+	void SetItemInfomation(const FItemInfomation& InItemInfo, int32 SlotIndex);
+};
+
+template<>
+struct TStructOpsTypeTraits< FItemInfomationContainer > : public TStructOpsTypeTraitsBase2< FItemInfomationContainer >
+{
+	enum
+	{
+		WithNetDeltaSerializer = true,
+	};
+};
+
 
 USTRUCT(BlueprintType)
 struct FItemKey

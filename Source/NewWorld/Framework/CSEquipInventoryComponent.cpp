@@ -19,8 +19,7 @@ void UCSEquipInventoryComponent::Initialize(int32 InventorySize)
 	InventoryItems.Empty(AdjustedInventorySize);
 	InventoryItems.AddDefaulted(AdjustedInventorySize);
 
-	ItemInfomations.Empty(AdjustedInventorySize);
-	ItemInfomations.AddDefaulted(AdjustedInventorySize);
+	ItemInfomations.AddDefaultedItems(AdjustedInventorySize);
 }
 
 void UCSEquipInventoryComponent::SetOwnerCharacter(APawn* InPawn)

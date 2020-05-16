@@ -14,8 +14,7 @@ void UCSInventoryComponent::Initialize(int32 InventorySize)
 	InventoryItems.Empty(InventorySize);
 	InventoryItems.AddDefaulted(InventorySize);
 
-	ItemInfomations.Empty(InventorySize);
-	ItemInfomations.AddDefaulted(InventorySize);
+	ItemInfomations.AddDefaultedItems(InventorySize);
 }
 
 void UCSInventoryComponent::SetOwnerCharacter(APawn* InPawn)
@@ -95,7 +94,7 @@ void UCSInventoryComponent::UpdateInventoryItem(int32 SlotIndex)
 	ItemInfo.FillFrom(InventoryItems[SlotIndex]);
 
 	// for replicate to owner client
-	ItemInfomations[SlotIndex] = ItemInfo;
+	ItemInfomations.SetItemInfomation(ItemInfo, SlotIndex);
 
 	BroadcastItemInfomationUpdated();
 }
@@ -109,7 +108,7 @@ void UCSInventoryComponent::UpdateInventoryItems()
 		ItemInfo.FillFrom(InventoryItems[i]);
 
 		// for replicate to owner client
-		ItemInfomations[i] = ItemInfo;
+		ItemInfomations.SetItemInfomation(ItemInfo, i);
 	}
 
 	BroadcastItemInfomationUpdated();
@@ -135,22 +134,19 @@ bool UCSInventoryComponent::HasInventoryEmptySpace(int32& OutSlotIndex) const
 }
 
 // Server & Owning Client
-void UCSInventoryComponent::OnRep_ItemInfomation()
-{
-	BroadcastItemInfomationUpdated();
-}
-
 void UCSInventoryComponent::BroadcastItemInfomationUpdated()
 {
 	if (ItemInfomationUpdateEvent.IsBound())
 	{
-		ItemInfomationUpdateEvent.Broadcast(ItemInfomations);
+		ItemInfomationUpdateEvent.Broadcast(ItemInfomations.Items);
 	}
 }
 
 void UCSInventoryComponent::BeginPlay()
 {
 	Super::BeginPlay();	
+
+	ItemInfomations.OwnerInventory = this;
 }
 
 void UCSInventoryComponent::GetLifetimeReplicatedProps(TArray< FLifetimeProperty > & OutLifetimeProps) const

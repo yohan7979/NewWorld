@@ -106,8 +106,6 @@ void ACSProjectile::OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor,
 			{
 				FDamageEvent DamageEvent(ProjectileConfig.DamageType);
 				OtherActor->TakeDamage(ProjectileConfig.ExplosionDamage, DamageEvent, GetInstigatorController(), GetInstigator());
-
-				UE_LOG(LogTemp, Log, TEXT("OtherActor : %s, IgnoreActor : %s"), *GetNameSafe(OtherActor), *GetNameSafe(SphereComponent->MoveIgnoreActors[0]));
 			}
 		}
 	}

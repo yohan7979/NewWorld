@@ -37,8 +37,6 @@ public:
 	DECLARE_EVENT_OneParam(UCSInventoryComponent, FOnItemInfomationUpdate, const TArray<FItemInfomation>&)
 	FOnItemInfomationUpdate& OnItemInfomationUpdate() { return ItemInfomationUpdateEvent; }
 
-	UFUNCTION()
-	void OnRep_ItemInfomation();
 	void BroadcastItemInfomationUpdated();
 	
 protected:
@@ -48,8 +46,8 @@ public:
 	UPROPERTY(Transient, BlueprintReadOnly)
 	TArray<FInventoryItem> InventoryItems;
 
-	UPROPERTY(ReplicatedUsing=OnRep_ItemInfomation)
-	TArray<FItemInfomation> ItemInfomations;	// use for HUD update.
+	UPROPERTY(Replicated)
+	FItemInfomationContainer ItemInfomations;	// sync for server & client (owner only)
 
 protected:
 	FOnItemInfomationUpdate ItemInfomationUpdateEvent;
