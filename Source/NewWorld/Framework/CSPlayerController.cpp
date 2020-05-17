@@ -5,6 +5,7 @@
 #include "CSInventoryManager.h"
 #include "CSInventoryComponent.h"
 #include "CSEquipInventoryComponent.h"
+#include "CSCharacter.h"
 
 FName ACSPlayerController::InventoryComponentName(TEXT("InventoryComponent"));
 
@@ -214,4 +215,15 @@ void ACSPlayerController::ServerDropInventoryItem_Implementation(const int32 Slo
 bool ACSPlayerController::ServerDropInventoryItem_Validate(const int32 SlotIndex)
 {
 	return true;
+}
+
+class UCSAttributeComponent* ACSPlayerController::GetCurrentAttributeComponent() const
+{
+	ACSCharacter* OwnedCharacter = GetPawn() ? Cast<ACSCharacter>(GetPawn()) : nullptr;
+	if (IsValid(OwnedCharacter))
+	{
+		return OwnedCharacter->GetAttributeComponent();
+	}
+
+	return nullptr;
 }

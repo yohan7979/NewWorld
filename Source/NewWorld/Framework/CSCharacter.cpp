@@ -436,6 +436,14 @@ void ACSCharacter::SetCurrentWeapon(ACSWeapon* NewWeapon, ACSWeapon* LastWeapon)
 	}
 }
 
+void ACSCharacter::SetCharacterStatus(const FCharacterStatus& InStatus)
+{
+	if (IsValid(AttributeComponent))
+	{
+		AttributeComponent->CharacterStatus = InStatus;
+	}
+}
+
 void ACSCharacter::OnRep_Weapon(ACSWeapon* LastWeapon)
 {
 	// Assign Weapon on client

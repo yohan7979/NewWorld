@@ -64,6 +64,9 @@ public:
 	void EquipWeapon(ACSWeapon* NewWeapon);
 	void SetCurrentWeapon(ACSWeapon* NewWeapon, ACSWeapon* LastWeapon);
 
+	void SetCharacterStatus(const FCharacterStatus& InStatus);
+	class UCSAttributeComponent* GetAttributeComponent() const { return AttributeComponent; }
+
 	float BaseTurnRate;
 	float BaseLookUpRate;
 

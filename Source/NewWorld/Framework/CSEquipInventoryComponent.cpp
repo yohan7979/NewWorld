@@ -5,6 +5,7 @@
 #include "CSEquipableCharacter.h"
 #include "CSGameplayStatics.h"
 #include "CSWeapon.h"
+#include "CSAttributeComponent.h"
 
 UCSEquipInventoryComponent::UCSEquipInventoryComponent(const FObjectInitializer& ObjectInitializer) : Super(ObjectInitializer)
 {
@@ -46,6 +47,8 @@ void UCSEquipInventoryComponent::SetInventoryItem(const FInventoryItem& NewItem,
 			{
 				UpdateWeaponEquippedMesh(NewItem, SlotIndex);
 			}
+
+			UpdateItemStatus();
 		}
 	}
 }
@@ -90,5 +93,20 @@ void UCSEquipInventoryComponent::UpdateWeaponEquippedMesh(const FInventoryItem& 
 			// ÇØÁ¦
 			OwnerEquipableCharacter->EquipWeapon(nullptr);
 		}
+	}
+}
+
+void UCSEquipInventoryComponent::UpdateItemStatus()
+{
+	if (IsValid(OwnerEquipableCharacter))
+	{
+		// calculate all equipments
+		FCharacterStatus LocalCharacterStatus;
+		for (int32 i = 0; i < static_cast<int32>(EEquipmentSlot::MAX); ++i)
+		{
+			LocalCharacterStatus += InventoryItems[i].ItemStatus;
+		}
+
+		OwnerEquipableCharacter->SetCharacterStatus(LocalCharacterStatus);
 	}
 }

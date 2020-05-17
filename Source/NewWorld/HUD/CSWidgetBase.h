@@ -27,6 +27,6 @@ public:
 	class ACSPlayerController* GetOwningCSPlayer();
 
 protected:
-	UPROPERTY(Transient)
+	UPROPERTY(Transient, BlueprintReadOnly)
 	class ACSPlayerController* OwningPlayer;
 };

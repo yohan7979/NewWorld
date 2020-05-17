@@ -64,6 +64,9 @@ public:
 	UFUNCTION(Reliable, Server, WithValidation)
 	void ServerDropInventoryItem(const int32 SlotIndex);
 
+	UFUNCTION(BlueprintCallable)
+	class UCSAttributeComponent* GetCurrentAttributeComponent() const;
+
 protected:
 	virtual void SetupInputComponent() override;
 	void ToggleInventory();

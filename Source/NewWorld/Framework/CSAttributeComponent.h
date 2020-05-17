@@ -39,4 +39,7 @@ public:
 
 	UPROPERTY(Transient)
 	class ACSCharacter* OwnerCharacter;
+
+	UPROPERTY(Replicated, BlueprintReadOnly)
+	FCharacterStatus CharacterStatus;
 };

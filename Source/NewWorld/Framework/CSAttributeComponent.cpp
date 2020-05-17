@@ -7,6 +7,8 @@
 UCSAttributeComponent::UCSAttributeComponent(const FObjectInitializer& ObjectInitializer) : Super(ObjectInitializer)
 {
 	MaxHealth = 200.f;
+
+	SetIsReplicated(true);
 }
 
 void UCSAttributeComponent::BeginPlay()
@@ -60,4 +62,5 @@ void UCSAttributeComponent::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
 
 	DOREPLIFETIME(UCSAttributeComponent, Health);
+	DOREPLIFETIME(UCSAttributeComponent, CharacterStatus);
 }

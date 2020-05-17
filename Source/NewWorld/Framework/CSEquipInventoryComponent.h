@@ -23,6 +23,7 @@ public:
 protected:
 	virtual void UpdateEquippedMesh(const FInventoryItem& NewItem, int32 SlotIndex);
 	virtual void UpdateWeaponEquippedMesh(const FInventoryItem& NewItem, int32 SlotIndex);
+	virtual void UpdateItemStatus();
 
 	UPROPERTY(Transient)
 	ACSEquipableCharacter* OwnerEquipableCharacter;

@@ -62,6 +62,57 @@ struct FParticleComponentSet
 	{}
 };
 
+
+USTRUCT(BlueprintType)
+struct FCharacterStatus
+{
+	GENERATED_USTRUCT_BODY()
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
+	int32 Strength;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
+	int32 Dexterity;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
+	int32 Intelligence;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
+	int32 Armor;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
+	int32 Health;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
+	int32 Damage;
+
+	FCharacterStatus();
+	FCharacterStatus(const FCharacterStatus& InStatus);
+	FCharacterStatus& operator=(const FCharacterStatus& InStatus)
+	{
+		Strength = InStatus.Strength;
+		Dexterity = InStatus.Dexterity;
+		Intelligence = InStatus.Intelligence;
+		Armor = InStatus.Armor;
+		Health = InStatus.Health;
+		Damage = InStatus.Damage;
+
+		return *this;
+	}
+
+	FCharacterStatus& operator+=(const FCharacterStatus& rhs)
+	{
+		Strength += rhs.Strength;
+		Dexterity += rhs.Dexterity;
+		Intelligence += rhs.Intelligence;
+		Armor += rhs.Armor;
+		Health += rhs.Health;
+		Damage += rhs.Damage;
+
+		return *this;
+	}
+};
+
 UENUM(BlueprintType)
 enum class EItemQuality : uint8
 {
@@ -161,6 +212,9 @@ struct FInventoryItem : public FTableRowBase
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
 	TSoftClassPtr<class ACSWeapon> WeaponClass;
 
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
+	FCharacterStatus ItemStatus;
+
 	FInventoryItem()
 		: ID(NAME_None)
 		, Icon(nullptr)
@@ -177,6 +231,7 @@ struct FInventoryItem : public FTableRowBase
 		, EquipmentType(EEquipmentType::Armor)
 		, EquipmentSlot(EEquipmentSlot::Head)
 		, WeaponClass(nullptr)
+		, ItemStatus()
 	{}
 };
 
@@ -203,24 +258,8 @@ struct FItemInfomation : public FFastArraySerializerItem
 	UPROPERTY(BlueprintReadOnly)
 	int32 Amount;
 
-	FItemInfomation()
-		: ID(NAME_None)
-		, Icon(nullptr)
-		, Name(NAME_None)
-		, Quality(EItemQuality::Common)
-		, Type(EItemType::Miscellaneous)
-		, Amount(1)
-	{}
-
-	FItemInfomation(const FItemInfomation& InItemInfo)
-		: ID(InItemInfo.ID)
-		, Icon(InItemInfo.Icon)
-		, Name(InItemInfo.Name)
-		, Quality(InItemInfo.Quality)
-		, Type(InItemInfo.Type)
-		, Amount(InItemInfo.Amount)
-	{}
-
+	FItemInfomation();
+	FItemInfomation(const FItemInfomation& InItemInfo);
 	FItemInfomation& operator=(const FItemInfomation& Other)
 	{
 		ID = Other.ID;
@@ -232,13 +271,6 @@ struct FItemInfomation : public FFastArraySerializerItem
 		return *this;
 	}
 
-	void FillFrom(FInventoryItem& InventoryItem);
-	void Reset();
-
-	void PreReplicatedRemove(const struct FItemInfomationContainer& InArraySerializer) {}
-	void PostReplicatedAdd(const struct FItemInfomationContainer& InArraySerializer);
-	void PostReplicatedChange(const struct FItemInfomationContainer& InArraySerializer);
-
 	FORCEINLINE bool operator==(const FItemInfomation& rhs) const
 	{
 		return ID == rhs.ID;
@@ -248,6 +280,14 @@ struct FItemInfomation : public FFastArraySerializerItem
 	{
 		return !(FItemInfomation::operator==(rhs));
 	}
+
+	void FillFrom(FInventoryItem& InventoryItem);
+	void Reset();
+
+	void PreReplicatedRemove(const struct FItemInfomationContainer& InArraySerializer) {}
+	void PostReplicatedAdd(const struct FItemInfomationContainer& InArraySerializer);
+	void PostReplicatedChange(const struct FItemInfomationContainer& InArraySerializer);
+	FString GetDebugString();
 
 private:
 	void OnRep_ItemInfomation(const struct FItemInfomationContainer& InArraySerializer);
