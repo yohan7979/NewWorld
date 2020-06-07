@@ -53,6 +53,7 @@ void ACSCharacter::BeginPlay()
 {
 	Super::BeginPlay();
 	
+	PressedJumpEvent.AddUObject(this, &ACSCharacter::DoRoll);
 }
 
 void ACSCharacter::EndPlay(const EEndPlayReason::Type EndPlayReason)
@@ -62,7 +63,9 @@ void ACSCharacter::EndPlay(const EEndPlayReason::Type EndPlayReason)
 	FTimerManager& TimerManager = GetWorldTimerManager();
 	TimerManager.ClearAllTimersForObject(this);
 	TimerManager.ClearTimer(TimerHandle_OrientRotationMode);
-	
+	TimerManager.ClearTimer(TimerHandle_RollEnd);
+
+	PressedJumpEvent.RemoveAll(this);
 }
 
 void ACSCharacter::PostInitializeComponents()
@@ -160,19 +163,50 @@ void ACSCharacter::LookUp(float Value)
 
 void ACSCharacter::DoJump(bool bPressed)
 {
-	if (bPressed)
+	if (PressedJumpEvent.IsBound())
 	{
-		Jump();
+		PressedJumpEvent.Broadcast(bPressed);
 	}
 	else
 	{
-		StopJumping();
+		bPressed ? Jump() : StopJumping();
 	}
+}
+
+void ACSCharacter::DoRoll(bool bPressed)
+{
+	if (bPressed && CanRoll())
+	{
+		SetRollState(true);
+		
+		const float DesiredPlayTime = PlayAnimMontage(RollAnim);
+
+		FTimerManager& TimerManager = GetWorldTimerManager();
+		if (TimerHandle_RollEnd.IsValid())
+		{
+			TimerManager.ClearTimer(TimerHandle_RollEnd);
+		}
+
+		TimerManager.SetTimer(TimerHandle_RollEnd, [this]() 
+		{ 
+			SetRollState(false); 
+		}, DesiredPlayTime, false);
+	}
+}
+
+void ACSCharacter::SetRollState(bool bRoll)
+{
+	bIsRolling = bRoll;
+}
+
+bool ACSCharacter::CanRoll() const
+{
+	return GetCharacterMovement()->IsMovingOnGround() && !bIsRolling;
 }
 
 void ACSCharacter::SetOrientRotationMode(bool bOrientRotationToMovement, float DelayTime /*= 0.f*/)
 {
-	auto SetOrientModeRamda = [&](bool bEnable)
+	auto SetOrientModeLambda = [this](bool bEnable)
 	{
 		GetCharacterMovement()->bOrientRotationToMovement = bEnable;
 		GetCharacterMovement()->bUseControllerDesiredRotation = !bEnable;
@@ -186,12 +220,12 @@ void ACSCharacter::SetOrientRotationMode(bool bOrientRotationToMovement, float D
 
 	if (DelayTime > 0.f)
 	{
-		FTimerDelegate TimerDelegate = FTimerDelegate::CreateLambda(SetOrientModeRamda, bOrientRotationToMovement);
+		FTimerDelegate TimerDelegate = FTimerDelegate::CreateLambda(SetOrientModeLambda, bOrientRotationToMovement);
 		TimerManager.SetTimer(TimerHandle_OrientRotationMode, TimerDelegate, DelayTime, false);	
 	}
 	else
 	{
-		SetOrientModeRamda(bOrientRotationToMovement);
+		SetOrientModeLambda(bOrientRotationToMovement);
 	}
 
 }

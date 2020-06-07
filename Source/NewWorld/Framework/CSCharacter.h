@@ -38,6 +38,9 @@ public:
 	void LookUp(float Value);
 
 	void DoJump(bool bPressed);
+	void DoRoll(bool bPressed);
+	void SetRollState(bool bRoll);
+	bool CanRoll() const;
 	void SetOrientRotationMode(bool bOrientRotationToMovement, float DelayTime = 0.f);
 	void OnStartFire();
 	void OnStopFire();
@@ -97,8 +100,18 @@ protected:
 	UPROPERTY(EditDefaultsOnly, Category = "Animation")
 	FCharacterAnimGraph DefaultCharacterAnimGraph;
 
+	UPROPERTY(EditDefaultsOnly, Category = "Animation")
+	UAnimMontage* RollAnim;
+
 	UPROPERTY(EditDefaultsOnly, Category = "Weapons")
 	TArray<TSubclassOf<ACSWeapon> > DefaultWeaponInventoryClasses;
 
 	FTimerHandle TimerHandle_OrientRotationMode;
+	FTimerHandle TimerHandle_RollEnd;
+
+	DECLARE_EVENT_OneParam(ACSCharacter, FOnPressedJumpEvent, bool)
+	FOnPressedJumpEvent& OnPressedJumpEvent() { return PressedJumpEvent; }
+
+	FOnPressedJumpEvent PressedJumpEvent;
+	bool bIsRolling;
 };
