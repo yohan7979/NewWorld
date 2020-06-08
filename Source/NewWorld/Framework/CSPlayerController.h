@@ -26,6 +26,12 @@ public:
 	virtual void AcknowledgePossession(class APawn* P) override;
 	virtual void ServerAcknowledgePossession_Implementation(class APawn* P) override;
 
+	virtual bool IsGameInputAllowed() const;
+
+	void SetIgnoreFireInput(bool bNewFireInput);
+	void ResetIgnoreFireInput();
+	bool IsFireInputIgnored() const;
+
 	DECLARE_EVENT_OneParam(ACSPlayerController, FOnAcknowledgePossession, APawn*)
 	FOnAcknowledgePossession& OnAcknowledgePossession() { return AcknowledgePossessionEvent; }
 
@@ -84,4 +90,6 @@ public:
 
 private:
 	FOnAcknowledgePossession AcknowledgePossessionEvent;
+	
+	uint8 IgnoreFireInput;
 };

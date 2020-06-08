@@ -41,6 +41,13 @@ public:
 	void DoRoll(bool bPressed);
 	void SetRollState(bool bRoll);
 	bool CanRoll() const;
+
+	UFUNCTION(Server, Reliable, WithValidation)
+	void ServerStartRoll();
+
+	UFUNCTION()
+	void OnRep_IsRolling();
+
 	void SetOrientRotationMode(bool bOrientRotationToMovement, float DelayTime = 0.f);
 	void OnStartFire();
 	void OnStopFire();
@@ -113,5 +120,7 @@ protected:
 	FOnPressedJumpEvent& OnPressedJumpEvent() { return PressedJumpEvent; }
 
 	FOnPressedJumpEvent PressedJumpEvent;
+
+	UPROPERTY(ReplicatedUsing=OnRep_IsRolling)
 	bool bIsRolling;
 };

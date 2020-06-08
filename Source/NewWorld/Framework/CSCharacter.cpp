@@ -177,31 +177,68 @@ void ACSCharacter::DoRoll(bool bPressed)
 {
 	if (bPressed && CanRoll())
 	{
-		SetRollState(true);
-		
-		const float DesiredPlayTime = PlayAnimMontage(RollAnim);
-
-		FTimerManager& TimerManager = GetWorldTimerManager();
-		if (TimerHandle_RollEnd.IsValid())
+		if (Role < ROLE_Authority)
 		{
-			TimerManager.ClearTimer(TimerHandle_RollEnd);
+			ServerStartRoll();
 		}
 
-		TimerManager.SetTimer(TimerHandle_RollEnd, [this]() 
-		{ 
-			SetRollState(false); 
-		}, DesiredPlayTime, false);
+		SetRollState(true);
+
+		if (RollAnim)
+		{
+			const float DesiredPlayTime = PlayAnimMontage(RollAnim) * (1.f / RollAnim->RateScale);
+
+			FTimerManager& TimerManager = GetWorldTimerManager();
+			if (TimerHandle_RollEnd.IsValid())
+			{
+				TimerManager.ClearTimer(TimerHandle_RollEnd);
+			}
+
+			TimerManager.SetTimer(TimerHandle_RollEnd, [this]()
+			{
+				SetRollState(false);
+			}, DesiredPlayTime, false);
+		}
 	}
 }
 
 void ACSCharacter::SetRollState(bool bRoll)
 {
+	ACSPlayerController* PC = Cast<ACSPlayerController>(GetController());
+	if (PC && PC->IsLocalController())
+	{
+		PC->SetIgnoreFireInput(bRoll);
+
+		if (bRoll && Weapon)
+		{
+			Weapon->StopFire(0);
+		}
+	}
+
 	bIsRolling = bRoll;
 }
 
 bool ACSCharacter::CanRoll() const
 {
 	return GetCharacterMovement()->IsMovingOnGround() && !bIsRolling;
+}
+
+void ACSCharacter::OnRep_IsRolling()
+{
+	if (bIsRolling)
+	{
+		PlayAnimMontage(RollAnim);
+	}
+}
+
+void ACSCharacter::ServerStartRoll_Implementation()
+{
+	DoRoll(true);
+}
+
+bool ACSCharacter::ServerStartRoll_Validate()
+{
+	return true;
 }
 
 void ACSCharacter::SetOrientRotationMode(bool bOrientRotationToMovement, float DelayTime /*= 0.f*/)
@@ -490,5 +527,6 @@ void ACSCharacter::GetLifetimeReplicatedProps(TArray< FLifetimeProperty > & OutL
 
 	DOREPLIFETIME(ACSCharacter, Weapon);
 	DOREPLIFETIME_CONDITION(ACSCharacter, WeaponInventory, COND_OwnerOnly);
+	DOREPLIFETIME_CONDITION(ACSCharacter, bIsRolling, COND_SkipOwner);
 }
 

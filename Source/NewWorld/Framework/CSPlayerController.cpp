@@ -38,7 +38,7 @@ void ACSPlayerController::StartFire(uint8 FireModeNum /* = 0 */)
 		// if(CanBeSpectator)
 		ServerViewNextPlayer();
 	}
-	else if (GetPawn() && !bCinematicMode && !GetWorld()->bPlayersOnly)
+	else if (GetPawn() && IsGameInputAllowed() && !IsFireInputIgnored())
 	{
 		GetPawn()->PawnStartFire(FireModeNum);
 	}
@@ -62,6 +62,26 @@ void ACSPlayerController::AcknowledgePossession(class APawn* P)
 	{
 		AcknowledgePossessionEvent.Broadcast(P);
 	}
+}
+
+bool ACSPlayerController::IsGameInputAllowed() const
+{
+	return !bCinematicMode && !GetWorld()->bPlayersOnly;
+}
+
+void ACSPlayerController::SetIgnoreFireInput(bool bNewFireInput)
+{
+	IgnoreFireInput = FMath::Max(IgnoreFireInput + (bNewFireInput ? +1 : -1), 0);
+}
+
+void ACSPlayerController::ResetIgnoreFireInput()
+{
+	IgnoreFireInput = 0;
+}
+
+bool ACSPlayerController::IsFireInputIgnored() const
+{
+	return IgnoreFireInput > 0;
 }
 
 void ACSPlayerController::ServerAcknowledgePossession_Implementation(class APawn* P)
