@@ -6,6 +6,7 @@
 #include "Particles/ParticleSystem.h"
 #include "Engine/DataTable.h"
 #include "TimerManager.h"
+#include "CSModifierProperties.h"
 #include "CSTypes.generated.h"
 
 DECLARE_DELEGATE_OneParam(FBindIntegerDelegate, int32)

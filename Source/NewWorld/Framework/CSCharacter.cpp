@@ -182,7 +182,11 @@ void ACSCharacter::DoRoll(bool bPressed)
 			ServerStartRoll();
 		}
 
-		SetRollState(true);
+		auto RollStateLambda = [this](bool bInRollState) {
+			SetRollState(bInRollState);
+		};
+
+		RollStateLambda(true);
 
 		if (RollAnim)
 		{
@@ -194,10 +198,7 @@ void ACSCharacter::DoRoll(bool bPressed)
 				TimerManager.ClearTimer(TimerHandle_RollEnd);
 			}
 
-			TimerManager.SetTimer(TimerHandle_RollEnd, [this]()
-			{
-				SetRollState(false);
-			}, DesiredPlayTime, false);
+			TimerManager.SetTimer(TimerHandle_RollEnd, FTimerDelegate::CreateLambda(RollStateLambda, false), DesiredPlayTime, false);
 		}
 	}
 }
