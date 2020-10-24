@@ -6,7 +6,7 @@
 
 UCSInventoryComponent::UCSInventoryComponent(const FObjectInitializer& ObjectInitializer) : Super(ObjectInitializer)
 {
-	SetIsReplicated(true);
+	SetIsReplicatedByDefault(true);
 }
 
 void UCSInventoryComponent::Initialize(int32 InventorySize)

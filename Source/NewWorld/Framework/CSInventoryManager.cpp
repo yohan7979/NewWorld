@@ -152,12 +152,12 @@ bool UCSInventoryManager::TryToGiveItem(const FName& ItemID, int32& Amount)
 	return false;
 }
 
-int32 UCSInventoryManager::GetFunctionCallspace(UFunction* Function, void* Parameters, FFrame* Stack)
+int32 UCSInventoryManager::GetFunctionCallspace(UFunction* Function, FFrame* Stack)
 {
 	ACSPlayerController* PC = GetOwningPlayer();
 	if (IsValid(PC))
 	{
-		return PC->GetFunctionCallspace(Function, Parameters, Stack);
+		return PC->GetFunctionCallspace(Function, Stack);
 	}
 
 	return FunctionCallspace::Local;

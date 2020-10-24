@@ -2,13 +2,13 @@
 
 
 #include "CSWidget_Inventory.h"
-#include "Framework/CSPlayerController.h"
-#include "Framework/CSInventoryManager.h"
+#include "NewWorld/Framework/CSPlayerController.h"
+#include "NewWorld/Framework/CSInventoryManager.h"
 #include "CSWidget_InventorySlot.h"
-#include "Framework/CSInventoryComponent.h"
+#include "NewWorld/Framework/CSInventoryComponent.h"
 #include "Components/UniformGridSlot.h"
-#include "Framework/CSCharacter.h"
-#include "Framework/CSGameplayStatics.h"
+#include "NewWorld/Framework/CSCharacter.h"
+#include "NewWorld/Framework/CSGameplayStatics.h"
 
 UCSWidget_Inventory::UCSWidget_Inventory(const FObjectInitializer& ObjectInitializer) : Super(ObjectInitializer)
 {

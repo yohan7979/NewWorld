@@ -2,8 +2,8 @@
 
 
 #include "CSGameplayStatics.h"
-#include "WidgetBlueprintLibrary.h"
 #include "CSPlayerController.h"
+#include <Blueprint/WidgetBlueprintLibrary.h>
 
 UCSGameplayStatics::UCSGameplayStatics(const FObjectInitializer& ObjectInitializer) : Super(ObjectInitializer)
 {

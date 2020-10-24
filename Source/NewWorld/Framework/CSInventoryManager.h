@@ -30,7 +30,7 @@ public:
 	virtual bool TryToGiveItem(const FName& ItemID, int32& Amount);
 
 	// UObject Interface Begin //
-	virtual int32 GetFunctionCallspace(UFunction* Function, void* Parameters, FFrame* Stack) override;
+	virtual int32 GetFunctionCallspace(UFunction* Function, FFrame* Stack) override;
 	virtual bool CallRemoteFunction(UFunction* Function, void* Parms, struct FOutParmRec* OutParms, FFrame* Stack) override;
 	virtual bool IsSupportedForNetworking() const override;
 	// UObject Interface End //

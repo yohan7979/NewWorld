@@ -8,7 +8,7 @@ UCSAttributeComponent::UCSAttributeComponent(const FObjectInitializer& ObjectIni
 {
 	MaxHealth = 200.f;
 
-	SetIsReplicated(true);
+	SetIsReplicatedByDefault(true);
 }
 
 void UCSAttributeComponent::BeginPlay()

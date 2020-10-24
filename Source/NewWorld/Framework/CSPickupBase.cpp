@@ -77,7 +77,7 @@ bool ACSPickupBase::CanBePickedUp(class ACSCharacter* Character)
 
 void ACSPickupBase::PickedUpBy(class ACSCharacter* Character)
 {
-	if (Role == ROLE_Authority)
+	if (GetLocalRole() == ROLE_Authority)
 	{
 		PreGiveTo(Character);
 		GiveTo(Character);

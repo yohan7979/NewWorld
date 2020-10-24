@@ -10,5 +10,7 @@ public class NewWorldEditorTarget : TargetRules
 		Type = TargetType.Editor;
 
 		ExtraModuleNames.AddRange( new string[] { "NewWorld" } );
-	}
+
+        DefaultBuildSettings = BuildSettingsVersion.V2;
+    }
 }

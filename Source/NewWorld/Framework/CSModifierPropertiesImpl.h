@@ -3,7 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "Framework/CSModifierProperties.h"
+#include "NewWorld/Framework/CSModifierProperties.h"
 #include "CSModifierPropertiesImpl.generated.h"
 
 /**

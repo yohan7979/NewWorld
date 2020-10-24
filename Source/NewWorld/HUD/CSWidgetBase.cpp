@@ -2,9 +2,9 @@
 
 
 #include "CSWidgetBase.h"
-#include "Framework/CSPlayerController.h"
-#include "Framework/CSInventoryManager.h"
-#include "Framework/CSInventoryComponent.h"
+#include "NewWorld/Framework/CSPlayerController.h"
+#include "NewWorld/Framework/CSInventoryManager.h"
+#include "NewWorld/Framework/CSInventoryComponent.h"
 
 UCSWidgetBase::UCSWidgetBase(const FObjectInitializer& ObjectInitializer) : Super(ObjectInitializer)
 {

@@ -3,7 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "Framework/CSCharacter.h"
+#include "NewWorld/Framework/CSCharacter.h"
 #include "CSEquipableCharacter.generated.h"
 
 /**

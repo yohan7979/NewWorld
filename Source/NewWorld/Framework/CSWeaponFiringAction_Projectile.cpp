@@ -62,10 +62,10 @@ void UCSWeaponFiringAction_Projectile::SpawnProjectile(class ACSWeapon* OwnerWea
 {
 	FTransform SpawnTM(FRotator::ZeroRotator, Origin);
 
-	ACSProjectile* Projectile = Cast<ACSProjectile>(UGameplayStatics::BeginDeferredActorSpawnFromClass(this, ProjectileWeaponConfig.ProjectileClass, SpawnTM, ESpawnActorCollisionHandlingMethod::AlwaysSpawn, OwnerWeapon->Instigator));
+	ACSProjectile* Projectile = Cast<ACSProjectile>(UGameplayStatics::BeginDeferredActorSpawnFromClass(this, ProjectileWeaponConfig.ProjectileClass, SpawnTM, ESpawnActorCollisionHandlingMethod::AlwaysSpawn, OwnerWeapon->GetInstigator()));
 	if (Projectile)
 	{
-		Projectile->Instigator = OwnerWeapon->Instigator;
+		Projectile->SetInstigator(OwnerWeapon->GetInstigator());
 		Projectile->SetOwner(OwnerWeapon);
 		Projectile->Init(ShotDirection, ProjectileWeaponConfig);
 

@@ -3,7 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "HUD/CSWidgetBase.h"
+#include "NewWorld/HUD/CSWidgetBase.h"
 #include "Components/GridPanel.h"
 #include "CSWidget_Container.generated.h"
 

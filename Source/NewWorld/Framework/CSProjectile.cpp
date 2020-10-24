@@ -39,7 +39,7 @@ void ACSProjectile::BeginPlay()
 	if (SphereComponent)
 	{
 		SphereComponent->OnComponentHit.AddDynamic(this, &ACSProjectile::OnHit);
-		SphereComponent->MoveIgnoreActors.Add(Instigator);
+		SphereComponent->MoveIgnoreActors.Add(GetInstigator());
 	}
 
 	PlayParticleEffect(ParticleSet.SpawnParticle);
@@ -100,7 +100,7 @@ void ACSProjectile::OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor,
 	{
 		Explode();
 
-		if (Role == ROLE_Authority)
+		if (GetLocalRole() == ROLE_Authority)
 		{
 			if (IsValid(OtherActor))
 			{

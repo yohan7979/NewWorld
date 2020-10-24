@@ -3,7 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "Framework/CSInventoryComponent.h"
+#include "NewWorld/Framework/CSInventoryComponent.h"
 #include "CSEquipInventoryComponent.generated.h"
 
 class ACSEquipableCharacter;

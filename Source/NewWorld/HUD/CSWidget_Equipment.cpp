@@ -2,9 +2,9 @@
 
 
 #include "CSWidget_Equipment.h"
-#include "Framework/CSPlayerController.h"
-#include "Framework/CSInventoryManager.h"
-#include "Framework/CSGameplayStatics.h"
+#include "NewWorld/Framework/CSPlayerController.h"
+#include "NewWorld/Framework/CSInventoryManager.h"
+#include "NewWorld/Framework/CSGameplayStatics.h"
 #include "CSWidget_InventorySlot.h"
 
 UCSWidget_Equipment::UCSWidget_Equipment(const FObjectInitializer& ObjectInitializer) : Super(ObjectInitializer)

@@ -4,7 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
-#include "Interface/CSInteractionInterface.h"
+#include "NewWorld/Interface/CSInteractionInterface.h"
 #include "CSPickupBase.generated.h"
 
 UCLASS(Abstract, NotBlueprintable)

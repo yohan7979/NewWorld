@@ -10,6 +10,8 @@
 // Forward Declaration
 class ACSWeapon;
 
+DECLARE_MULTICAST_DELEGATE_FiveParams(FOnTakeDamageEvent, class ACSCharacter* /*Victim*/, float /*Damage*/, struct FDamageEvent const& /*DamageEvent*/, AController* /*EventInstigator*/, AActor* /*DamageCauser*/)
+
 UCLASS()
 class NEWWORLD_API ACSCharacter : public ACharacter
 {
@@ -28,6 +30,7 @@ public:
 	virtual void PostInitializeComponents() override;
 	virtual void Tick(float DeltaTime) override;
 	virtual void Destroyed() override;
+	virtual float TakeDamage(float DamageAmount, struct FDamageEvent const& DamageEvent, class AController* EventInstigator, AActor* DamageCauser) override;
 
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
@@ -80,6 +83,11 @@ public:
 	float BaseTurnRate;
 	float BaseLookUpRate;
 
+	DECLARE_EVENT_OneParam(ACSCharacter, FOnPressedJumpEvent, bool)
+	FOnPressedJumpEvent& OnPressedJumpEvent() { return PressedJumpEvent; }
+
+	static FOnTakeDamageEvent OnTakeDamageEvent;
+
 	UFUNCTION()
 	void OnRep_Weapon(ACSWeapon* LastWeapon);
 
@@ -115,9 +123,6 @@ protected:
 
 	FTimerHandle TimerHandle_OrientRotationMode;
 	FTimerHandle TimerHandle_RollEnd;
-
-	DECLARE_EVENT_OneParam(ACSCharacter, FOnPressedJumpEvent, bool)
-	FOnPressedJumpEvent& OnPressedJumpEvent() { return PressedJumpEvent; }
 
 	FOnPressedJumpEvent PressedJumpEvent;
 

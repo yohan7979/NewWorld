@@ -194,7 +194,7 @@ void ACSWeapon::SetOwningPawn(ACSCharacter* NewOwner)
 {
 	if (GetOwner() != NewOwner)
 	{
-		Instigator = NewOwner;
+		SetInstigator(NewOwner);
 		SetOwner(NewOwner);
 		SetCachedCharacter(NewOwner);
 	}
@@ -227,7 +227,7 @@ void ACSWeapon::StartFire(const uint8 FireModeNum)
 		// @TODO : SetPendingFire
 		SetWeaponState(EWeaponState::Firing);
 
-		if (Role < ROLE_Authority)
+		if (GetLocalRole() < ROLE_Authority)
 		{
 			ServerStartFire(FireModeNum);
 		}
@@ -242,7 +242,7 @@ void ACSWeapon::StopFire(const uint8 FireModeNum)
 	{
 		SetWeaponState(EWeaponState::Active);
 
-		if (Role < ROLE_Authority)
+		if (GetLocalRole() < ROLE_Authority)
 		{
 			ServerStopFire(FireModeNum);
 		}
@@ -434,7 +434,7 @@ FVector ACSWeapon::GetCameraStartLocation(const FVector& AimDir) const
 		PC->GetPlayerViewPoint(OutLocation, UnusedRotation);
 
 		// Adjust trace so there is nothing blocking the ray between the camera and the pawn, and calculate distance from adjusted start
-		OutLocation = OutLocation + AimDir * ((Instigator->GetActorLocation() - OutLocation) | AimDir);
+		OutLocation = OutLocation + AimDir * ((GetInstigator()->GetActorLocation() - OutLocation) | AimDir);
 
 		return OutLocation;
 	}
@@ -456,9 +456,9 @@ FVector ACSWeapon::GetAdjustedAim() const
 
 		OutAimVector = OutRotation.Vector();
 	}
-	else if (Instigator)
+	else if (GetInstigator())
 	{
-		OutAimVector = Instigator->GetBaseAimRotation().Vector();
+		OutAimVector = GetInstigator()->GetBaseAimRotation().Vector();
 	}
 
 	return OutAimVector;
@@ -482,7 +482,7 @@ bool ACSWeapon::WeaponTrace(const FVector& StartTrace, const FVector& EndTrace, 
 {
 	FCollisionQueryParams CollisionParams(SCENE_QUERY_STAT(WeaponTrace), true);
 	CollisionParams.AddIgnoredActor(this);
-	CollisionParams.AddIgnoredActor(Instigator);
+	CollisionParams.AddIgnoredActor(GetInstigator());
 	CollisionParams.bReturnPhysicalMaterial = true;
 
 	GetWorld()->LineTraceSingleByChannel(OutHit, StartTrace, EndTrace, COLLISION_WEAPON, CollisionParams);

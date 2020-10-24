@@ -12,8 +12,11 @@
 #include "CSPlayerController.h"
 #include "Components/SphereComponent.h"
 #include "Components/CapsuleComponent.h"
-#include "Interface/CSInteractionInterface.h"
+#include "NewWorld/Interface/CSInteractionInterface.h"
 #include "CSAttributeComponent.h"
+
+
+FOnTakeDamageEvent ACSCharacter::OnTakeDamageEvent;
 
 ACSCharacter::ACSCharacter(const FObjectInitializer& ObjectInitializer)
 {
@@ -72,7 +75,7 @@ void ACSCharacter::PostInitializeComponents()
 {
 	Super::PostInitializeComponents();
 
-	if (Role == ROLE_Authority)
+	if (GetLocalRole() == ROLE_Authority)
 	{
 		SpawnDefaultWeaponInventory();
 	}
@@ -89,10 +92,25 @@ void ACSCharacter::Destroyed()
 {
 	Super::Destroyed();
 
-	if (Role == ROLE_Authority)
+	if (GetLocalRole() == ROLE_Authority)
 	{
 		DestoryWeaponInventory();
 	}
+}
+
+float ACSCharacter::TakeDamage(float DamageAmount, struct FDamageEvent const& DamageEvent, class AController* EventInstigator, AActor* DamageCauser)
+{
+	float ResultDamage = Super::TakeDamage(DamageAmount, DamageEvent, EventInstigator, DamageCauser);
+	
+	if (ResultDamage != 0.f)
+	{
+		if (ACSCharacter::OnTakeDamageEvent.IsBound())
+		{
+			ACSCharacter::OnTakeDamageEvent.Broadcast(this, DamageAmount, DamageEvent, EventInstigator, DamageCauser);
+		}
+	}
+
+	return ResultDamage;
 }
 
 // Called to bind functionality to input
@@ -177,7 +195,7 @@ void ACSCharacter::DoRoll(bool bPressed)
 {
 	if (bPressed && CanRoll())
 	{
-		if (Role < ROLE_Authority)
+		if (GetLocalRole() < ROLE_Authority)
 		{
 			ServerStartRoll();
 		}
@@ -371,7 +389,7 @@ AActor* ACSCharacter::GetNearestInteractActor()
 
 void ACSCharacter::SpawnDefaultWeaponInventory()
 {
-	if (Role < ROLE_Authority)
+	if (GetLocalRole() < ROLE_Authority)
 	{
 		return;
 	}
@@ -391,7 +409,7 @@ void ACSCharacter::SpawnDefaultWeaponInventory()
 
 void ACSCharacter::DestoryWeaponInventory()
 {
-	if (Role < ROLE_Authority)
+	if (GetLocalRole() < ROLE_Authority)
 	{
 		return;
 	}
@@ -467,7 +485,7 @@ bool ACSCharacter::ServerEquipWeapon_Validate(ACSWeapon* NewWeapon)
 
 void ACSCharacter::EquipWeapon(ACSWeapon* NewWeapon)
 {
-	if (Role == ROLE_Authority)
+	if (GetLocalRole() == ROLE_Authority)
 	{
 		SetCurrentWeapon(NewWeapon, Weapon);
 	}

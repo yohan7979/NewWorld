@@ -26,6 +26,7 @@ ACSEquipableCharacter::ACSEquipableCharacter(const FObjectInitializer& ObjectIni
 		{
 			TargetMeshComp->SetupAttachment(GetMesh());
 			TargetMeshComp->SetComponentTickEnabled(false);
+			TargetMeshComp->SetMasterPoseComponent(GetMesh());
 		}
 	}
 }

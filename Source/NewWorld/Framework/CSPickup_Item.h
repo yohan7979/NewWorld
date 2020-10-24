@@ -3,7 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "Framework/CSPickupBase.h"
+#include "NewWorld/Framework/CSPickupBase.h"
 #include "CSTypes.h"
 #include "CSPickup_Item.generated.h"
 

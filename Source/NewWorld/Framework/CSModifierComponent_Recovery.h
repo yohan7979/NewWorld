@@ -3,7 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "Framework/CSModifierComponent.h"
+#include "NewWorld/Framework/CSModifierComponent.h"
 #include "CSModifierComponent_Recovery.generated.h"
 
 /**

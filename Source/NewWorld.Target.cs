@@ -9,6 +9,6 @@ public class NewWorldTarget : TargetRules
 	{
 		Type = TargetType.Game;
 
-		ExtraModuleNames.AddRange( new string[] { "NewWorld" } );
-	}
+        ExtraModuleNames.AddRange(new string[] { "NewWorld" });
+    }
 }
