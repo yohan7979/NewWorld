@@ -33,7 +33,7 @@ void UCSWeaponFiringAction::StopFire()
 
 bool UCSWeaponFiringAction::CanRefire()
 {
-	return false;
+	return true;
 }
 
 void UCSWeaponFiringAction::FireShot()

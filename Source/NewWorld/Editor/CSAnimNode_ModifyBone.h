@@ -19,17 +19,13 @@ struct FBoneAndCurve
 	GENERATED_USTRUCT_BODY()
 
 	UPROPERTY(EditAnywhere)
-	int32 Direction;
-	
-	UPROPERTY(EditAnywhere)
 	FName BoneName;
 
 	UPROPERTY(EditAnywhere)
 	TSoftObjectPtr<UCurveVector> Curve;
 
 	FBoneAndCurve()
-		: Direction(0)
-		, BoneName(NAME_None)
+		: BoneName(NAME_None)
 		, Curve(nullptr)
 	{}
 };
@@ -64,6 +60,7 @@ public:
 	virtual bool IsValidToEvaluate(const USkeleton* Skeleton, const FBoneContainer& RequiredBones) override;
 	void OnTakeDamage(class ACSCharacter* Victim, float DamageAmount, struct FDamageEvent const& DamageEvent, class AController* EventInstigator, AActor* DamageCauser);
 	void UpdateMaxTime();
+	void UpdateHitDirection(AActor* Owner, AActor* Instigator);
 
 public:
 	UPROPERTY(EditAnywhere, Category = BoneAndCurve)
@@ -76,5 +73,8 @@ private:
 	float fElapsedTime;
 	float fMaxTime;
 	bool m_bIsActive;
-	FDelegateHandle OnTakeDamageHandle;
+	float fFrontRate;
+	float fSideRate;
+	float fAngle;
+	FDelegateHandle OnTakeDamageHandle;	
 };

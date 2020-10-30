@@ -351,3 +351,46 @@ enum class EInputMode : uint8
 	GameAndUI,
 	GameOnly,
 };
+
+USTRUCT()
+struct FTakeHitInfo
+{
+	GENERATED_USTRUCT_BODY()
+
+	UPROPERTY()
+	float ActualDamage;
+
+	UPROPERTY()
+	UClass* DamageTypeClass;
+
+	UPROPERTY()
+	TWeakObjectPtr<class ACSCharacter> PawnInstigator;
+
+	UPROPERTY()
+	TWeakObjectPtr<class AActor> DamageCauser;
+	
+	UPROPERTY()
+	int32 DamageEventClassID;
+
+	UPROPERTY()
+	bool bKilled;
+
+private:
+	UPROPERTY()
+	FDamageEvent GeneralDamageEvent;
+
+	UPROPERTY()
+	FPointDamageEvent PointDamageEvent;
+
+	UPROPERTY()
+	FRadialDamageEvent RadialDamageEvent;
+
+	uint8 EnsureReplicationDirty;
+
+public:
+	FTakeHitInfo();
+
+	void EnsureReplication();
+	void SetDamageEvent(const FDamageEvent& InDamageEvent);
+	FDamageEvent& GetDamageEvent();
+};

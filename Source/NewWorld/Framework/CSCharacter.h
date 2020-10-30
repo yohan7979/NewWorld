@@ -79,6 +79,7 @@ public:
 
 	void SetCharacterStatus(const FCharacterStatus& InStatus);
 	class UCSAttributeComponent* GetAttributeComponent() const { return AttributeComponent; }
+	bool IsAliveAndWell() const;
 
 	float BaseTurnRate;
 	float BaseLookUpRate;
@@ -128,4 +129,17 @@ protected:
 
 	UPROPERTY(ReplicatedUsing=OnRep_IsRolling)
 	bool bIsRolling;
+
+	UPROPERTY(ReplicatedUsing=OnRep_LastTakeHitInfo)
+	FTakeHitInfo LastTakeHitInfo;
+
+	UFUNCTION()
+	void OnRep_LastTakeHitInfo();
+	void ReplicateHit(float Damage, struct FDamageEvent const& DamageEvent, class AController* EventInstigator, class AActor* DamageCauser, bool bKilled);
+
+	/** notification when killed, for both the server and client. */
+	virtual void OnDeath(float KillingDamage, struct FDamageEvent const& DamageEvent, class ACSCharacter* PawnInstigator, class AActor* DamageCauser);
+
+	/** play effects on hit */
+	virtual void PlayHit(float DamageTaken, struct FDamageEvent const& DamageEvent, class ACSCharacter* PawnInstigator, class AActor* DamageCauser);
 };

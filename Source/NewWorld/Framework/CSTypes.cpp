@@ -105,3 +105,64 @@ FCharacterStatus::FCharacterStatus(const FCharacterStatus& InStatus)
 {
 
 }
+
+FTakeHitInfo::FTakeHitInfo()
+	: ActualDamage(0.f)
+	, DamageTypeClass(nullptr)
+	, PawnInstigator(nullptr)
+	, DamageCauser(nullptr)
+	, DamageEventClassID(0)
+	, bKilled(false)
+{
+
+}
+
+void FTakeHitInfo::EnsureReplication()
+{
+	++EnsureReplicationDirty;
+}
+
+void FTakeHitInfo::SetDamageEvent(const FDamageEvent& InDamageEvent)
+{
+	DamageEventClassID = InDamageEvent.GetTypeID();
+
+	switch (DamageEventClassID)
+	{
+	case FPointDamageEvent::ClassID:
+		PointDamageEvent = *(static_cast<FPointDamageEvent const*>(&InDamageEvent));
+		break;
+	case FRadialDamageEvent::ClassID:
+		RadialDamageEvent = *(static_cast<FRadialDamageEvent const*>(&InDamageEvent));
+		break;
+	default:
+		GeneralDamageEvent = InDamageEvent;
+		break;
+	}
+
+	DamageTypeClass = InDamageEvent.DamageTypeClass;
+}
+
+FDamageEvent& FTakeHitInfo::GetDamageEvent()
+{
+	switch (DamageEventClassID)
+	{
+	case FPointDamageEvent::ClassID:
+		if (false == IsValid(PointDamageEvent.DamageTypeClass))
+		{
+			PointDamageEvent.DamageTypeClass = DamageTypeClass ? DamageTypeClass : UDamageType::StaticClass();
+		}
+		return PointDamageEvent;
+	case FRadialDamageEvent::ClassID:
+		if (false == IsValid(RadialDamageEvent.DamageTypeClass))
+		{
+			RadialDamageEvent.DamageTypeClass = DamageTypeClass ? DamageTypeClass : UDamageType::StaticClass();
+		}
+		return RadialDamageEvent;
+	default:
+		if (false == IsValid(GeneralDamageEvent.DamageTypeClass))
+		{
+			GeneralDamageEvent.DamageTypeClass = DamageTypeClass ? DamageTypeClass : UDamageType::StaticClass();
+		}
+		return GeneralDamageEvent;
+	}
+}

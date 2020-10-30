@@ -69,7 +69,7 @@ void UCSWeaponFiringAction_Projectile::SpawnProjectile(class ACSWeapon* OwnerWea
 		Projectile->SetOwner(OwnerWeapon);
 		Projectile->Init(ShotDirection, ProjectileWeaponConfig);
 
-		DrawDebugLine(GetWorld(), Origin, Origin + ShotDirection * 1000.f, FColor::Red, true, 3.f);
+		//DrawDebugLine(GetWorld(), Origin, Origin + ShotDirection * 1000.f, FColor::Red, true, 3.f);
 
 		UGameplayStatics::FinishSpawningActor(Projectile, SpawnTM);
 	}

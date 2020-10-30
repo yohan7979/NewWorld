@@ -104,9 +104,9 @@ float ACSCharacter::TakeDamage(float DamageAmount, struct FDamageEvent const& Da
 	
 	if (ResultDamage != 0.f)
 	{
-		if (ACSCharacter::OnTakeDamageEvent.IsBound())
+		if (GetLocalRole() == ROLE_Authority)
 		{
-			ACSCharacter::OnTakeDamageEvent.Broadcast(this, DamageAmount, DamageEvent, EventInstigator, DamageCauser);
+			ReplicateHit(ResultDamage, DamageEvent, EventInstigator, DamageCauser, IsAliveAndWell());
 		}
 	}
 
@@ -540,12 +540,55 @@ void ACSCharacter::OnRep_Weapon(ACSWeapon* LastWeapon)
 	SetCurrentWeapon(Weapon, LastWeapon);
 }
 
+void ACSCharacter::OnRep_LastTakeHitInfo()
+{
+	if (LastTakeHitInfo.bKilled)
+	{
+		OnDeath(LastTakeHitInfo.ActualDamage, LastTakeHitInfo.GetDamageEvent(), LastTakeHitInfo.PawnInstigator.Get(), LastTakeHitInfo.DamageCauser.Get());
+	}
+	else
+	{
+		PlayHit(LastTakeHitInfo.ActualDamage, LastTakeHitInfo.GetDamageEvent(), LastTakeHitInfo.PawnInstigator.Get(), LastTakeHitInfo.DamageCauser.Get());
+	}
+}
+
+
 void ACSCharacter::GetLifetimeReplicatedProps(TArray< FLifetimeProperty > & OutLifetimeProps) const
 {
 	Super::GetLifetimeReplicatedProps(OutLifetimeProps);
 
 	DOREPLIFETIME(ACSCharacter, Weapon);
+	DOREPLIFETIME(ACSCharacter, LastTakeHitInfo);
 	DOREPLIFETIME_CONDITION(ACSCharacter, WeaponInventory, COND_OwnerOnly);
 	DOREPLIFETIME_CONDITION(ACSCharacter, bIsRolling, COND_SkipOwner);
 }
 
+bool ACSCharacter::IsAliveAndWell() const
+{
+	return !IsPendingKill() && IsValid(AttributeComponent) && AttributeComponent->Health > 0.f;
+}
+
+void ACSCharacter::ReplicateHit(float Damage, struct FDamageEvent const& DamageEvent, class AController* EventInstigator, class AActor* DamageCauser, bool bKilled)
+{
+	LastTakeHitInfo.ActualDamage = Damage;
+	LastTakeHitInfo.PawnInstigator = EventInstigator ? Cast<ACSCharacter>(EventInstigator->GetPawn()) : nullptr;
+	LastTakeHitInfo.DamageCauser = DamageCauser;
+	LastTakeHitInfo.bKilled = bKilled;
+	LastTakeHitInfo.SetDamageEvent(DamageEvent);
+	LastTakeHitInfo.EnsureReplication();
+
+	OnRep_LastTakeHitInfo();
+}
+
+void ACSCharacter::OnDeath(float KillingDamage, struct FDamageEvent const& DamageEvent, class ACSCharacter* PawnInstigator, class AActor* DamageCauser)
+{
+
+}
+
+void ACSCharacter::PlayHit(float DamageTaken, struct FDamageEvent const& DamageEvent, class ACSCharacter* PawnInstigator, class AActor* DamageCauser)
+{
+	if (ACSCharacter::OnTakeDamageEvent.IsBound())
+	{
+		ACSCharacter::OnTakeDamageEvent.Broadcast(this, DamageTaken, DamageEvent, PawnInstigator ? PawnInstigator->GetController() : nullptr, DamageCauser);
+	}
+}

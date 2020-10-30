@@ -39,6 +39,7 @@ void ACSProjectile::BeginPlay()
 	if (SphereComponent)
 	{
 		SphereComponent->OnComponentHit.AddDynamic(this, &ACSProjectile::OnHit);
+		SphereComponent->OnComponentBeginOverlap.AddDynamic(this, &ACSProjectile::OnBeginOverlap);
 		SphereComponent->MoveIgnoreActors.Add(GetInstigator());
 	}
 
@@ -55,6 +56,7 @@ void ACSProjectile::EndPlay(const EEndPlayReason::Type EndPlayReason)
 	if (SphereComponent)
 	{
 		SphereComponent->OnComponentHit.RemoveAll(this);
+		SphereComponent->OnComponentBeginOverlap.RemoveAll(this);
 	}
 
 	SpawnedParticles.Empty();
@@ -78,13 +80,18 @@ void ACSProjectile::Init(const FVector& Direction, const FProjectileWeaponConfig
 	ProjectileConfig = InProjectileConfig;
 }
 
-void ACSProjectile::Explode()
+void ACSProjectile::Explode(const FHitResult& Hit)
 {
 	if (IsValid(ParticleComponent))
 	{
 		ParticleComponent->Deactivate();
 		ParticleComponent->MarkPendingKill();
 		ParticleComponent = nullptr;
+	}
+
+	if (IsValid(ProjectileMovement))
+	{
+		ProjectileMovement->StopSimulating(Hit);
 	}
 
 	PlayParticleEffect(ParticleSet.HitParticle);
@@ -98,7 +105,16 @@ void ACSProjectile::OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor,
 {
 	if (!IsPendingKill() && !bExploded)
 	{
-		Explode();
+		Explode(Hit);
+	}
+}
+
+
+void ACSProjectile::OnBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult & SweepResult)
+{
+	if (!IsPendingKill() && !bExploded)
+	{
+		Explode(SweepResult);
 
 		if (GetLocalRole() == ROLE_Authority)
 		{

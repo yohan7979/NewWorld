@@ -48,19 +48,15 @@ void FCSAnimNode_ModifyBone::UpdateInternal(const FAnimationUpdateContext& Conte
 
 	if (false == m_bIsActive || BoneReferenceAndCurve.Num() == 0)
 	{
-		fElapsedTime = 0.f;
+		return;
 	}
-	else
+	
+	fElapsedTime += Context.GetDeltaTime();
+	if (fElapsedTime > fMaxTime)
 	{
-		fElapsedTime += Context.GetDeltaTime();
-		if (fElapsedTime > fMaxTime)
-		{
-			fElapsedTime = fMaxTime;
-			m_bIsActive = false;
-		}
-
-		UE_LOG(LogTemp, Warning, TEXT("fElapsedTime : %f"), fElapsedTime);
-	}
+		fElapsedTime = fMaxTime;
+		m_bIsActive = false;
+	}	
 }
 
 void FCSAnimNode_ModifyBone::InitializeBoneReferences(const FBoneContainer& RequiredBones)
@@ -97,7 +93,7 @@ void FCSAnimNode_ModifyBone::EvaluateSkeletalControl_AnyThread(FComponentSpacePo
 		FTransform ComponentTransform = Output.AnimInstanceProxy->GetComponentTransform();	
 		FAnimationRuntime::ConvertCSTransformToBoneSpace(ComponentTransform, Output.Pose, NewBoneTM, CompactPoseBoneToModify, BCS_ComponentSpace);
 
-		const FRotator CurveRotation(CurveValue.X, CurveValue.Y, CurveValue.Z);
+		FRotator CurveRotation(CurveValue.X * fSideRate, CurveValue.Y, CurveValue.Z * fFrontRate);
 		NewBoneTM.SetRotation(FQuat(CurveRotation) * NewBoneTM.GetRotation());
 
 		FAnimationRuntime::ConvertBoneSpaceTransformToCS(ComponentTransform, Output.Pose, NewBoneTM, CompactPoseBoneToModify, BCS_ComponentSpace);
@@ -142,10 +138,9 @@ void FCSAnimNode_ModifyBone::OnTakeDamage(class ACSCharacter* Victim, float Dama
 		return;
 	}
 
-	const FVector& ForwardDir = CSCharacter->GetActorForwardVector();
-	const FVector& TargetDir = (DamageCauser->GetActorLocation() - CSCharacter->GetActorLocation()).GetSafeNormal();
-
 	BoneReferenceAndCurve.Empty();
+
+	UpdateHitDirection(Victim, DamageCauser);
 
 	TArray<FBoneReferenceAndCurve> LocalBoneReferenceAndCurve;
 	for (const FBoneAndCurve& BoneAndCurve : CurveSettings)
@@ -173,7 +168,6 @@ void FCSAnimNode_ModifyBone::OnTakeDamage(class ACSCharacter* Victim, float Dama
 
 	if (LocalBoneReferenceAndCurve.Num() > 0)
 	{
-		UE_LOG(LogTemp, Warning, TEXT("Active true"));
 		m_bIsActive = true;
 		fElapsedTime = 0.f;
 
@@ -198,5 +192,33 @@ void FCSAnimNode_ModifyBone::UpdateMaxTime()
 			}
 		}
 	}
+}
+
+void FCSAnimNode_ModifyBone::UpdateHitDirection(AActor* Owner, AActor* Instigator)
+{
+	if (nullptr == Owner)
+	{
+		return;
+	}
+
+	FVector LookAt(ForceInitToZero);
+	if (IsValid(Instigator))
+	{
+		LookAt = (Instigator->GetActorLocation() - Owner->GetActorLocation()).GetSafeNormal();
+	}
+	else
+	{
+		LookAt = Owner->GetActorForwardVector();
+	}
+
+	FVector2D ForwardDir(Owner->GetActorForwardVector());
+	FVector2D TargetDir(LookAt);
+
+	fFrontRate = FVector2D::DotProduct(TargetDir, ForwardDir);
+	fSideRate = FVector2D::CrossProduct(TargetDir, ForwardDir);
+
+	fAngle = FMath::RadiansToDegrees(FMath::Acos(fFrontRate));
+
+	UE_LOG(LogTemp, Warning, TEXT("fFrontRate : %f, fSideRate : %f"), fFrontRate, fSideRate);
 }
 
