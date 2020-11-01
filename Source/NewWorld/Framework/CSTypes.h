@@ -385,6 +385,7 @@ private:
 	UPROPERTY()
 	FRadialDamageEvent RadialDamageEvent;
 
+	UPROPERTY()
 	uint8 EnsureReplicationDirty;
 
 public:
