@@ -58,6 +58,11 @@ void UCSWeaponFiringAction::Init(ACSWeapon* InWeapon)
 	OwnerWeaponPrivate = InWeapon;
 }
 
+void UCSWeaponFiringAction::Tick(float fDeltaTime)
+{
+
+}
+
 void UCSWeaponFiringAction::Shutdown()
 {
 	OwnerWeaponPrivate = nullptr;

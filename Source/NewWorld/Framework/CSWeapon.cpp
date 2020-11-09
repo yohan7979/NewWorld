@@ -69,6 +69,11 @@ void ACSWeapon::EndPlay(const EEndPlayReason::Type EndPlayReason)
 void ACSWeapon::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+
+	if (FiringAction)
+	{
+		FiringAction->Tick(DeltaTime);
+	}
 }
 
 void ACSWeapon::PostInitializeComponents()
@@ -478,6 +483,15 @@ FVector ACSWeapon::GetMuzzleLocation(const FVector& AimDir, const int32 ComboCou
 	return FVector::ZeroVector;
 }
 
+static TAutoConsoleVariable<int32> CVarDebugWeaponTrace(
+	TEXT("cs.debug.weapontrace"),
+	0,
+	TEXT("draw weapon trace debug line and sphere\n")
+	TEXT("0 : off\n")
+	TEXT("1 : on\n"),
+	ECVF_Cheat
+);
+
 bool ACSWeapon::WeaponTrace(const FVector& StartTrace, const FVector& EndTrace, FHitResult& OutHit)
 {
 	FCollisionQueryParams CollisionParams(SCENE_QUERY_STAT(WeaponTrace), true);
@@ -486,13 +500,47 @@ bool ACSWeapon::WeaponTrace(const FVector& StartTrace, const FVector& EndTrace, 
 	CollisionParams.bReturnPhysicalMaterial = true;
 
 	GetWorld()->LineTraceSingleByChannel(OutHit, StartTrace, EndTrace, COLLISION_WEAPON, CollisionParams);
+	
+	const int32 DebugFlag = CVarDebugWeaponTrace.GetValueOnGameThread();
+	if (DebugFlag != 0)
+	{
+		DrawDebugLine(GetWorld(), StartTrace, EndTrace, FColor::Red, true);
+	}
 
 	return OutHit.bBlockingHit;
+}
+
+bool ACSWeapon::WeaponTrace(const FVector& Position, const FQuat& Rotation, const FCollisionShape& Shape, TArray<FOverlapResult>& OutResults)
+{
+	FCollisionQueryParams CollisionParams(SCENE_QUERY_STAT(WeaponTrace), true);
+	CollisionParams.AddIgnoredActor(this);
+	CollisionParams.AddIgnoredActor(GetInstigator());
+	CollisionParams.bReturnPhysicalMaterial = true;
+
+	GetWorld()->OverlapMultiByChannel(OutResults, Position, Rotation, COLLISION_WEAPON, Shape, CollisionParams);
+
+	const int32 DebugFlag = CVarDebugWeaponTrace.GetValueOnGameThread();
+	if (DebugFlag != 0)
+	{
+		DrawDebugSphere(GetWorld(), Position, Shape.GetSphereRadius(), 10, FColor::Red, true);
+	}
+	
+	return OutResults.Num() > 0;
 }
 
 bool ACSWeapon::IsLocallyControlled()
 {
 	return CachedCharacter && CachedCharacter->IsLocallyControlled();
+}
+
+ACSCharacter* ACSWeapon::GetOwnerCharacter() const
+{
+	if (IsValid(CachedCharacter))
+	{
+		return CachedCharacter;
+	}
+
+	return Cast<ACSCharacter>(GetOwner());
 }
 
 void ACSWeapon::OnRep_CurrentState(uint8 OldState)

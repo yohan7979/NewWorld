@@ -17,14 +17,15 @@ class NEWWORLD_API UCSWeaponFiringAction : public UObject
 	
 public:
 	void StartFire();
-	void StopFire();
+	virtual void StopFire();
 	virtual bool CanRefire();
 	virtual void FireShot();
 	virtual void Init(ACSWeapon* InWeapon);
+	virtual void Tick(float fDeltaTime);
 	virtual void Shutdown();
 
 	template<typename T>
-	ACSWeapon* GetOwnerWeapon()
+	T* GetOwnerWeapon()
 	{
 		return Cast<T>(GetOwnerWeapon());
 	}

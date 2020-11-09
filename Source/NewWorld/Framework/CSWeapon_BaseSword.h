@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "CSWeapon.h"
+#include "CSWeaponTypes.h"
 #include "CSWeapon_BaseSword.generated.h"
 
 /**
@@ -14,4 +15,10 @@ class NEWWORLD_API ACSWeapon_BaseSword : public ACSWeapon
 {
 	GENERATED_UCLASS_BODY()
 	
+public:
+	virtual void PlayWeaponAnimation(const FWeaponAnim& InWeaponAnim) override;
+
+public:
+	UPROPERTY(EditDefaultsOnly)
+	FMeleeWeaponConfig MeleeWeaponConfig;
 };

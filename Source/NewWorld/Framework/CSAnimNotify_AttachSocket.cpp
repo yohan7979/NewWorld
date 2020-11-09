@@ -13,7 +13,7 @@ UCSAnimNotify_AttachSocket::UCSAnimNotify_AttachSocket(const FObjectInitializer&
 
 void UCSAnimNotify_AttachSocket::Notify(USkeletalMeshComponent* MeshComp, UAnimSequenceBase* Animation)
 {
-	Super::Notify(MeshComp, Animation);
+	//Super::Notify(MeshComp, Animation);
 
 	if (MeshComp)
 	{

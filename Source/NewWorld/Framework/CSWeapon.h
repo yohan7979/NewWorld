@@ -116,8 +116,10 @@ public:
 	virtual FVector GetMuzzleLocation(const FVector& AimDir, const int32 ComboCount = 0) const;
 	
 	bool WeaponTrace(const FVector& StartTrace, const FVector& EndTrace, FHitResult& OutHit);
+	bool WeaponTrace(const FVector& Position, const FQuat& Rotation, const FCollisionShape& Shape, TArray<FOverlapResult>& OutResults);
 
 	bool IsLocallyControlled();
+	ACSCharacter* GetOwnerCharacter() const;
 
 	UFUNCTION()
 	void OnRep_CurrentState(uint8 OldState);
@@ -176,8 +178,9 @@ protected:
 	class UCSWeaponFiringAction* FiringAction;
 
 	UPROPERTY(EditDefaultsOnly)
-	FInstantWeaponConfig InstantWeaponConfig;
-
-	UPROPERTY(EditDefaultsOnly)
 	FName MuzzleSocketName;
+
+public:
+	UPROPERTY(Transient)
+	TArray<float> HitTimes;
 };

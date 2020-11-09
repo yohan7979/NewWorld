@@ -57,3 +57,28 @@ struct FInstantWeaponConfig
 		AllowedViewDotHitDir = 0.8f;
 	}
 };
+
+USTRUCT()
+struct FMeleeWeaponConfig
+{
+	GENERATED_USTRUCT_BODY()
+
+	/** weapon range */
+	UPROPERTY(EditDefaultsOnly, Category = WeaponStat)
+	float WeaponRange;
+
+	/** damage amount */
+	UPROPERTY(EditDefaultsOnly, Category = WeaponStat)
+	int32 HitDamage;
+
+	/** type of damage */
+	UPROPERTY(EditDefaultsOnly, Category = WeaponStat)
+	TSubclassOf<UDamageType> DamageType;
+
+	FMeleeWeaponConfig()
+	{
+		WeaponRange = 100.f;
+		HitDamage = 10;
+		DamageType = UDamageType::StaticClass();
+	}
+};

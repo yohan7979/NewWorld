@@ -15,5 +15,13 @@ class NEWWORLD_API UCSWeaponFiringAction_Melee : public UCSWeaponFiringAction
 	GENERATED_UCLASS_BODY()
 	
 public:
+	virtual void StopFire() override;
 	virtual void FireShot() override;
+	virtual void Tick(float fDeltaTime) override;
+
+private:
+	void InternalFireShot();
+
+	UPROPERTY(Transient)
+	float ElapsedFireTime;
 };
