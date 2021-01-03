@@ -21,12 +21,13 @@ public:
 	virtual void OnInteractWith(class ACSCharacter* Character);
 	// Interaction Interface End
 
-	virtual void PreGiveTo(class ACSCharacter* Character);
-	virtual void GiveTo(class ACSCharacter* Character) PURE_VIRTUAL(ACSPickupBase,);
-	virtual void PostGiveTo(class ACSCharacter* Character);
-
 	virtual bool CanBePickedUp(class ACSCharacter* Character);
-	virtual void PickedUpBy(class ACSCharacter* Character);
+	virtual void PickedUpBy(class ACSCharacter* Character) final;
+
+private:
+	virtual void PreGiveTo(class ACSCharacter* Character);
+	virtual void GiveTo(class ACSCharacter* Character) PURE_VIRTUAL(ACSPickupBase, );
+	virtual void PostGiveTo(class ACSCharacter* Character);
 
 protected:
 	UPROPERTY(VisibleAnywhere, meta = (AllowPrivateAccess = true))

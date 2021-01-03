@@ -67,7 +67,7 @@ void ACSPickupBase::PostGiveTo(class ACSCharacter* Character)
 
 bool ACSPickupBase::CanBePickedUp(class ACSCharacter* Character)
 {
-	if (IsValid(Character) /*&& Character->IsAliveAndWell()*/)
+	if (IsValid(Character) && Character->IsAliveAndWell())
 	{
 		return true;
 	}

@@ -17,13 +17,14 @@ class NEWWORLD_API ACSPickup_Item : public ACSPickupBase
 	
 public:
 	virtual void Initialize(const struct FInventoryItem& InventoryItem);
-	virtual void GiveTo(class ACSCharacter* Character) override;
-	virtual void PostGiveTo(class ACSCharacter* Character) override;
-
 	virtual bool CanBePickedUp(class ACSCharacter* Character) override;
 
 	UFUNCTION()
 	void OnRep_ItemIntializeInfo();
+
+private:
+	virtual void GiveTo(class ACSCharacter* Character) override;
+	virtual void PostGiveTo(class ACSCharacter* Character) override;
 
 protected:
 	UPROPERTY(EditAnywhere, Category = "Item")
