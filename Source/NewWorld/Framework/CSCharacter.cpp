@@ -106,7 +106,7 @@ float ACSCharacter::TakeDamage(float DamageAmount, struct FDamageEvent const& Da
 	{
 		if (GetLocalRole() == ROLE_Authority)
 		{
-			ReplicateHit(ResultDamage, DamageEvent, EventInstigator, DamageCauser, IsAliveAndWell());
+			ReplicateHit(ResultDamage, DamageEvent, EventInstigator, DamageCauser, !IsAliveAndWell());
 		}
 	}
 

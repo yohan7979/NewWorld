@@ -183,4 +183,7 @@ protected:
 public:
 	UPROPERTY(Transient)
 	TArray<float> HitTimes;
+
+	UPROPERTY(EditDefaultsOnly)
+	FTrailParticleSet WeaponTrailFX;
 };

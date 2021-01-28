@@ -6,6 +6,7 @@
 
 UCSAttributeComponent::UCSAttributeComponent(const FObjectInitializer& ObjectInitializer) : Super(ObjectInitializer)
 {
+	Health = 200.f;
 	MaxHealth = 200.f;
 
 	SetIsReplicatedByDefault(true);

@@ -1,0 +1,4 @@
+How to install?
+ You need to drop the "AxeAnimationPack"
+ folder into the "Content" folder
+ in your project.

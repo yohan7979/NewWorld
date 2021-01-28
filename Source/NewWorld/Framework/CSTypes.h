@@ -59,7 +59,24 @@ struct FParticleComponentSet
 	FParticleComponentSet()
 		: MovableParticle(nullptr)
 		, SpawnParticle(nullptr)
-		, HitParticle(nullptr)
+		, HitParticle(nullptr)	
+	{}
+};
+
+USTRUCT()
+struct FTrailParticleSet
+{
+	GENERATED_USTRUCT_BODY()
+
+	UPROPERTY(EditDefaultsOnly)
+	TSoftObjectPtr<UParticleSystem> TrailParticle;
+
+	UPROPERTY(EditDefaultsOnly)
+	TMap<TSoftObjectPtr<UParticleSystem>, FName> SubParticles;
+
+	FTrailParticleSet()
+		: TrailParticle(nullptr)
+		, SubParticles()
 	{}
 };
 

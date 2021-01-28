@@ -16,7 +16,7 @@ void UCSWeaponFiringAction_Melee::StopFire()
 
 	if (ACSWeapon_BaseSword* OwnerWeapon = GetOwnerWeapon<ACSWeapon_BaseSword>())
 	{
-		OwnerWeapon->HitTimes.Empty();
+		//OwnerWeapon->HitTimes.Empty();
 	}
 }
 
