@@ -4,7 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "Blueprint/UserWidget.h"
-#include "NewWorld/Framework/CSInventoryComponent.h"
+#include "NewWorld/Framework/Component/CSInventoryComponent.h"
 #include "CSWidget_InventorySlot.generated.h"
 
 /**

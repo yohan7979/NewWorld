@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "NewWorld/Framework/CSPickupBase.h"
 #include "CSTypes.h"
+#include "CSTable.h"
 #include "CSPickup_Item.generated.h"
 
 /**

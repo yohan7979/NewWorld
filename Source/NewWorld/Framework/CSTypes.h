@@ -6,7 +6,7 @@
 #include "Particles/ParticleSystem.h"
 #include "Engine/DataTable.h"
 #include "TimerManager.h"
-#include "CSModifierProperties.h"
+#include "NewWorld/Framework/Component/CSModifierProperties.h"
 #include "CSTypes.generated.h"
 
 DECLARE_DELEGATE_OneParam(FBindIntegerDelegate, int32)
@@ -15,6 +15,8 @@ DECLARE_DELEGATE_OneParam(FBindBoolDelegate, bool)
 #define COLLISION_WEAPON ECC_GameTraceChannel1
 #define COLLISION_PROJECTILE ECC_GameTraceChannel2
 #define COLLISION_INTERACTIVE ECC_GameTraceChannel3
+
+struct FInventoryItem;
 
 USTRUCT(BlueprintType)
 struct FCharacterAnimGraph
@@ -163,6 +165,11 @@ enum class EEquipmentType : uint8
 UENUM(BlueprintType)
 enum class EEquipmentSlot : uint8
 {
+	Body_Head,
+	Body_Chest,
+	Body_Hands,
+	Body_Legs,
+	Body_Feet,
 	Head,
 	Shoulder,
 	Chest,
@@ -178,79 +185,6 @@ enum class EEquipmentSlot : uint8
 	MainHand,
 	OffHand,
 	MAX
-};
-
-USTRUCT(BlueprintType)
-struct FInventoryItem : public FTableRowBase
-{
-	GENERATED_USTRUCT_BODY()
-
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
-	FName ID;
-
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
-	TSoftObjectPtr<UTexture2D> Icon;
-
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
-	FName Name;
-
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
-	FString Description;
-
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
-	EItemQuality Quality;
-
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
-	EItemType ItemType;
-
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
-	int32 Amount;
-
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
-	bool bIsStackable;
-
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, meta = (EditCondition = "bIsStackable"))
-	int32 MaxStackSize;
-
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
-	bool bIsDroppable;
-
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
-	UStaticMesh* WorldMesh;
-
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
-	USkeletalMesh* EquipmentMesh;
-
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
-	EEquipmentType EquipmentType;
-
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
-	EEquipmentSlot EquipmentSlot;
-
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
-	TSoftClassPtr<class ACSWeapon> WeaponClass;
-
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
-	FCharacterStatus ItemStatus;
-
-	FInventoryItem()
-		: ID(NAME_None)
-		, Icon(nullptr)
-		, Name(NAME_None)
-		, Description("")
-		, Quality(EItemQuality::Common)
-		, ItemType(EItemType::Miscellaneous)
-		, Amount(1)
-		, bIsStackable(false)
-		, MaxStackSize(1)
-		, bIsDroppable(true)
-		, WorldMesh(nullptr)
-		, EquipmentMesh(nullptr)
-		, EquipmentType(EEquipmentType::Armor)
-		, EquipmentSlot(EEquipmentSlot::Head)
-		, WeaponClass(nullptr)
-		, ItemStatus()
-	{}
 };
 
 USTRUCT(BlueprintType)
@@ -411,4 +345,11 @@ public:
 	void EnsureReplication();
 	void SetDamageEvent(const FDamageEvent& InDamageEvent);
 	FDamageEvent& GetDamageEvent();
+};
+
+UENUM()
+enum class EMeshType : uint8
+{
+	SkeletalMesh,
+	StaticMesh,
 };

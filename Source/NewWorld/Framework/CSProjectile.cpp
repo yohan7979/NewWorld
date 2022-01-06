@@ -4,11 +4,11 @@
 #include "CSProjectile.h"
 #include "GameFramework/ProjectileMovementComponent.h"
 #include "Components/SphereComponent.h"
-#include "CSWeapon.h"
+#include "NewWorld/Framework/Weapon/CSWeapon.h"
 #include "Particles/ParticleSystemComponent.h"
 #include "Particles/ParticleSystem.h"
 #include "CSGameplayStatics.h"
-#include "CSCharacter.h"
+#include "NewWorld/Framework/Character/CSCharacter.h"
 
 ACSProjectile::ACSProjectile(const FObjectInitializer& ObjectInitializer) : Super(ObjectInitializer)
 {

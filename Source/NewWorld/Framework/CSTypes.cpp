@@ -1,8 +1,9 @@
 
 #include "CSTypes.h"
 #include "CSGameplayStatics.h"
-#include "CSWeapon.h"
-#include "CSInventoryComponent.h"
+#include "NewWorld/Framework/Weapon/CSWeapon.h"
+#include "NewWorld/Framework/Component/CSInventoryComponent.h"
+#include "CSTable.h"
 
 FItemInfomation::FItemInfomation()
 	: ID(NAME_None)

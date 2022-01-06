@@ -8,7 +8,7 @@ public class NewWorld : ModuleRules
 	{
 		PCHUsage = PCHUsageMode.UseExplicitOrSharedPCHs;
 
-        PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine", "InputCore", "AnimGraph", "AnimGraphRunTime", "BlueprintGraph" });
+        PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine", "InputCore", "AnimGraph", "AnimGraphRunTime", "BlueprintGraph", "XmlParser", "SignificanceManager" });
 
         PrivateDependencyModuleNames.AddRange(new string[] { "AnimGraph", "AnimGraphRunTime", "BlueprintGraph" });
 

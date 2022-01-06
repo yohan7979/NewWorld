@@ -2,10 +2,11 @@
 
 
 #include "CSPickup_Item.h"
-#include "CSCharacter.h"
+#include "NewWorld/Framework/Character/CSCharacter.h"
 #include "CSPlayerController.h"
 #include "CSInventoryManager.h"
 #include "Components/StaticMeshComponent.h"
+#include "CSGameplayStatics.h"
 
 ACSPickup_Item::ACSPickup_Item(const FObjectInitializer& ObjectInitializer) : Super(ObjectInitializer)
 {
@@ -56,11 +57,9 @@ void ACSPickup_Item::OnRep_ItemIntializeInfo()
 {
 	ItemID = ItemIntializeInfo.ID;
 	Amount = ItemIntializeInfo.Amount;
-
-	if (ItemIntializeInfo.WorldMesh)
-	{
-		StaticMeshComponent->SetStaticMesh(ItemIntializeInfo.WorldMesh);
-	}
+	
+	UStaticMesh* LoadedMesh = UCSGameplayStatics::GetLoadedMesh<UStaticMesh>(this, ItemIntializeInfo.WorldMesh_Tid);
+	StaticMeshComponent->SetStaticMesh(LoadedMesh);
 }
 
 void ACSPickup_Item::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const

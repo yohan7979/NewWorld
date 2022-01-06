@@ -1,7 +1,7 @@
 // copyrighted by swonlee ... twiclok@naver.com
 
 #include "CSPickupBase.h"
-#include "CSCharacter.h"
+#include "NewWorld/Framework/Character/CSCharacter.h"
 #include "Components/CapsuleComponent.h"
 #include "Components/StaticMeshComponent.h"
 #include "Sound/SoundCue.h"

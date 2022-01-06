@@ -3,9 +3,9 @@
 
 #include "CSAnimNode_ModifyBone.h"
 #include <BoneContainer.h>
-#include "NewWorld/Framework/CSCharacter.h"
+#include "NewWorld/Framework/Character/CSCharacter.h"
 #include <Components/SkeletalMeshComponent.h>
-#include "NewWorld/Framework/CSAnimInstance.h"
+#include "NewWorld/Framework/Animation/CSAnimInstance.h"
 #include "Animation/AnimInstanceProxy.h"
 #include <GameFramework/Controller.h>
 #include <GameFramework/DamageType.h>

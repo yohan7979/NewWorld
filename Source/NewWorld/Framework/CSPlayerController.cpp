@@ -3,9 +3,9 @@
 
 #include "CSPlayerController.h"
 #include "CSInventoryManager.h"
-#include "CSInventoryComponent.h"
-#include "CSEquipInventoryComponent.h"
-#include "CSCharacter.h"
+#include "NewWorld/Framework/Component/CSInventoryComponent.h"
+#include "NewWorld/Framework/Component/CSEquipInventoryComponent.h"
+#include "NewWorld/Framework/Character/CSCharacter.h"
 
 FName ACSPlayerController::InventoryComponentName(TEXT("InventoryComponent"));
 

@@ -6,6 +6,7 @@
 #include "UObject/NoExportTypes.h"
 #include "CSInventoryManager.generated.h"
 
+class UDataTable;
 class UCSInventoryComponent;
 
 /**
@@ -63,7 +64,7 @@ public:
 	FOnEquipmentVisibilityChanged& OnEquipmentVisibilityChanged() { return EquipmentVisibilityChangeEvent; }
 
 	UPROPERTY(EditDefaultsOnly)
-	class UDataTable* ItemTable;
+	UDataTable* ItemTable;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly)
 	int32 InventorySize = 30;

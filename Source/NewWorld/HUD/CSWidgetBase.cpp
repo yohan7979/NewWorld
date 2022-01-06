@@ -4,7 +4,7 @@
 #include "CSWidgetBase.h"
 #include "NewWorld/Framework/CSPlayerController.h"
 #include "NewWorld/Framework/CSInventoryManager.h"
-#include "NewWorld/Framework/CSInventoryComponent.h"
+#include "NewWorld/Framework/Component/CSInventoryComponent.h"
 
 UCSWidgetBase::UCSWidgetBase(const FObjectInitializer& ObjectInitializer) : Super(ObjectInitializer)
 {
@@ -56,7 +56,7 @@ void UCSWidgetBase::SubscribePlayerControllerDelegate(bool bSubscribe)
 				InvComponent->OnItemInfomationUpdate().AddUObject(this, &UCSWidgetBase::OnItemInfomationUpdate);
 
 				// for standalone
-				if (OwningPlayer->GetPawn() != nullptr)
+				//if (OwningPlayer->GetPawn() != nullptr)
 				{
 					OnItemInfomationUpdate(InvComponent->ItemInfomations.Items);
 				}

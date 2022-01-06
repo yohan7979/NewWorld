@@ -1,0 +1,731 @@
+<?xml version="1.0"?>
+<?mso-application progid="Excel.Sheet"?>
+<Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet"
+ xmlns:o="urn:schemas-microsoft-com:office:office"
+ xmlns:x="urn:schemas-microsoft-com:office:excel"
+ xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet"
+ xmlns:html="http://www.w3.org/TR/REC-html40">
+ <DocumentProperties xmlns="urn:schemas-microsoft-com:office:office">
+  <Author>sangwon lee</Author>
+  <LastAuthor>sangwon lee</LastAuthor>
+  <Created>2020-10-18T13:15:05Z</Created>
+  <LastSaved>2021-02-06T17:12:57Z</LastSaved>
+  <Version>16.00</Version>
+ </DocumentProperties>
+ <OfficeDocumentSettings xmlns="urn:schemas-microsoft-com:office:office">
+  <AllowPNG/>
+ </OfficeDocumentSettings>
+ <ExcelWorkbook xmlns="urn:schemas-microsoft-com:office:excel">
+  <WindowHeight>12285</WindowHeight>
+  <WindowWidth>28800</WindowWidth>
+  <WindowTopX>0</WindowTopX>
+  <WindowTopY>0</WindowTopY>
+  <ProtectStructure>False</ProtectStructure>
+  <ProtectWindows>False</ProtectWindows>
+ </ExcelWorkbook>
+ <Styles>
+  <Style ss:ID="Default" ss:Name="Normal">
+   <Alignment ss:Vertical="Center"/>
+   <Borders/>
+   <Font ss:FontName="맑은 고딕" x:CharSet="129" x:Family="Modern" ss:Size="11"
+    ss:Color="#000000"/>
+   <Interior/>
+   <NumberFormat/>
+   <Protection/>
+  </Style>
+ </Styles>
+ <Worksheet ss:Name="ItemList">
+  <Table ss:ExpandedColumnCount="17" ss:ExpandedRowCount="36" x:FullColumns="1"
+   x:FullRows="1" ss:DefaultColumnWidth="54" ss:DefaultRowHeight="16.5">
+   <Column ss:Width="149.25" ss:Span="1"/>
+   <Column ss:Index="3" ss:AutoFitWidth="0" ss:Width="92.25"/>
+   <Column ss:Width="131.25"/>
+   <Column ss:Index="6" ss:Width="72.75"/>
+   <Column ss:Width="74.25"/>
+   <Column ss:Index="9" ss:Width="73.5"/>
+   <Column ss:Width="80.25"/>
+   <Column ss:Index="12" ss:AutoFitWidth="0" ss:Width="108.75"/>
+   <Column ss:AutoFitWidth="0" ss:Width="101.25"/>
+   <Column ss:Width="91.5"/>
+   <Column ss:Width="86.25"/>
+   <Column ss:AutoFitWidth="0" ss:Width="89.25"/>
+   <Column ss:Width="423"/>
+   <Row>
+    <Cell><Data ss:Type="String">&#45;&#45;-</Data></Cell>
+    <Cell><Data ss:Type="String">ID</Data></Cell>
+    <Cell><Data ss:Type="String">Icon</Data></Cell>
+    <Cell><Data ss:Type="String">Name</Data></Cell>
+    <Cell><Data ss:Type="String">Description</Data></Cell>
+    <Cell><Data ss:Type="String">Quality</Data></Cell>
+    <Cell><Data ss:Type="String">ItemType</Data></Cell>
+    <Cell><Data ss:Type="String">Amount</Data></Cell>
+    <Cell><Data ss:Type="String">bIsStackable</Data></Cell>
+    <Cell><Data ss:Type="String">MaxStackSize</Data></Cell>
+    <Cell><Data ss:Type="String">bIsDroppable</Data></Cell>
+    <Cell><Data ss:Type="String">WorldMesh</Data></Cell>
+    <Cell><Data ss:Type="String">EquipmentMesh</Data></Cell>
+    <Cell><Data ss:Type="String">EquipmentType</Data></Cell>
+    <Cell><Data ss:Type="String">EquipmentSlot</Data></Cell>
+    <Cell><Data ss:Type="String">WeaponClass</Data></Cell>
+    <Cell><Data ss:Type="String">ItemStatus</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String">Food_Fern</Data></Cell>
+    <Cell><Data ss:Type="String">Food_Fern</Data></Cell>
+    <Cell><Data ss:Type="String">/Game/InventorySystem/Items/Consumables/Icons/T_ICON_Food_Fern.T_ICON_Food_Fern</Data></Cell>
+    <Cell><Data ss:Type="String">Fern</Data></Cell>
+    <Cell><Data ss:Type="String">It looks edidble...</Data></Cell>
+    <Cell><Data ss:Type="String">Poor</Data></Cell>
+    <Cell><Data ss:Type="String">Consumable</Data></Cell>
+    <Cell><Data ss:Type="Number">1</Data></Cell>
+    <Cell><Data ss:Type="Boolean">0</Data></Cell>
+    <Cell><Data ss:Type="Number">1</Data></Cell>
+    <Cell><Data ss:Type="Boolean">1</Data></Cell>
+    <Cell><Data ss:Type="String">StaticMesh'/Game/InventorySystem/Environment/Meshes/SM_Fern.SM_Fern'</Data></Cell>
+    <Cell><Data ss:Type="String">EquipmentMesh</Data></Cell>
+    <Cell><Data ss:Type="String">Armor</Data></Cell>
+    <Cell><Data ss:Type="String">Head</Data></Cell>
+    <Cell><Data ss:Type="String">None</Data></Cell>
+    <Cell><Data ss:Type="String">(Strength=0,Dexterity=0,Intelligence=0,Armor=0,Health=0,Damage=0)</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String">Food_Apple</Data></Cell>
+    <Cell><Data ss:Type="String">Food_Apple</Data></Cell>
+    <Cell><Data ss:Type="String">/Game/InventorySystem/Items/Consumables/Icons/T_ICON_Food_Apple.T_ICON_Food_Apple</Data></Cell>
+    <Cell><Data ss:Type="String">Apple</Data></Cell>
+    <Cell><Data ss:Type="String">A juicy red apple.</Data></Cell>
+    <Cell><Data ss:Type="String">Common</Data></Cell>
+    <Cell><Data ss:Type="String">Consumable</Data></Cell>
+    <Cell><Data ss:Type="Number">1</Data></Cell>
+    <Cell><Data ss:Type="Boolean">1</Data></Cell>
+    <Cell><Data ss:Type="Number">5</Data></Cell>
+    <Cell><Data ss:Type="Boolean">1</Data></Cell>
+    <Cell><Data ss:Type="String">StaticMesh'/Game/InventorySystem/Items/Consumables/Meshes/SM_Food_Apple.SM_Food_Apple'</Data></Cell>
+    <Cell><Data ss:Type="String">EquipmentMesh</Data></Cell>
+    <Cell><Data ss:Type="String">Armor</Data></Cell>
+    <Cell><Data ss:Type="String">Head</Data></Cell>
+    <Cell><Data ss:Type="String">None</Data></Cell>
+    <Cell><Data ss:Type="String">(Strength=0,Dexterity=0,Intelligence=0,Armor=0,Health=0,Damage=0)</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String">Food_Apple_Poisoned</Data></Cell>
+    <Cell><Data ss:Type="String">Food_Apple_Poisoned</Data></Cell>
+    <Cell><Data ss:Type="String">/Game/InventorySystem/Items/Consumables/Icons/T_ICON_Food_Apple_Poisoned.T_ICON_Food_Apple_Poisoned</Data></Cell>
+    <Cell><Data ss:Type="String">Poisoned Apple</Data></Cell>
+    <Cell><Data ss:Type="String">Appears as if it were dripping with poison.</Data></Cell>
+    <Cell><Data ss:Type="String">Legendary</Data></Cell>
+    <Cell><Data ss:Type="String">Consumable</Data></Cell>
+    <Cell><Data ss:Type="Number">1</Data></Cell>
+    <Cell><Data ss:Type="Boolean">0</Data></Cell>
+    <Cell><Data ss:Type="Number">1</Data></Cell>
+    <Cell><Data ss:Type="Boolean">1</Data></Cell>
+    <Cell><Data ss:Type="String">StaticMesh'/Game/InventorySystem/Items/Consumables/Meshes/SM_Food_Apple_Poisoned.SM_Food_Apple_Poisoned'</Data></Cell>
+    <Cell><Data ss:Type="String">EquipmentMesh</Data></Cell>
+    <Cell><Data ss:Type="String">Armor</Data></Cell>
+    <Cell><Data ss:Type="String">Head</Data></Cell>
+    <Cell><Data ss:Type="String">None</Data></Cell>
+    <Cell><Data ss:Type="String">(Strength=0,Dexterity=0,Intelligence=0,Armor=0,Health=0,Damage=0)</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String">Food_Bread</Data></Cell>
+    <Cell><Data ss:Type="String">Food_Bread</Data></Cell>
+    <Cell><Data ss:Type="String">/Game/InventorySystem/Items/Consumables/Icons/T_ICON_Food_Bread.T_ICON_Food_Bread</Data></Cell>
+    <Cell><Data ss:Type="String">Bread</Data></Cell>
+    <Cell><Data ss:Type="String">hot bread</Data></Cell>
+    <Cell><Data ss:Type="String">Common</Data></Cell>
+    <Cell><Data ss:Type="String">Consumable</Data></Cell>
+    <Cell><Data ss:Type="Number">1</Data></Cell>
+    <Cell><Data ss:Type="Boolean">1</Data></Cell>
+    <Cell><Data ss:Type="Number">3</Data></Cell>
+    <Cell><Data ss:Type="Boolean">1</Data></Cell>
+    <Cell><Data ss:Type="String">StaticMesh'/Game/InventorySystem/Items/Consumables/Meshes/SM_Food_Bread.SM_Food_Bread'</Data></Cell>
+    <Cell><Data ss:Type="String">EquipmentMesh</Data></Cell>
+    <Cell><Data ss:Type="String">Armor</Data></Cell>
+    <Cell><Data ss:Type="String">Head</Data></Cell>
+    <Cell><Data ss:Type="String">None</Data></Cell>
+    <Cell><Data ss:Type="String">(Strength=0,Dexterity=0,Intelligence=0,Armor=0,Health=0,Damage=0)</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String">Food_Baguette</Data></Cell>
+    <Cell><Data ss:Type="String">Food_Baguette</Data></Cell>
+    <Cell><Data ss:Type="String">/Game/InventorySystem/Items/Consumables/Icons/T_ICON_Food_Baguette.T_ICON_Food_Baguette</Data></Cell>
+    <Cell><Data ss:Type="String">Baguette</Data></Cell>
+    <Cell><Data ss:Type="String">hot Baguette</Data></Cell>
+    <Cell><Data ss:Type="String">Epic</Data></Cell>
+    <Cell><Data ss:Type="String">Consumable</Data></Cell>
+    <Cell><Data ss:Type="Number">1</Data></Cell>
+    <Cell><Data ss:Type="Boolean">0</Data></Cell>
+    <Cell><Data ss:Type="Number">1</Data></Cell>
+    <Cell><Data ss:Type="Boolean">1</Data></Cell>
+    <Cell><Data ss:Type="String">StaticMesh'/Game/InventorySystem/Items/Consumables/Meshes/SM_Food_Baguette.SM_Food_Baguette'</Data></Cell>
+    <Cell><Data ss:Type="String">EquipmentMesh</Data></Cell>
+    <Cell><Data ss:Type="String">Armor</Data></Cell>
+    <Cell><Data ss:Type="String">Head</Data></Cell>
+    <Cell><Data ss:Type="String">None</Data></Cell>
+    <Cell><Data ss:Type="String">(Strength=0,Dexterity=0,Intelligence=0,Armor=0,Health=0,Damage=0)</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String">Food_Hambone</Data></Cell>
+    <Cell><Data ss:Type="String">Food_Hambone</Data></Cell>
+    <Cell><Data ss:Type="String">/Game/InventorySystem/Items/Consumables/Icons/T_ICON_Food_Hambone.T_ICON_Food_Hambone</Data></Cell>
+    <Cell><Data ss:Type="String">Hambone</Data></Cell>
+    <Cell><Data ss:Type="String">Literally, the bone found in ham meat</Data></Cell>
+    <Cell><Data ss:Type="String">Rare</Data></Cell>
+    <Cell><Data ss:Type="String">Consumable</Data></Cell>
+    <Cell><Data ss:Type="Number">1</Data></Cell>
+    <Cell><Data ss:Type="Boolean">1</Data></Cell>
+    <Cell><Data ss:Type="Number">5</Data></Cell>
+    <Cell><Data ss:Type="Boolean">1</Data></Cell>
+    <Cell><Data ss:Type="String">StaticMesh'/Game/InventorySystem/Items/Consumables/Meshes/SM_Food_Hambone.SM_Food_Hambone'</Data></Cell>
+    <Cell><Data ss:Type="String">EquipmentMesh</Data></Cell>
+    <Cell><Data ss:Type="String">Armor</Data></Cell>
+    <Cell><Data ss:Type="String">Head</Data></Cell>
+    <Cell><Data ss:Type="String">None</Data></Cell>
+    <Cell><Data ss:Type="String">(Strength=0,Dexterity=0,Intelligence=0,Armor=0,Health=0,Damage=0)</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String">Equip_Leather_Backpack</Data></Cell>
+    <Cell><Data ss:Type="String">Equip_Leather_Backpack</Data></Cell>
+    <Cell><Data ss:Type="String">/Game/InventorySystem/Items/Equipment/Icons/T_ICON_Equip_Leather_Backpack.T_ICON_Equip_Leather_Backpack</Data></Cell>
+    <Cell><Data ss:Type="String">Leather Backpack</Data></Cell>
+    <Cell ss:Index="6"><Data ss:Type="String">Common</Data></Cell>
+    <Cell><Data ss:Type="String">Equipment</Data></Cell>
+    <Cell><Data ss:Type="Number">1</Data></Cell>
+    <Cell><Data ss:Type="Boolean">0</Data></Cell>
+    <Cell><Data ss:Type="Number">1</Data></Cell>
+    <Cell><Data ss:Type="Boolean">1</Data></Cell>
+    <Cell><Data ss:Type="String">StaticMesh'/Game/InventorySystem/Items/Equipment/Meshes/SM_Equip_Leather_Backpack.SM_Equip_Leather_Backpack'</Data></Cell>
+    <Cell><Data ss:Type="String">EquipmentMesh</Data></Cell>
+    <Cell><Data ss:Type="String">Armor</Data></Cell>
+    <Cell><Data ss:Type="String">Back</Data></Cell>
+    <Cell><Data ss:Type="String">None</Data></Cell>
+    <Cell><Data ss:Type="String">(Strength=0,Dexterity=0,Intelligence=0,Armor=0,Health=0,Damage=0)</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String">Equip_Leather_Pouches</Data></Cell>
+    <Cell><Data ss:Type="String">Equip_Leather_Pouches</Data></Cell>
+    <Cell><Data ss:Type="String">/Game/InventorySystem/Items/Equipment/Icons/T_ICON_Equip_Leather_Pouches.T_ICON_Equip_Leather_Pouches</Data></Cell>
+    <Cell><Data ss:Type="String">Leather Pouches</Data></Cell>
+    <Cell ss:Index="6"><Data ss:Type="String">Common</Data></Cell>
+    <Cell><Data ss:Type="String">Equipment</Data></Cell>
+    <Cell><Data ss:Type="Number">1</Data></Cell>
+    <Cell><Data ss:Type="Boolean">0</Data></Cell>
+    <Cell><Data ss:Type="Number">1</Data></Cell>
+    <Cell><Data ss:Type="Boolean">1</Data></Cell>
+    <Cell><Data ss:Type="String">StaticMesh'/Game/InventorySystem/Items/Equipment/Meshes/SM_Equip_Leather_Pouches.SM_Equip_Leather_Pouches'</Data></Cell>
+    <Cell><Data ss:Type="String">EquipmentMesh</Data></Cell>
+    <Cell><Data ss:Type="String">Armor</Data></Cell>
+    <Cell><Data ss:Type="String">Waist</Data></Cell>
+    <Cell><Data ss:Type="String">None</Data></Cell>
+    <Cell><Data ss:Type="String">(Strength=0,Dexterity=0,Intelligence=0,Armor=0,Health=0,Damage=0)</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String">Equip_Leather_Ring</Data></Cell>
+    <Cell><Data ss:Type="String">Equip_Leather_Ring</Data></Cell>
+    <Cell><Data ss:Type="String">/Game/InventorySystem/Items/Equipment/Icons/T_ICON_Equip_Leather_Ring.T_ICON_Equip_Leather_Ring</Data></Cell>
+    <Cell><Data ss:Type="String">Leather Ring</Data></Cell>
+    <Cell ss:Index="6"><Data ss:Type="String">UnCommon</Data></Cell>
+    <Cell><Data ss:Type="String">Equipment</Data></Cell>
+    <Cell><Data ss:Type="Number">1</Data></Cell>
+    <Cell><Data ss:Type="Boolean">0</Data></Cell>
+    <Cell><Data ss:Type="Number">1</Data></Cell>
+    <Cell><Data ss:Type="Boolean">1</Data></Cell>
+    <Cell><Data ss:Type="String">StaticMesh'/Game/InventorySystem/Items/Equipment/Meshes/SM_Equip_Ring.SM_Equip_Ring'</Data></Cell>
+    <Cell><Data ss:Type="String">EquipmentMesh</Data></Cell>
+    <Cell><Data ss:Type="String">Armor</Data></Cell>
+    <Cell><Data ss:Type="String">Ring</Data></Cell>
+    <Cell><Data ss:Type="String">None</Data></Cell>
+    <Cell><Data ss:Type="String">(Strength=0,Dexterity=0,Intelligence=0,Armor=0,Health=0,Damage=0)</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String">Equip_Spiked_Ring</Data></Cell>
+    <Cell><Data ss:Type="String">Equip_Spiked_Ring</Data></Cell>
+    <Cell><Data ss:Type="String">/Game/InventorySystem/Items/Equipment/Icons/T_ICON_Equip_Spiked_Ring.T_ICON_Equip_Spiked_Ring</Data></Cell>
+    <Cell><Data ss:Type="String">Spiked Ring</Data></Cell>
+    <Cell ss:Index="6"><Data ss:Type="String">Rare</Data></Cell>
+    <Cell><Data ss:Type="String">Equipment</Data></Cell>
+    <Cell><Data ss:Type="Number">1</Data></Cell>
+    <Cell><Data ss:Type="Boolean">0</Data></Cell>
+    <Cell><Data ss:Type="Number">1</Data></Cell>
+    <Cell><Data ss:Type="Boolean">1</Data></Cell>
+    <Cell><Data ss:Type="String">StaticMesh'/Game/InventorySystem/Items/Equipment/Meshes/SM_Equip_Ring_Spiked.SM_Equip_Ring_Spiked'</Data></Cell>
+    <Cell><Data ss:Type="String">EquipmentMesh</Data></Cell>
+    <Cell><Data ss:Type="String">Armor</Data></Cell>
+    <Cell><Data ss:Type="String">Ring</Data></Cell>
+    <Cell><Data ss:Type="String">None</Data></Cell>
+    <Cell><Data ss:Type="String">(Strength=0,Dexterity=0,Intelligence=0,Armor=0,Health=0,Damage=0)</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String">Weapon_Simple_Axe</Data></Cell>
+    <Cell><Data ss:Type="String">Weapon_Simple_Axe</Data></Cell>
+    <Cell><Data ss:Type="String">/Game/InventorySystem/Items/Weapons/Icon/T_ICON_Weapon_Simple_Axe.T_ICON_Weapon_Simple_Axe</Data></Cell>
+    <Cell><Data ss:Type="String">Simple Axe</Data></Cell>
+    <Cell ss:Index="6"><Data ss:Type="String">Common</Data></Cell>
+    <Cell><Data ss:Type="String">Equipment</Data></Cell>
+    <Cell><Data ss:Type="Number">1</Data></Cell>
+    <Cell><Data ss:Type="Boolean">0</Data></Cell>
+    <Cell><Data ss:Type="Number">1</Data></Cell>
+    <Cell><Data ss:Type="Boolean">1</Data></Cell>
+    <Cell><Data ss:Type="String">StaticMesh'/Game/InventorySystem/Items/Weapons/Meshes/SM_Weapon_Simple_Axe.SM_Weapon_Simple_Axe'</Data></Cell>
+    <Cell><Data ss:Type="String">EquipmentMesh</Data></Cell>
+    <Cell><Data ss:Type="String">Weapon</Data></Cell>
+    <Cell><Data ss:Type="String">MainHand</Data></Cell>
+    <Cell><Data ss:Type="String">None</Data></Cell>
+    <Cell><Data ss:Type="String">(Strength=0,Dexterity=0,Intelligence=0,Armor=0,Health=0,Damage=0)</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String">Weapon_Bone_Dagger</Data></Cell>
+    <Cell><Data ss:Type="String">Weapon_Bone_Dagger</Data></Cell>
+    <Cell><Data ss:Type="String">/Game/InventorySystem/Items/Weapons/Icon/T_ICON_Weapon_Bone_Dagger.T_ICON_Weapon_Bone_Dagger</Data></Cell>
+    <Cell><Data ss:Type="String">Bone Dagger</Data></Cell>
+    <Cell ss:Index="6"><Data ss:Type="String">Common</Data></Cell>
+    <Cell><Data ss:Type="String">Equipment</Data></Cell>
+    <Cell><Data ss:Type="Number">1</Data></Cell>
+    <Cell><Data ss:Type="Boolean">0</Data></Cell>
+    <Cell><Data ss:Type="Number">1</Data></Cell>
+    <Cell><Data ss:Type="Boolean">1</Data></Cell>
+    <Cell><Data ss:Type="String">StaticMesh'/Game/InventorySystem/Items/Weapons/Meshes/SM_Weapon_Bone_Dagger.SM_Weapon_Bone_Dagger'</Data></Cell>
+    <Cell><Data ss:Type="String">EquipmentMesh</Data></Cell>
+    <Cell><Data ss:Type="String">Weapon</Data></Cell>
+    <Cell><Data ss:Type="String">MainHand</Data></Cell>
+    <Cell><Data ss:Type="String">None</Data></Cell>
+    <Cell><Data ss:Type="String">(Strength=0,Dexterity=0,Intelligence=0,Armor=0,Health=0,Damage=0)</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String">Weapon_Bone_Sword</Data></Cell>
+    <Cell><Data ss:Type="String">Weapon_Bone_Sword</Data></Cell>
+    <Cell><Data ss:Type="String">/Game/InventorySystem/Items/Weapons/Icon/T_ICON_Weapon_Bone_Sword.T_ICON_Weapon_Bone_Sword</Data></Cell>
+    <Cell><Data ss:Type="String">Bone Sword</Data></Cell>
+    <Cell ss:Index="6"><Data ss:Type="String">UnCommon</Data></Cell>
+    <Cell><Data ss:Type="String">Equipment</Data></Cell>
+    <Cell><Data ss:Type="Number">1</Data></Cell>
+    <Cell><Data ss:Type="Boolean">0</Data></Cell>
+    <Cell><Data ss:Type="Number">1</Data></Cell>
+    <Cell><Data ss:Type="Boolean">1</Data></Cell>
+    <Cell><Data ss:Type="String">StaticMesh'/Game/InventorySystem/Items/Weapons/Meshes/SM_Weapon_Bone_Sword.SM_Weapon_Bone_Sword'</Data></Cell>
+    <Cell><Data ss:Type="String">EquipmentMesh</Data></Cell>
+    <Cell><Data ss:Type="String">Weapon</Data></Cell>
+    <Cell><Data ss:Type="String">MainHand</Data></Cell>
+    <Cell><Data ss:Type="String">None</Data></Cell>
+    <Cell><Data ss:Type="String">(Strength=0,Dexterity=0,Intelligence=0,Armor=0,Health=0,Damage=0)</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String">Armor_Leather_Hood</Data></Cell>
+    <Cell><Data ss:Type="String">Armor_Leather_Hood</Data></Cell>
+    <Cell><Data ss:Type="String">/Game/InventorySystem/Items/Equipment/Icons/T_ICON_Armor_Leather_Hood.T_ICON_Armor_Leather_Hood</Data></Cell>
+    <Cell><Data ss:Type="String">Leather Hood</Data></Cell>
+    <Cell ss:Index="6"><Data ss:Type="String">UnCommon</Data></Cell>
+    <Cell><Data ss:Type="String">Equipment</Data></Cell>
+    <Cell><Data ss:Type="Number">1</Data></Cell>
+    <Cell><Data ss:Type="Boolean">0</Data></Cell>
+    <Cell><Data ss:Type="Number">1</Data></Cell>
+    <Cell><Data ss:Type="Boolean">1</Data></Cell>
+    <Cell><Data ss:Type="String">StaticMesh'/Game/InventorySystem/Items/Equipment/Meshes/SM_Armor_Leather_Hood.SM_Armor_Leather_Hood'</Data></Cell>
+    <Cell><Data ss:Type="String">EquipmentMesh</Data></Cell>
+    <Cell><Data ss:Type="String">Armor</Data></Cell>
+    <Cell><Data ss:Type="String">Head</Data></Cell>
+    <Cell><Data ss:Type="String">None</Data></Cell>
+    <Cell><Data ss:Type="String">(Strength=0,Dexterity=3,Intelligence=0,Armor=5,Health=0,Damage=0)</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String">Armor_Leather_Helmet</Data></Cell>
+    <Cell><Data ss:Type="String">Armor_Leather_Helmet</Data></Cell>
+    <Cell><Data ss:Type="String">/Game/InventorySystem/Items/Equipment/Icons/T_ICON_Armor_Leather_Helmet.T_ICON_Armor_Leather_Helmet</Data></Cell>
+    <Cell><Data ss:Type="String">Leather Helmet</Data></Cell>
+    <Cell ss:Index="6"><Data ss:Type="String">UnCommon</Data></Cell>
+    <Cell><Data ss:Type="String">Equipment</Data></Cell>
+    <Cell><Data ss:Type="Number">1</Data></Cell>
+    <Cell><Data ss:Type="Boolean">0</Data></Cell>
+    <Cell><Data ss:Type="Number">1</Data></Cell>
+    <Cell><Data ss:Type="Boolean">1</Data></Cell>
+    <Cell><Data ss:Type="String">StaticMesh'/Game/InventorySystem/Items/Equipment/Meshes/SM_Armor_Leather_Helmet.SM_Armor_Leather_Helmet'</Data></Cell>
+    <Cell><Data ss:Type="String">EquipmentMesh</Data></Cell>
+    <Cell><Data ss:Type="String">Armor</Data></Cell>
+    <Cell><Data ss:Type="String">Head</Data></Cell>
+    <Cell><Data ss:Type="String">None</Data></Cell>
+    <Cell><Data ss:Type="String">(Strength=5,Dexterity=0,Intelligence=0,Armor=10,Health=0,Damage=0)</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String">Armor_Leather_Boots</Data></Cell>
+    <Cell><Data ss:Type="String">Armor_Leather_Boots</Data></Cell>
+    <Cell><Data ss:Type="String">/Game/InventorySystem/Items/Equipment/Icons/T_ICON_Armor_Leather_Boots.T_ICON_Armor_Leather_Boots</Data></Cell>
+    <Cell><Data ss:Type="String">Leather Boots</Data></Cell>
+    <Cell ss:Index="6"><Data ss:Type="String">UnCommon</Data></Cell>
+    <Cell><Data ss:Type="String">Equipment</Data></Cell>
+    <Cell><Data ss:Type="Number">1</Data></Cell>
+    <Cell><Data ss:Type="Boolean">0</Data></Cell>
+    <Cell><Data ss:Type="Number">1</Data></Cell>
+    <Cell><Data ss:Type="Boolean">1</Data></Cell>
+    <Cell><Data ss:Type="String">StaticMesh'/Game/InventorySystem/Items/Equipment/Meshes/SM_Armor_Leather_Boots.SM_Armor_Leather_Boots'</Data></Cell>
+    <Cell><Data ss:Type="String">EquipmentMesh</Data></Cell>
+    <Cell><Data ss:Type="String">Armor</Data></Cell>
+    <Cell><Data ss:Type="String">Feet</Data></Cell>
+    <Cell><Data ss:Type="String">None</Data></Cell>
+    <Cell><Data ss:Type="String">(Strength=3,Dexterity=0,Intelligence=0,Armor=5,Health=0,Damage=0)</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String">Armor_Bladed_Shoulder</Data></Cell>
+    <Cell><Data ss:Type="String">Armor_Bladed_Shoulder</Data></Cell>
+    <Cell><Data ss:Type="String">/Game/InventorySystem/Items/Equipment/Icons/T_ICON_Armor_Bladed_Shoulder.T_ICON_Armor_Bladed_Shoulder</Data></Cell>
+    <Cell><Data ss:Type="String">Bladed Shoulder Piece</Data></Cell>
+    <Cell ss:Index="6"><Data ss:Type="String">Legendary</Data></Cell>
+    <Cell><Data ss:Type="String">Equipment</Data></Cell>
+    <Cell><Data ss:Type="Number">1</Data></Cell>
+    <Cell><Data ss:Type="Boolean">0</Data></Cell>
+    <Cell><Data ss:Type="Number">1</Data></Cell>
+    <Cell><Data ss:Type="Boolean">1</Data></Cell>
+    <Cell><Data ss:Type="String">StaticMesh'/Game/InventorySystem/Items/Equipment/Meshes/SM_Armor_Bladed_Shoulder.SM_Armor_Bladed_Shoulder'</Data></Cell>
+    <Cell><Data ss:Type="String">EquipmentMesh</Data></Cell>
+    <Cell><Data ss:Type="String">Armor</Data></Cell>
+    <Cell><Data ss:Type="String">Shoulder</Data></Cell>
+    <Cell><Data ss:Type="String">None</Data></Cell>
+    <Cell><Data ss:Type="String">(Strength=10,Dexterity=5,Intelligence=0,Armor=20,Health=25,Damage=0)</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String">Armor_Cardboard_Helmet</Data></Cell>
+    <Cell><Data ss:Type="String">Armor_Cardboard_Helmet</Data></Cell>
+    <Cell><Data ss:Type="String">/Game/InventorySystem/Items/Equipment/Icons/T_ICON_Armor_Cardboard_Helmet.T_ICON_Armor_Cardboard_Helmet</Data></Cell>
+    <Cell><Data ss:Type="String">Cardboard Helmet</Data></Cell>
+    <Cell ss:Index="6"><Data ss:Type="String">Poor</Data></Cell>
+    <Cell><Data ss:Type="String">Equipment</Data></Cell>
+    <Cell><Data ss:Type="Number">1</Data></Cell>
+    <Cell><Data ss:Type="Boolean">0</Data></Cell>
+    <Cell><Data ss:Type="Number">1</Data></Cell>
+    <Cell><Data ss:Type="Boolean">1</Data></Cell>
+    <Cell><Data ss:Type="String">StaticMesh'/Game/InventorySystem/Items/Equipment/Meshes/SM_Armor_Cardboard_Helm.SM_Armor_Cardboard_Helm'</Data></Cell>
+    <Cell><Data ss:Type="String">EquipmentMesh</Data></Cell>
+    <Cell><Data ss:Type="String">Armor</Data></Cell>
+    <Cell><Data ss:Type="String">Head</Data></Cell>
+    <Cell><Data ss:Type="String">None</Data></Cell>
+    <Cell><Data ss:Type="String">(Strength=1,Dexterity=1,Intelligence=0,Armor=3,Health=0,Damage=0)</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String">Armor_Cardboard_Chest</Data></Cell>
+    <Cell><Data ss:Type="String">Armor_Cardboard_Chest</Data></Cell>
+    <Cell><Data ss:Type="String">/Game/InventorySystem/Items/Equipment/Icons/T_ICON_Armor_Cardboard_Chest.T_ICON_Armor_Cardboard_Chest</Data></Cell>
+    <Cell><Data ss:Type="String">Cardboard Chest</Data></Cell>
+    <Cell ss:Index="6"><Data ss:Type="String">Poor</Data></Cell>
+    <Cell><Data ss:Type="String">Equipment</Data></Cell>
+    <Cell><Data ss:Type="Number">1</Data></Cell>
+    <Cell><Data ss:Type="Boolean">0</Data></Cell>
+    <Cell><Data ss:Type="Number">1</Data></Cell>
+    <Cell><Data ss:Type="Boolean">1</Data></Cell>
+    <Cell><Data ss:Type="String">StaticMesh'/Game/InventorySystem/Items/Equipment/Meshes/SM_Armor_Cardboard_Chest.SM_Armor_Cardboard_Chest'</Data></Cell>
+    <Cell><Data ss:Type="String">EquipmentMesh</Data></Cell>
+    <Cell><Data ss:Type="String">Armor</Data></Cell>
+    <Cell><Data ss:Type="String">Chest</Data></Cell>
+    <Cell><Data ss:Type="String">None</Data></Cell>
+    <Cell><Data ss:Type="String">(Strength=1,Dexterity=0,Intelligence=0,Armor=5,Health=0,Damage=0)</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String">Armor_Cardboard_Gloves</Data></Cell>
+    <Cell><Data ss:Type="String">Armor_Cardboard_Gloves</Data></Cell>
+    <Cell><Data ss:Type="String">/Game/InventorySystem/Items/Equipment/Icons/T_ICON_Armor_Cardboard_Gloves.T_ICON_Armor_Cardboard_Gloves</Data></Cell>
+    <Cell><Data ss:Type="String">Cardboard Gloves</Data></Cell>
+    <Cell ss:Index="6"><Data ss:Type="String">Poor</Data></Cell>
+    <Cell><Data ss:Type="String">Equipment</Data></Cell>
+    <Cell><Data ss:Type="Number">1</Data></Cell>
+    <Cell><Data ss:Type="Boolean">0</Data></Cell>
+    <Cell><Data ss:Type="Number">1</Data></Cell>
+    <Cell><Data ss:Type="Boolean">1</Data></Cell>
+    <Cell><Data ss:Type="String">StaticMesh'/Game/InventorySystem/Items/Equipment/Meshes/SM_Armor_Cardboard_Gloves.SM_Armor_Cardboard_Gloves'</Data></Cell>
+    <Cell><Data ss:Type="String">EquipmentMesh</Data></Cell>
+    <Cell><Data ss:Type="String">Armor</Data></Cell>
+    <Cell><Data ss:Type="String">Hands</Data></Cell>
+    <Cell><Data ss:Type="String">None</Data></Cell>
+    <Cell><Data ss:Type="String">(Strength=3,Dexterity=0,Intelligence=0,Armor=3,Health=0,Damage=0)</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String">Armor_Cardboard_Legs</Data></Cell>
+    <Cell><Data ss:Type="String">Armor_Cardboard_Legs</Data></Cell>
+    <Cell><Data ss:Type="String">/Game/InventorySystem/Items/Equipment/Icons/T_ICON_Armor_Cardboard_Legs.T_ICON_Armor_Cardboard_Legs</Data></Cell>
+    <Cell><Data ss:Type="String">Cardboard Legs</Data></Cell>
+    <Cell ss:Index="6"><Data ss:Type="String">Poor</Data></Cell>
+    <Cell><Data ss:Type="String">Equipment</Data></Cell>
+    <Cell><Data ss:Type="Number">1</Data></Cell>
+    <Cell><Data ss:Type="Boolean">0</Data></Cell>
+    <Cell><Data ss:Type="Number">1</Data></Cell>
+    <Cell><Data ss:Type="Boolean">1</Data></Cell>
+    <Cell><Data ss:Type="String">StaticMesh'/Game/InventorySystem/Items/Equipment/Meshes/SM_Armor_Cardboard_Legs.SM_Armor_Cardboard_Legs'</Data></Cell>
+    <Cell><Data ss:Type="String">EquipmentMesh</Data></Cell>
+    <Cell><Data ss:Type="String">Armor</Data></Cell>
+    <Cell><Data ss:Type="String">Legs</Data></Cell>
+    <Cell><Data ss:Type="String">None</Data></Cell>
+    <Cell><Data ss:Type="String">(Strength=2,Dexterity=0,Intelligence=0,Armor=0,Health=3,Damage=0)</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String">Armor_Cardboard_Boots</Data></Cell>
+    <Cell><Data ss:Type="String">Armor_Cardboard_Boots</Data></Cell>
+    <Cell><Data ss:Type="String">/Game/InventorySystem/Items/Equipment/Icons/T_ICON_Armor_Cardboard_Boots.T_ICON_Armor_Cardboard_Boots</Data></Cell>
+    <Cell><Data ss:Type="String">Cardboard Boots</Data></Cell>
+    <Cell ss:Index="6"><Data ss:Type="String">Poor</Data></Cell>
+    <Cell><Data ss:Type="String">Equipment</Data></Cell>
+    <Cell><Data ss:Type="Number">1</Data></Cell>
+    <Cell><Data ss:Type="Boolean">0</Data></Cell>
+    <Cell><Data ss:Type="Number">1</Data></Cell>
+    <Cell><Data ss:Type="Boolean">1</Data></Cell>
+    <Cell><Data ss:Type="String">StaticMesh'/Game/InventorySystem/Items/Equipment/Meshes/SM_Armor_Cardboard_Boots.SM_Armor_Cardboard_Boots'</Data></Cell>
+    <Cell><Data ss:Type="String">EquipmentMesh</Data></Cell>
+    <Cell><Data ss:Type="String">Armor</Data></Cell>
+    <Cell><Data ss:Type="String">Feet</Data></Cell>
+    <Cell><Data ss:Type="String">None</Data></Cell>
+    <Cell><Data ss:Type="String">(Strength=1,Dexterity=0,Intelligence=0,Armor=2,Health=0,Damage=0)</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String">Shield_Wood_Planks</Data></Cell>
+    <Cell><Data ss:Type="String">Shield_Wood_Planks</Data></Cell>
+    <Cell><Data ss:Type="String">/Game/InventorySystem/Items/Weapons/Icon/T_ICON_Shield_Wood_Planks.T_ICON_Shield_Wood_Planks</Data></Cell>
+    <Cell><Data ss:Type="String">Wood Planks</Data></Cell>
+    <Cell><Data ss:Type="String">Lash enough of these together, and you'll have a pretty sturdy raft.</Data></Cell>
+    <Cell><Data ss:Type="String">Poor</Data></Cell>
+    <Cell><Data ss:Type="String">Equipment</Data></Cell>
+    <Cell><Data ss:Type="Number">1</Data></Cell>
+    <Cell><Data ss:Type="Boolean">0</Data></Cell>
+    <Cell><Data ss:Type="Number">1</Data></Cell>
+    <Cell><Data ss:Type="Boolean">1</Data></Cell>
+    <Cell><Data ss:Type="String">StaticMesh'/Game/InventorySystem/Items/Weapons/Meshes/SM_Shield_Wood_Planks.SM_Shield_Wood_Planks'</Data></Cell>
+    <Cell><Data ss:Type="String">EquipmentMesh</Data></Cell>
+    <Cell><Data ss:Type="String">Armor</Data></Cell>
+    <Cell><Data ss:Type="String">OffHand</Data></Cell>
+    <Cell><Data ss:Type="String">None</Data></Cell>
+    <Cell><Data ss:Type="String">(Strength=10,Dexterity=0,Intelligence=0,Armor=30,Health=0,Damage=0)</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String">Misc_Human_Skull</Data></Cell>
+    <Cell><Data ss:Type="String">Misc_Human_Skull</Data></Cell>
+    <Cell><Data ss:Type="String">/Game/InventorySystem/Items/Miscellaneous/Icons/T_ICON_Misc_Human_Skull.T_ICON_Misc_Human_Skull</Data></Cell>
+    <Cell><Data ss:Type="String">Human Skull</Data></Cell>
+    <Cell><Data ss:Type="String">Screams and weeping are heard faintly as you clutch the skull.</Data></Cell>
+    <Cell><Data ss:Type="String">Rare</Data></Cell>
+    <Cell><Data ss:Type="String">Equipment</Data></Cell>
+    <Cell><Data ss:Type="Number">1</Data></Cell>
+    <Cell><Data ss:Type="Boolean">0</Data></Cell>
+    <Cell><Data ss:Type="Number">1</Data></Cell>
+    <Cell><Data ss:Type="Boolean">1</Data></Cell>
+    <Cell><Data ss:Type="String">StaticMesh'/Game/InventorySystem/Items/Miscellaneous/Meshes/SM_Human_Skull.SM_Human_Skull'</Data></Cell>
+    <Cell><Data ss:Type="String">EquipmentMesh</Data></Cell>
+    <Cell><Data ss:Type="String">Miscellaneuos</Data></Cell>
+    <Cell><Data ss:Type="String">Trinket</Data></Cell>
+    <Cell><Data ss:Type="String">None</Data></Cell>
+    <Cell><Data ss:Type="String">(Strength=0,Dexterity=0,Intelligence=0,Armor=0,Health=0,Damage=0)</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String">Equip_Bone_Amulet</Data></Cell>
+    <Cell><Data ss:Type="String">Equip_Bone_Amulet</Data></Cell>
+    <Cell><Data ss:Type="String">/Game/InventorySystem/Items/Equipment/Icons/T_ICON_Equip_Bone_Amulet.T_ICON_Equip_Bone_Amulet</Data></Cell>
+    <Cell><Data ss:Type="String">Amulet of Bone</Data></Cell>
+    <Cell><Data ss:Type="String">A great deal of power radiates from the amulet...</Data></Cell>
+    <Cell><Data ss:Type="String">Legendary</Data></Cell>
+    <Cell><Data ss:Type="String">Equipment</Data></Cell>
+    <Cell><Data ss:Type="Number">1</Data></Cell>
+    <Cell><Data ss:Type="Boolean">0</Data></Cell>
+    <Cell><Data ss:Type="Number">1</Data></Cell>
+    <Cell><Data ss:Type="Boolean">1</Data></Cell>
+    <Cell><Data ss:Type="String">StaticMesh'/Game/InventorySystem/Items/Equipment/Meshes/SM_Equip_Bone_Amulet.SM_Equip_Bone_Amulet'</Data></Cell>
+    <Cell><Data ss:Type="String">EquipmentMesh</Data></Cell>
+    <Cell><Data ss:Type="String">Armor</Data></Cell>
+    <Cell><Data ss:Type="String">Accessory</Data></Cell>
+    <Cell><Data ss:Type="String">None</Data></Cell>
+    <Cell><Data ss:Type="String">(Strength=0,Dexterity=0,Intelligence=0,Armor=0,Health=0,Damage=0)</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String">Currency_Gold</Data></Cell>
+    <Cell><Data ss:Type="String">Currency_Gold</Data></Cell>
+    <Cell><Data ss:Type="String">/Game/InventorySystem/Items/Miscellaneous/Icons/T_ICON_Currency_Gold.T_ICON_Currency_Gold</Data></Cell>
+    <Cell><Data ss:Type="String">Gold</Data></Cell>
+    <Cell ss:Index="6"><Data ss:Type="String">Common</Data></Cell>
+    <Cell><Data ss:Type="String">Currency</Data></Cell>
+    <Cell><Data ss:Type="Number">1</Data></Cell>
+    <Cell><Data ss:Type="Boolean">0</Data></Cell>
+    <Cell><Data ss:Type="Number">1</Data></Cell>
+    <Cell><Data ss:Type="Boolean">1</Data></Cell>
+    <Cell><Data ss:Type="String">StaticMesh'/Game/InventorySystem/Items/Miscellaneous/Meshes/SM_Coin.SM_Coin'</Data></Cell>
+    <Cell><Data ss:Type="String">EquipmentMesh</Data></Cell>
+    <Cell><Data ss:Type="String">Armor</Data></Cell>
+    <Cell><Data ss:Type="String">Head</Data></Cell>
+    <Cell><Data ss:Type="String">None</Data></Cell>
+    <Cell><Data ss:Type="String">(Strength=0,Dexterity=0,Intelligence=0,Armor=0,Health=0,Damage=0)</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String">Weapon_Rifle_Assault</Data></Cell>
+    <Cell><Data ss:Type="String">Weapon_Rifle_Assault</Data></Cell>
+    <Cell><Data ss:Type="String">/Game/InventorySystem/Items/Weapons/Icon/T_ICON_Weapon_Rifle_Assault.T_ICON_Weapon_Rifle_Assault</Data></Cell>
+    <Cell><Data ss:Type="String">Assault Rifle</Data></Cell>
+    <Cell><Data ss:Type="String">Unlike anything you have ever seen before.</Data></Cell>
+    <Cell><Data ss:Type="String">Legendary</Data></Cell>
+    <Cell><Data ss:Type="String">Equipment</Data></Cell>
+    <Cell><Data ss:Type="Number">1</Data></Cell>
+    <Cell><Data ss:Type="Boolean">0</Data></Cell>
+    <Cell><Data ss:Type="Number">1</Data></Cell>
+    <Cell><Data ss:Type="Boolean">1</Data></Cell>
+    <Cell><Data ss:Type="String">StaticMesh'/Game/InventorySystem/Items/Weapons/Meshes/SM_Weapon_Assault_Rifle.SM_Weapon_Assault_Rifle'</Data></Cell>
+    <Cell><Data ss:Type="String">EquipmentMesh</Data></Cell>
+    <Cell><Data ss:Type="String">Weapon</Data></Cell>
+    <Cell><Data ss:Type="String">MainHand</Data></Cell>
+    <Cell><Data ss:Type="String">None</Data></Cell>
+    <Cell><Data ss:Type="String">(Strength=0,Dexterity=0,Intelligence=0,Armor=0,Health=0,Damage=0)</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String">Armor_Steel_Helmet</Data></Cell>
+    <Cell><Data ss:Type="String">Armor_Steel_Helmet</Data></Cell>
+    <Cell><Data ss:Type="String">/Game/GameContent/Meshes/Textures/T_ICON_SteelHelmet.T_ICON_SteelHelmet</Data></Cell>
+    <Cell><Data ss:Type="String">Steel Helmet</Data></Cell>
+    <Cell ss:Index="6"><Data ss:Type="String">Epic</Data></Cell>
+    <Cell><Data ss:Type="String">Equipment</Data></Cell>
+    <Cell><Data ss:Type="Number">1</Data></Cell>
+    <Cell><Data ss:Type="Boolean">0</Data></Cell>
+    <Cell><Data ss:Type="Number">1</Data></Cell>
+    <Cell><Data ss:Type="Boolean">1</Data></Cell>
+    <Cell><Data ss:Type="String">StaticMesh'/Game/GameContent/Meshes/SM_SteelHelmet.SM_SteelHelmet'</Data></Cell>
+    <Cell><Data ss:Type="String">EquipmentMesh</Data></Cell>
+    <Cell><Data ss:Type="String">Armor</Data></Cell>
+    <Cell><Data ss:Type="String">Head</Data></Cell>
+    <Cell><Data ss:Type="String">None</Data></Cell>
+    <Cell><Data ss:Type="String">(Strength=5,Dexterity=5,Intelligence=5,Armor=15,Health=10,Damage=0)</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String">Armor_Steel_Breastplate</Data></Cell>
+    <Cell><Data ss:Type="String">Armor_Steel_Breastplate</Data></Cell>
+    <Cell><Data ss:Type="String">/Game/GameContent/Meshes/Textures/T_ICON_SteelBreastplate.T_ICON_SteelBreastplate</Data></Cell>
+    <Cell><Data ss:Type="String">Steel Breastplate</Data></Cell>
+    <Cell ss:Index="6"><Data ss:Type="String">Epic</Data></Cell>
+    <Cell><Data ss:Type="String">Equipment</Data></Cell>
+    <Cell><Data ss:Type="Number">1</Data></Cell>
+    <Cell><Data ss:Type="Boolean">0</Data></Cell>
+    <Cell><Data ss:Type="Number">1</Data></Cell>
+    <Cell><Data ss:Type="Boolean">1</Data></Cell>
+    <Cell><Data ss:Type="String">StaticMesh'/Game/GameContent/Meshes/SM_SteelBreastplate.SM_SteelBreastplate'</Data></Cell>
+    <Cell><Data ss:Type="String">EquipmentMesh</Data></Cell>
+    <Cell><Data ss:Type="String">Armor</Data></Cell>
+    <Cell><Data ss:Type="String">Chest</Data></Cell>
+    <Cell><Data ss:Type="String">None</Data></Cell>
+    <Cell><Data ss:Type="String">(Strength=5,Dexterity=5,Intelligence=5,Armor=25,Health=50,Damage=0)</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String">Armor_Steel_Gloves</Data></Cell>
+    <Cell><Data ss:Type="String">Armor_Steel_Gloves</Data></Cell>
+    <Cell><Data ss:Type="String">/Game/GameContent/Meshes/Textures/T_ICON_SteelGloves.T_ICON_SteelGloves</Data></Cell>
+    <Cell><Data ss:Type="String">Steel Gloves</Data></Cell>
+    <Cell ss:Index="6"><Data ss:Type="String">Epic</Data></Cell>
+    <Cell><Data ss:Type="String">Equipment</Data></Cell>
+    <Cell><Data ss:Type="Number">1</Data></Cell>
+    <Cell><Data ss:Type="Boolean">0</Data></Cell>
+    <Cell><Data ss:Type="Number">1</Data></Cell>
+    <Cell><Data ss:Type="Boolean">1</Data></Cell>
+    <Cell><Data ss:Type="String">StaticMesh'/Game/GameContent/Meshes/SM_SteelGloves.SM_SteelGloves'</Data></Cell>
+    <Cell><Data ss:Type="String">EquipmentMesh</Data></Cell>
+    <Cell><Data ss:Type="String">Armor</Data></Cell>
+    <Cell><Data ss:Type="String">Hands</Data></Cell>
+    <Cell><Data ss:Type="String">None</Data></Cell>
+    <Cell><Data ss:Type="String">(Strength=0,Dexterity=0,Intelligence=0,Armor=0,Health=0,Damage=0)</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String">Armor_Steel_Leggings</Data></Cell>
+    <Cell><Data ss:Type="String">Armor_Steel_Leggings</Data></Cell>
+    <Cell><Data ss:Type="String">/Game/GameContent/Meshes/Textures/T_ICON_SteelLeggings.T_ICON_SteelLeggings</Data></Cell>
+    <Cell><Data ss:Type="String">Steel Leggings</Data></Cell>
+    <Cell ss:Index="6"><Data ss:Type="String">Epic</Data></Cell>
+    <Cell><Data ss:Type="String">Equipment</Data></Cell>
+    <Cell><Data ss:Type="Number">1</Data></Cell>
+    <Cell><Data ss:Type="Boolean">0</Data></Cell>
+    <Cell><Data ss:Type="Number">1</Data></Cell>
+    <Cell><Data ss:Type="Boolean">1</Data></Cell>
+    <Cell><Data ss:Type="String">StaticMesh'/Game/GameContent/Meshes/SM_SteelLeggings.SM_SteelLeggings'</Data></Cell>
+    <Cell><Data ss:Type="String">EquipmentMesh</Data></Cell>
+    <Cell><Data ss:Type="String">Armor</Data></Cell>
+    <Cell><Data ss:Type="String">Legs</Data></Cell>
+    <Cell><Data ss:Type="String">None</Data></Cell>
+    <Cell><Data ss:Type="String">(Strength=5,Dexterity=5,Intelligence=5,Armor=25,Health=50,Damage=0)</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String">Armor_Steel_Boots</Data></Cell>
+    <Cell><Data ss:Type="String">Armor_Steel_Boots</Data></Cell>
+    <Cell><Data ss:Type="String">/Game/GameContent/Meshes/Textures/T_ICON_SteelBoots.T_ICON_SteelBoots</Data></Cell>
+    <Cell><Data ss:Type="String">Steel Boots</Data></Cell>
+    <Cell ss:Index="6"><Data ss:Type="String">Epic</Data></Cell>
+    <Cell><Data ss:Type="String">Equipment</Data></Cell>
+    <Cell><Data ss:Type="Number">1</Data></Cell>
+    <Cell><Data ss:Type="Boolean">0</Data></Cell>
+    <Cell><Data ss:Type="Number">1</Data></Cell>
+    <Cell><Data ss:Type="Boolean">1</Data></Cell>
+    <Cell><Data ss:Type="String">StaticMesh'/Game/GameContent/Meshes/SM_SteelBoots.SM_SteelBoots'</Data></Cell>
+    <Cell><Data ss:Type="String">EquipmentMesh</Data></Cell>
+    <Cell><Data ss:Type="String">Armor</Data></Cell>
+    <Cell><Data ss:Type="String">Feet</Data></Cell>
+    <Cell><Data ss:Type="String">None</Data></Cell>
+    <Cell><Data ss:Type="String">(Strength=5,Dexterity=5,Intelligence=5,Armor=15,Health=25,Damage=0)</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String">Weapon_Magic_Wand</Data></Cell>
+    <Cell><Data ss:Type="String">Weapon_Magic_Wand</Data></Cell>
+    <Cell><Data ss:Type="String">/Game/InventorySystem/Items/Weapons/Icon/T_ICON_MagicWand.T_ICON_MagicWand</Data></Cell>
+    <Cell><Data ss:Type="String">Magic Wand</Data></Cell>
+    <Cell ss:Index="6"><Data ss:Type="String">UnCommon</Data></Cell>
+    <Cell><Data ss:Type="String">Equipment</Data></Cell>
+    <Cell><Data ss:Type="Number">1</Data></Cell>
+    <Cell><Data ss:Type="Boolean">0</Data></Cell>
+    <Cell><Data ss:Type="Number">1</Data></Cell>
+    <Cell><Data ss:Type="Boolean">1</Data></Cell>
+    <Cell><Data ss:Type="String">StaticMesh'/Game/GameContent/Meshes/SM_MagicWand.SM_MagicWand'</Data></Cell>
+    <Cell><Data ss:Type="String">EquipmentMesh</Data></Cell>
+    <Cell><Data ss:Type="String">Weapon</Data></Cell>
+    <Cell><Data ss:Type="String">MainHand</Data></Cell>
+    <Cell><Data ss:Type="String">/Game/GameContent/Blueprint/BP_Weapon_WandBase.BP_Weapon_WandBase_C</Data></Cell>
+    <Cell><Data ss:Type="String">(Strength=5,Dexterity=5,Intelligence=10,Armor=0,Health=0,Damage=10)</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String">Weapon_Hard_Sword</Data></Cell>
+    <Cell><Data ss:Type="String">Weapon_Hard_Sword</Data></Cell>
+    <Cell><Data ss:Type="String">/Game/InventorySystem/Items/Weapons/Icon/T_ICON_HardSword.T_ICON_HardSword</Data></Cell>
+    <Cell><Data ss:Type="String">Hard_Sword</Data></Cell>
+    <Cell ss:Index="6"><Data ss:Type="String">Rare</Data></Cell>
+    <Cell><Data ss:Type="String">Equipment</Data></Cell>
+    <Cell><Data ss:Type="Number">1</Data></Cell>
+    <Cell><Data ss:Type="Boolean">0</Data></Cell>
+    <Cell><Data ss:Type="Number">1</Data></Cell>
+    <Cell><Data ss:Type="Boolean">1</Data></Cell>
+    <Cell><Data ss:Type="String">StaticMesh'/Game/CloseCombat/Weapon/Swords/SwordTest/Meshes/SM_Sword.SM_Sword'</Data></Cell>
+    <Cell><Data ss:Type="String">EquipmentMesh</Data></Cell>
+    <Cell><Data ss:Type="String">Weapon</Data></Cell>
+    <Cell><Data ss:Type="String">MainHand</Data></Cell>
+    <Cell><Data ss:Type="String">/Game/GameContent/Blueprint/BP_Weapon_SwordBase.BP_Weapon_SwordBase_C</Data></Cell>
+    <Cell><Data ss:Type="String">(Strength=12,Dexterity=6,Intelligence=0,Armor=0,Health=0,Damage=20)</Data></Cell>
+   </Row>
+   <Row>
+    <Cell><Data ss:Type="String">Armor_Glasses_Helmet</Data></Cell>
+    <Cell><Data ss:Type="String">Armor_Glasses_Helmet</Data></Cell>
+    <Cell><Data ss:Type="String">/Game/SCK_Casual01/Textures/Environment_Textures/Inprojectpromo.Inprojectpromo</Data></Cell>
+    <Cell><Data ss:Type="String">Glasses_Helmet</Data></Cell>
+    <Cell ss:Index="6"><Data ss:Type="String">Legendary</Data></Cell>
+    <Cell><Data ss:Type="String">Equipment</Data></Cell>
+    <Cell><Data ss:Type="Number">1</Data></Cell>
+    <Cell><Data ss:Type="Boolean">0</Data></Cell>
+    <Cell><Data ss:Type="Number">1</Data></Cell>
+    <Cell><Data ss:Type="Boolean">1</Data></Cell>
+    <Cell><Data ss:Type="String">StaticMesh'/Game/SCK_Casual01/Models/MESH_A_01_SM.MESH_A_01_SM'</Data></Cell>
+    <Cell><Data ss:Type="String">EquipmentMesh</Data></Cell>
+    <Cell><Data ss:Type="String">Armor</Data></Cell>
+    <Cell><Data ss:Type="String">Head</Data></Cell>
+    <Cell><Data ss:Type="String">None</Data></Cell>
+    <Cell><Data ss:Type="String">(Strength=0,Dexterity=0,Intelligence=0,Armor=0,Health=0,Damage=0)</Data></Cell>
+   </Row>
+  </Table>
+  <WorksheetOptions xmlns="urn:schemas-microsoft-com:office:excel">
+   <PageSetup>
+    <Header x:Margin="0.3"/>
+    <Footer x:Margin="0.3"/>
+    <PageMargins x:Bottom="0.75" x:Left="0.7" x:Right="0.7" x:Top="0.75"/>
+   </PageSetup>
+   <Selected/>
+   <Panes>
+    <Pane>
+     <Number>3</Number>
+     <ActiveRow>37</ActiveRow>
+     <ActiveCol>13</ActiveCol>
+    </Pane>
+   </Panes>
+   <ProtectObjects>False</ProtectObjects>
+   <ProtectScenarios>False</ProtectScenarios>
+  </WorksheetOptions>
+ </Worksheet>
+</Workbook>

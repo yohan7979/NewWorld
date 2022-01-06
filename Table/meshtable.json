@@ -1,0 +1,402 @@
+[
+	{
+		"Name": "SM_Fern",
+		"MeshType": "StaticMesh",
+		"ModelMesh": "/Game/InventorySystem/Environment/Meshes/SM_Fern.SM_Fern"
+	},
+	{
+		"Name": "SM_Apple",
+		"MeshType": "StaticMesh",
+		"ModelMesh": "/Game/InventorySystem/Items/Consumables/Meshes/SM_Food_Apple.SM_Food_Apple"
+	},
+	{
+		"Name": "SM_Apple_Poisoned",
+		"MeshType": "StaticMesh",
+		"ModelMesh": "/Game/InventorySystem/Items/Consumables/Meshes/SM_Food_Apple_Poisoned.SM_Food_Apple_Poisoned"
+	},
+	{
+		"Name": "SM_Bread",
+		"MeshType": "StaticMesh",
+		"ModelMesh": "/Game/InventorySystem/Items/Consumables/Meshes/SM_Food_Bread.SM_Food_Bread"
+	},
+	{
+		"Name": "SM_Baguette",
+		"MeshType": "StaticMesh",
+		"ModelMesh": "/Game/InventorySystem/Items/Consumables/Meshes/SM_Food_Baguette.SM_Food_Baguette"
+	},
+	{
+		"Name": "SM_Hambone",
+		"MeshType": "StaticMesh",
+		"ModelMesh": "/Game/InventorySystem/Items/Consumables/Meshes/SM_Food_Hambone.SM_Food_Hambone"
+	},
+	{
+		"Name": "SM_Equip_Leather_Backpack",
+		"MeshType": "SkeletalMesh",
+		"ModelMesh": "/Game/InventorySystem/Items/Equipment/Meshes/SM_Equip_Leather_Backpack.SM_Equip_Leather_Backpack"
+	},
+	{
+		"Name": "SK_Equip_Leather_Backpack",
+		"MeshType": "SkeletalMesh",
+		"ModelMesh": "/Game/InventorySystem/Items/Equipment/Meshes/SK_Equip_Leather_Backpack.SK_Equip_Leather_Backpack"
+	},
+	{
+		"Name": "SM_Equip_Leather_Pouches",
+		"MeshType": "StaticMesh",
+		"ModelMesh": "/Game/InventorySystem/Items/Equipment/Meshes/SM_Equip_Leather_Pouches.SM_Equip_Leather_Pouches"
+	},
+	{
+		"Name": "SK_Equip_Leather_Pouches",
+		"MeshType": "SkeletalMesh",
+		"ModelMesh": "/Game/InventorySystem/Items/Equipment/Meshes/SK_Equip_Leather_Pouches.SK_Equip_Leather_Pouches"
+	},
+	{
+		"Name": "SM_Equip_Ring",
+		"MeshType": "StaticMesh",
+		"ModelMesh": "/Game/InventorySystem/Items/Equipment/Meshes/SM_Equip_Ring.SM_Equip_Ring"
+	},
+	{
+		"Name": "SK_Equip_Ring",
+		"MeshType": "SkeletalMesh",
+		"ModelMesh": "/Game/InventorySystem/Items/Equipment/Meshes/SK_Equip_Ring.SK_Equip_Ring"
+	},
+	{
+		"Name": "SM_Equip_Ring_Spiked",
+		"MeshType": "StaticMesh",
+		"ModelMesh": "/Game/InventorySystem/Items/Equipment/Meshes/SM_Equip_Ring_Spiked.SM_Equip_Ring_Spiked"
+	},
+	{
+		"Name": "SK_Equip_Ring_Spiked",
+		"MeshType": "SkeletalMesh",
+		"ModelMesh": "/Game/InventorySystem/Items/Equipment/Meshes/SK_Equip_Ring_Spiked.SK_Equip_Ring_Spiked"
+	},
+	{
+		"Name": "SM_Weapon_Simple_Axe",
+		"MeshType": "StaticMesh",
+		"ModelMesh": "/Game/InventorySystem/Items/Weapons/Meshes/SM_Weapon_Simple_Axe.SM_Weapon_Simple_Axe"
+	},
+	{
+		"Name": "SK_Weapon_Simple_Axe",
+		"MeshType": "SkeletalMesh",
+		"ModelMesh": "/Game/InventorySystem/Items/Weapons/Meshes/SK_Weapon_Simple_Axe.SK_Weapon_Simple_Axe"
+	},
+	{
+		"Name": "SM_Weapon_Bone_Dagger",
+		"MeshType": "StaticMesh",
+		"ModelMesh": "/Game/InventorySystem/Items/Weapons/Meshes/SM_Weapon_Bone_Dagger.SM_Weapon_Bone_Dagger"
+	},
+	{
+		"Name": "SK_Weapon_Bone_Dagger",
+		"MeshType": "SkeletalMesh",
+		"ModelMesh": "/Game/InventorySystem/Items/Weapons/Meshes/SK_Weapon_Bone_Dagger.SK_Weapon_Bone_Dagger"
+	},
+	{
+		"Name": "SM_Weapon_Bone_Sword",
+		"MeshType": "StaticMesh",
+		"ModelMesh": "/Game/InventorySystem/Items/Weapons/Meshes/SM_Weapon_Bone_Sword.SM_Weapon_Bone_Sword"
+	},
+	{
+		"Name": "SK_Weapon_Bone_Sword",
+		"MeshType": "SkeletalMesh",
+		"ModelMesh": "/Game/InventorySystem/Items/Weapons/Meshes/SK_Weapon_Bone_Sword.SK_Weapon_Bone_Sword"
+	},
+	{
+		"Name": "SM_Armor_Leather_Hood",
+		"MeshType": "StaticMesh",
+		"ModelMesh": "/Game/InventorySystem/Items/Equipment/Meshes/SM_Armor_Leather_Hood.SM_Armor_Leather_Hood"
+	},
+	{
+		"Name": "SK_Armor_Leather_Hood",
+		"MeshType": "SkeletalMesh",
+		"ModelMesh": "/Game/InventorySystem/Items/Equipment/Meshes/SK_Armor_Leather_Hood.SK_Armor_Leather_Hood"
+	},
+	{
+		"Name": "SM_Armor_Leather_Helmet",
+		"MeshType": "StaticMesh",
+		"ModelMesh": "/Game/InventorySystem/Items/Equipment/Meshes/SM_Armor_Leather_Helmet.SM_Armor_Leather_Helmet"
+	},
+	{
+		"Name": "SK_Armor_Leather_Helmet",
+		"MeshType": "SkeletalMesh",
+		"ModelMesh": "/Game/InventorySystem/Items/Equipment/Meshes/SK_Armor_Leather_Helmet.SK_Armor_Leather_Helmet"
+	},
+	{
+		"Name": "SM_Armor_Leather_Boots",
+		"MeshType": "StaticMesh",
+		"ModelMesh": "/Game/InventorySystem/Items/Equipment/Meshes/SM_Armor_Leather_Boots.SM_Armor_Leather_Boots"
+	},
+	{
+		"Name": "SK_Armor_Leather_Boots",
+		"MeshType": "SkeletalMesh",
+		"ModelMesh": "/Game/InventorySystem/Items/Equipment/Meshes/SK_Armor_Leather_Boots.SK_Armor_Leather_Boots"
+	},
+	{
+		"Name": "SM_Armor_Bladed_Shoulder",
+		"MeshType": "StaticMesh",
+		"ModelMesh": "/Game/InventorySystem/Items/Equipment/Meshes/SM_Armor_Bladed_Shoulder.SM_Armor_Bladed_Shoulder"
+	},
+	{
+		"Name": "SK_Armor_Bladed_Shoulder",
+		"MeshType": "SkeletalMesh",
+		"ModelMesh": "/Game/InventorySystem/Items/Equipment/Meshes/SK_Armor_Bladed_Shoulder.SK_Armor_Bladed_Shoulder"
+	},
+	{
+		"Name": "SM_Armor_Cardboard_Helmet",
+		"MeshType": "StaticMesh",
+		"ModelMesh": "/Game/InventorySystem/Items/Equipment/Meshes/SM_Armor_Cardboard_Helm.SM_Armor_Cardboard_Helm"
+	},
+	{
+		"Name": "SK_Armor_Cardboard_Helmet",
+		"MeshType": "SkeletalMesh",
+		"ModelMesh": "/Game/InventorySystem/Items/Equipment/Meshes/SK_Armor_Cardboard_Helmet.SK_Armor_Cardboard_Helmet"
+	},
+	{
+		"Name": "SM_Armor_CardBoard_Chest",
+		"MeshType": "StaticMesh",
+		"ModelMesh": "/Game/InventorySystem/Items/Equipment/Meshes/SM_Armor_Cardboard_Chest.SM_Armor_Cardboard_Chest"
+	},
+	{
+		"Name": "SK_Armor_CardBoard_Chest",
+		"MeshType": "SkeletalMesh",
+		"ModelMesh": "/Game/InventorySystem/Items/Equipment/Meshes/SK_Armor_Cardboard_Chest.SK_Armor_Cardboard_Chest"
+	},
+	{
+		"Name": "SM_Armor_CardBoard_Gloves",
+		"MeshType": "StaticMesh",
+		"ModelMesh": "/Game/InventorySystem/Items/Equipment/Meshes/SM_Armor_Cardboard_Gloves.SM_Armor_Cardboard_Gloves"
+	},
+	{
+		"Name": "SK_Armor_CardBoard_Gloves",
+		"MeshType": "SkeletalMesh",
+		"ModelMesh": "/Game/InventorySystem/Items/Equipment/Meshes/SK_Armor_Cardboard_Gloves.SK_Armor_Cardboard_Gloves"
+	},
+	{
+		"Name": "SM_Armor_CardBoard_Legs",
+		"MeshType": "StaticMesh",
+		"ModelMesh": "/Game/InventorySystem/Items/Equipment/Meshes/SM_Armor_Cardboard_Legs.SM_Armor_Cardboard_Legs"
+	},
+	{
+		"Name": "SK_Armor_CardBoard_Legs",
+		"MeshType": "SkeletalMesh",
+		"ModelMesh": "/Game/InventorySystem/Items/Equipment/Meshes/SK_Armor_Cardboard_Legs.SK_Armor_Cardboard_Legs"
+	},
+	{
+		"Name": "SM_Armor_CardBoard_Boots",
+		"MeshType": "StaticMesh",
+		"ModelMesh": "/Game/InventorySystem/Items/Equipment/Meshes/SM_Armor_Cardboard_Boots.SM_Armor_Cardboard_Boots"
+	},
+	{
+		"Name": "SK_Armor_CardBoard_Boots",
+		"MeshType": "SkeletalMesh",
+		"ModelMesh": "/Game/InventorySystem/Items/Equipment/Meshes/SK_Armor_Cardboard_Boots.SK_Armor_Cardboard_Boots"
+	},
+	{
+		"Name": "SM_Shield_Wood_Planks",
+		"MeshType": "StaticMesh",
+		"ModelMesh": "/Game/InventorySystem/Items/Weapons/Meshes/SM_Shield_Wood_Planks.SM_Shield_Wood_Planks"
+	},
+	{
+		"Name": "SK_Shield_Wood_Planks",
+		"MeshType": "SkeletalMesh",
+		"ModelMesh": "/Game/InventorySystem/Items/Weapons/Meshes/SK_Shield_Wood_Planks.SK_Shield_Wood_Planks"
+	},
+	{
+		"Name": "SM_Human_Skull",
+		"MeshType": "StaticMesh",
+		"ModelMesh": "/Game/InventorySystem/Items/Miscellaneous/Meshes/SM_Human_Skull.SM_Human_Skull"
+	},
+	{
+		"Name": "SM_Equip_Bone_Amulet",
+		"MeshType": "StaticMesh",
+		"ModelMesh": "/Game/InventorySystem/Items/Equipment/Meshes/SM_Equip_Bone_Amulet.SM_Equip_Bone_Amulet"
+	},
+	{
+		"Name": "SK_Equip_Bone_Amulet",
+		"MeshType": "SkeletalMesh",
+		"ModelMesh": "/Game/InventorySystem/Items/Equipment/Meshes/SK_Equip_Bone_Amulet.SK_Equip_Bone_Amulet"
+	},
+	{
+		"Name": "SM_Coin",
+		"MeshType": "StaticMesh",
+		"ModelMesh": "/Game/InventorySystem/Items/Miscellaneous/Meshes/SM_Coin.SM_Coin"
+	},
+	{
+		"Name": "SM_Weapon_Assault_Rifle",
+		"MeshType": "StaticMesh",
+		"ModelMesh": "/Game/InventorySystem/Items/Weapons/Meshes/SM_Weapon_Assault_Rifle.SM_Weapon_Assault_Rifle"
+	},
+	{
+		"Name": "SK_Weapon_Assault_Rifle",
+		"MeshType": "SkeletalMesh",
+		"ModelMesh": "/Game/InventorySystem/Items/Weapons/Meshes/SK_Weapon_Rifle_Assault.SK_Weapon_Rifle_Assault"
+	},
+	{
+		"Name": "SM_SteelHelmet",
+		"MeshType": "StaticMesh",
+		"ModelMesh": "/Game/GameContent/Meshes/SM_SteelHelmet.SM_SteelHelmet"
+	},
+	{
+		"Name": "SM_SteelBreastplate",
+		"MeshType": "StaticMesh",
+		"ModelMesh": "/Game/GameContent/Meshes/SM_SteelBreastplate.SM_SteelBreastplate"
+	},
+	{
+		"Name": "SK_SteelBreastplate",
+		"MeshType": "SkeletalMesh",
+		"ModelMesh": "/Game/GameContent/Meshes/SK_SteelBreastplate.SK_SteelBreastplate"
+	},
+	{
+		"Name": "SM_SteelGloves",
+		"MeshType": "StaticMesh",
+		"ModelMesh": "/Game/GameContent/Meshes/SM_SteelGloves.SM_SteelGloves"
+	},
+	{
+		"Name": "SK_SteelGloves",
+		"MeshType": "SkeletalMesh",
+		"ModelMesh": "/Game/GameContent/Meshes/SK_SteelGloves.SK_SteelGloves"
+	},
+	{
+		"Name": "SM_SteelLeggings",
+		"MeshType": "StaticMesh",
+		"ModelMesh": "/Game/GameContent/Meshes/SM_SteelLeggings.SM_SteelLeggings"
+	},
+	{
+		"Name": "SK_SteelPants",
+		"MeshType": "SkeletalMesh",
+		"ModelMesh": "/Game/GameContent/Meshes/SK_SteelPants.SK_SteelPants"
+	},
+	{
+		"Name": "SM_SteelBoots",
+		"MeshType": "StaticMesh",
+		"ModelMesh": "/Game/GameContent/Meshes/SM_SteelBoots.SM_SteelBoots"
+	},
+	{
+		"Name": "SK_SteelBoots",
+		"MeshType": "SkeletalMesh",
+		"ModelMesh": "/Game/GameContent/Meshes/SK_SteelBoots.SK_SteelBoots"
+	},
+	{
+		"Name": "SM_MagicWand",
+		"MeshType": "StaticMesh",
+		"ModelMesh": "/Game/GameContent/Meshes/SM_MagicWand.SM_MagicWand"
+	},
+	{
+		"Name": "SM_Sword",
+		"MeshType": "StaticMesh",
+		"ModelMesh": "/Game/CloseCombat/Weapon/Swords/SwordTest/Meshes/SM_Sword.SM_Sword"
+	},
+	{
+		"Name": "SM_Glasses",
+		"MeshType": "StaticMesh",
+		"ModelMesh": "/Game/SCK_Casual01/Models/MESH_A_01_SM.MESH_A_01_SM"
+	},
+	{
+		"Name": "SK_Glasses",
+		"MeshType": "SkeletalMesh",
+		"ModelMesh": "/Game/SCK_Casual01/Models/MESH_A_01.MESH_A_01"
+	},
+	{
+		"Name": "SK_Body_Chest",
+		"MeshType": "SkeletalMesh",
+		"ModelMesh": "/Game/StylizedModularChar/Meshes/Male/Chest/SK_Body_Chest.SK_Body_Chest"
+	},
+	{
+		"Name": "SK_Body_Legs",
+		"MeshType": "SkeletalMesh",
+		"ModelMesh": "/Game/StylizedModularChar/Meshes/Male/Legs/SK_Body_Legs.SK_Body_Legs"
+	},
+	{
+		"Name": "SK_Body_Face",
+		"MeshType": "SkeletalMesh",
+		"ModelMesh": "/Game/StylizedModularChar/Meshes/Male/Face/SK_Body_Face.SK_Body_Face"
+	},
+	{
+		"Name": "SK_Body_Hands",
+		"MeshType": "SkeletalMesh",
+		"ModelMesh": "/Game/StylizedModularChar/Meshes/Male/Hands/SK_Body_Hands.SK_Body_Hands"
+	},
+	{
+		"Name": "SK_Aviator_Chest",
+		"MeshType": "SkeletalMesh",
+		"ModelMesh": "/Game/StylizedModularChar/Meshes/Male/Chest/SK_Aviator_Chest.SK_Aviator_Chest"
+	},
+	{
+		"Name": "SK_Casual_Chest",
+		"MeshType": "SkeletalMesh",
+		"ModelMesh": "/Game/StylizedModularChar/Meshes/Male/Chest/SK_Casual_Chest.SK_Casual_Chest"
+	},
+	{
+		"Name": "SK_Cop_Chest",
+		"MeshType": "SkeletalMesh",
+		"ModelMesh": "/Game/StylizedModularChar/Meshes/Male/Chest/SK_Cop_Chest.SK_Cop_Chest"
+	},
+	{
+		"Name": "SK_Smoking_Chest",
+		"MeshType": "SkeletalMesh",
+		"ModelMesh": "/Game/StylizedModularChar/Meshes/Male/Chest/SK_Smoking_Chest.SK_Smoking_Chest"
+	},
+	{
+		"Name": "SK_Soldier_Chest",
+		"MeshType": "SkeletalMesh",
+		"ModelMesh": "/Game/StylizedModularChar/Meshes/Male/Chest/SK_Soldier_Chest.SK_Soldier_Chest"
+	},
+	{
+		"Name": "SK_SpaceSuit_Chest",
+		"MeshType": "SkeletalMesh",
+		"ModelMesh": "/Game/StylizedModularChar/Meshes/Male/Chest/SK_SpaceSuit_Chest.SK_SpaceSuit_Chest"
+	},
+	{
+		"Name": "SK_Soldier_Face",
+		"MeshType": "SkeletalMesh",
+		"ModelMesh": "/Game/StylizedModularChar/Meshes/Male/Face/SK_Soldier_Face.SK_Soldier_Face"
+	},
+	{
+		"Name": "SK_SpaceSuit_Face",
+		"MeshType": "SkeletalMesh",
+		"ModelMesh": "/Game/StylizedModularChar/Meshes/Male/Face/SK_SpaceSuit_Face.SK_SpaceSuit_Face"
+	},
+	{
+		"Name": "SK_Casual_Hands",
+		"MeshType": "SkeletalMesh",
+		"ModelMesh": "/Game/StylizedModularChar/Meshes/Male/Hands/SK_Casual_Hands.SK_Casual_Hands"
+	},
+	{
+		"Name": "SK_SpaceSuit_Hands",
+		"MeshType": "SkeletalMesh",
+		"ModelMesh": "/Game/StylizedModularChar/Meshes/Male/Hands/SK_SpaceSuit_Hands.SK_SpaceSuit_Hands"
+	},
+	{
+		"Name": "SK_Aviator_Legs",
+		"MeshType": "SkeletalMesh",
+		"ModelMesh": "/Game/StylizedModularChar/Meshes/Male/Legs/SK_Aviator_Legs.SK_Aviator_Legs"
+	},
+	{
+		"Name": "SK_Casual_Legs",
+		"MeshType": "SkeletalMesh",
+		"ModelMesh": "/Game/StylizedModularChar/Meshes/Male/Legs/SK_Casual_Legs.SK_Casual_Legs"
+	},
+	{
+		"Name": "SK_Cop_Legs",
+		"MeshType": "SkeletalMesh",
+		"ModelMesh": "/Game/StylizedModularChar/Meshes/Male/Legs/SK_Cop_Legs.SK_Cop_Legs"
+	},
+	{
+		"Name": "SK_Smoking_Legs",
+		"MeshType": "SkeletalMesh",
+		"ModelMesh": "/Game/StylizedModularChar/Meshes/Male/Legs/SK_Smoking_Legs.SK_Smoking_Legs"
+	},
+	{
+		"Name": "SK_Soldier_Legs",
+		"MeshType": "SkeletalMesh",
+		"ModelMesh": "/Game/StylizedModularChar/Meshes/Male/Legs/SK_Soldier_Legs.SK_Soldier_Legs"
+	},
+	{
+		"Name": "SK_SpaceSuit_Legs",
+		"MeshType": "SkeletalMesh",
+		"ModelMesh": "/Game/StylizedModularChar/Meshes/Male/Legs/SK_SpaceSuit_Legs.SK_SpaceSuit_Legs"
+	},
+	{
+		"Name": "SM_SpaceSuit_Face",
+		"MeshType": "StaticMesh",
+		"ModelMesh": "/Game/Meshes/SM_SpaceSuit_Face.SM_SpaceSuit_Face"
+	}
+]

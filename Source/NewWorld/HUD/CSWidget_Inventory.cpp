@@ -5,9 +5,9 @@
 #include "NewWorld/Framework/CSPlayerController.h"
 #include "NewWorld/Framework/CSInventoryManager.h"
 #include "CSWidget_InventorySlot.h"
-#include "NewWorld/Framework/CSInventoryComponent.h"
+#include "NewWorld/Framework/Component/CSInventoryComponent.h"
 #include "Components/UniformGridSlot.h"
-#include "NewWorld/Framework/CSCharacter.h"
+#include "NewWorld/Framework/Character/CSCharacter.h"
 #include "NewWorld/Framework/CSGameplayStatics.h"
 
 UCSWidget_Inventory::UCSWidget_Inventory(const FObjectInitializer& ObjectInitializer) : Super(ObjectInitializer)

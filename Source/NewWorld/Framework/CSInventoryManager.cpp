@@ -3,14 +3,14 @@
 
 #include "CSInventoryManager.h"
 #include "CSPlayerController.h"
-#include "CSInventoryComponent.h"
+#include "NewWorld/Framework/Component/CSInventoryComponent.h"
 #include "Engine/NetDriver.h"
 #include "Engine/DataTable.h"
 #include "CSPickup_Item.h"
 #include "CSGameplayStatics.h"
 #include "DrawDebugHelpers.h"
-#include "CSCharacter.h"
-#include "CSWeapon.h"
+#include "NewWorld/Framework/Character/CSCharacter.h"
+#include "NewWorld/Framework/Weapon/CSWeapon.h"
 
 UCSInventoryManager::UCSInventoryManager(const FObjectInitializer& ObjectInitializer) : Super(ObjectInitializer)
 {
@@ -74,7 +74,7 @@ void UCSInventoryManager::ServerLoadPlayerItems()
 	{
 		TMap<EEquipmentSlot, FItemKey> StartEquipItemKeys;
 		//StartEquipItemKeys.Add(EEquipmentSlot::Head, FItemKey(TEXT("Armor_Leather_Helmet"), 1));
-		//StartEquipItemKeys.Add(EEquipmentSlot::Feet, FItemKey(TEXT("Armor_Leather_Boots"), 1));
+		StartEquipItemKeys.Add(EEquipmentSlot::Feet, FItemKey(TEXT("Armor_Leather_Boots"), 1));
 		
 		for (int32 i = 0; i < static_cast<int32>(EEquipmentSlot::MAX); ++i)
 		{

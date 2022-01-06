@@ -6,6 +6,9 @@
 #include "Kismet/GameplayStatics.h"
 #include "Components/Widget.h"
 #include "CSTypes.h"
+#include "CSTable.h"
+#include "CSDataTableManager.h"
+#include "CSGameInstance.h"
 #include "CSGameplayStatics.generated.h"
 
 /**
@@ -37,6 +40,25 @@ public:
 		}
 
 		return SoftClassPtr.Get();
+	}
+
+	template<typename T>
+	static T* GetLoadedMesh(AActor* InActor, const FName& MeshTid)
+	{
+		UCSGameInstance* GameInstance = InActor->GetGameInstance<UCSGameInstance>();
+		if (GameInstance)
+		{
+			if (GameInstance->DataTableManager)
+			{
+				UCSDataTableManager* Manager = GameInstance->DataTableManager->GetDefaultObject<UCSDataTableManager>();
+				if (Manager)
+				{
+					return Manager->GetModelMesh<T>(MeshTid);
+				}				
+			}
+		}
+
+		return nullptr;
 	}
 
 	static void SetInputMode(APlayerController* Target, UWidget* InWidgetToFocus, EInputMode InputMode);
